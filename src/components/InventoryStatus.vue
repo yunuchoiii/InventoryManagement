@@ -1,11 +1,10 @@
 <template>
   <body>
-    <h1>관리자페이지</h1>
   </body>
 </template>
 <script>
 export default {
-  name: 'IntroPage',
+  name: 'InventoryStatus',
   components: {},
   data () {
     return {

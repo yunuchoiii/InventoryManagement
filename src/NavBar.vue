@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <body style="height: 100%;">
     <div class="navBar">
       <div style="text-align: center">
         <a href="/"><img src="@/assets/logo.png" alt="" width="100%"></a>
@@ -47,7 +47,4 @@ export default {
 <style>
 @import "@/styles/styles.css";
 
-html, body {
-  height: 100%;
-}
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <body>
-    <IntroPage style="margin-left: 200px"/>
+  <body class="body-padding">
+    <IntroPage/>
   </body>
 </template>
 

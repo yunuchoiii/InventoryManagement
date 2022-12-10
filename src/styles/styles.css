@@ -11,6 +11,7 @@ a {
 }
 .body-padding {
   padding: 25px;
+  margin-left: 200px;
 }
 .tx-center {
   text-align: center;
@@ -40,4 +41,52 @@ a {
   font-size: 32px;
   font-weight: 700;
   color: #5B5B5B;
+}
+.head-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+.title-box {
+  width: 10%;
+  height: 40px;
+  font-size: 1.5vw;
+  font-weight: 700;
+  color: #4a4a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.filter-box {
+  width: 90%;
+  height: 40px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter-card {
+  width: 20%;
+  display: flex;
+  margin-left: 15px;
+}
+.filter-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #3F5473;
+}
+.filter-select {
+  margin-left: 10px;
+  height: 30px;
+  width: 100px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: white;
+  width: 60%;
+}
+.w-35 {
+  width: 35%;
 }

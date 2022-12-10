@@ -1,6 +1,6 @@
 <template>
   <body>
-    <IntroPage />
+    <IntroPage style="margin-left: 200px"/>
   </body>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <InventoryStatus></InventoryStatus>
+  <InventoryStatus style="margin-left: 200px"></InventoryStatus>
 </template>
 
 <script>

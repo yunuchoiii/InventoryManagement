@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <body>
+    <h1>관리자페이지</h1>
+  </body>
 </template>
 <script>
 export default {
@@ -17,3 +19,5 @@ export default {
   methods: {}
 }
 </script>
+<style>
+</style>

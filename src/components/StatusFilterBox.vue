@@ -58,6 +58,7 @@
             height="30px"
             width="100%"
             color="#3F5473"
+            @click="submitFilter()"
           >
             <span style="color: white; font-size: 15px; font-weight:700">조회</span>
           </v-btn>
@@ -79,7 +80,8 @@ export default {
       selectedCategory: '',
       categories: ['세제', '방향제', '말통', '광택제', '박스'],
       selectedItem: '',
-      items: []
+      items: [],
+      filterList: {}
     }
   },
   setup () {},
@@ -88,7 +90,17 @@ export default {
   },
   mounted () {},
   unmounted () {},
-  methods: {}
+  methods: {
+    submitFilter () {
+      this.filterList = {
+        year: this.selectedYear,
+        month: this.selectedMonth,
+        category: this.selectedCategory,
+        item: this.selectedItem
+      }
+      this.$emit('filterData', this.filterList)
+    }
+  }
 }
 </script>
 <style>

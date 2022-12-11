@@ -1,7 +1,7 @@
 <template>
   <body class="body-padding">
-    <StatusFilterBox></StatusFilterBox>
-    <InventoryStatus></InventoryStatus>
+    <StatusFilterBox @filterData="filterEvent"></StatusFilterBox>
+    <InventoryStatus :filterData="filterData"></InventoryStatus>
   </body>
 </template>
 
@@ -13,6 +13,16 @@ export default {
   components: {
     StatusFilterBox,
     InventoryStatus
+  },
+  data () {
+    return {
+      filterData: {}
+    }
+  },
+  methods: {
+    filterEvent (data) {
+      this.filterData = data
+    }
   }
 }
 </script>

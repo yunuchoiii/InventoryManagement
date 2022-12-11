@@ -1,5 +1,5 @@
 body {
-  font-family: 'Noto Sans KR', "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'AppleSDGothicNeo', 'Noto Sans KR', sans-serif;
 }
 a {
   text-decoration: none;
@@ -26,16 +26,29 @@ a {
   padding-top: 30px;
   position: fixed;
 }
+.navBtn {
+  margin: 5px;
+  font-size: 20px !important;
+  color: white !important;
+}
 .navText {
+  font-size: 15px !important;
   margin-top: 20px;
-  font-size: 20px;
+  margin-bottom: 10px;
   color: white;
 }
 .navDivider {
   width: 80%;
   height: 1px;
   background-color: #a9a9a9;
-  margin-top: 20px;
+  margin: 10px;
+}
+.icon-box {
+  display: flex;
+  width: 60%;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 30px;
 }
 .title {
   font-size: 32px;
@@ -69,23 +82,22 @@ a {
   justify-content: space-between;
 }
 .filter-card {
-  width: 20%;
+  width: 22.5%;
   display: flex;
   margin-left: 15px;
 }
 .filter-text {
-  font-size: 18px;
+  font-size: 1.2vw;
   font-weight: 700;
   color: #3F5473;
 }
 .filter-select {
   margin-left: 10px;
   height: 30px;
-  width: 100px;
   border-radius: 5px;
   text-align: center;
   background-color: white;
-  width: 60%;
+  width: 70%;
 }
 .w-35 {
   width: 35%;

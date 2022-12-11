@@ -6,50 +6,53 @@
       </div>
       <div class="filter-box">
         <div class="filter-card">
-          <div class="flex-center w-35">
+          <div class="flex-center">
             <span class="filter-text">연도</span>
           </div>
           <select v-model="selectedYear" class="filter-select">
-            <option value="" disabled selected>Years</option>
+            <option value="" disabled selected>Year</option>
             <option v-for="option in years" :value="option" :key="option">
-              {{ option }}
+              {{ option }}년
             </option>
           </select>
         </div>
         <div class="filter-card">
-          <div class="flex-center w-35">
+          <div class="flex-center">
             <span class="filter-text">월별</span>
           </div>
           <select v-model="selectedMonth" class="filter-select">
-            <option value="" disabled selected>Months</option>
+            <option value="" disabled selected>Month</option>
             <option v-for="option in months" :value="option" :key="option">
+              {{ option }}월
+            </option>
+          </select>
+        </div>
+        <v-divider
+          vertical
+        ></v-divider>
+        <div class="filter-card" style="margin-left: 2%;">
+          <div class="flex-center">
+            <span class="filter-text">구분</span>
+          </div>
+          <select v-model="selectedCategory" class="filter-select">
+            <option value="" disabled selected>Category</option>
+            <option v-for="option in categories" :value="option" :key="option">
               {{ option }}
             </option>
           </select>
         </div>
         <div class="filter-card">
-          <div class="flex-center w-35">
-            <span class="filter-text">품목 분류</span>
+          <div class="flex-center">
+            <span class="filter-text">물품</span>
           </div>
-          <select v-model="selectedMonth" class="filter-select">
-            <option value="" disabled selected>Months</option>
-            <option v-for="option in months" :value="option" :key="option">
+          <select v-model="selectedItem" class="filter-select">
+            <option value="" disabled selected>Item</option>
+            <option v-for="option in items" :value="option" :key="option">
               {{ option }}
             </option>
           </select>
         </div>
-        <div class="filter-card">
-          <div class="flex-center w-35">
-            <span class="filter-text">품목명</span>
-          </div>
-          <select v-model="selectedMonth" class="filter-select">
-            <option value="" disabled selected>Months</option>
-            <option v-for="option in months" :value="option" :key="option">
-              {{ option }}
-            </option>
-          </select>
-        </div>
-        <div style="width: 5%">
+        <div style="width: 10%">
           <v-btn
             elevation="2"
             height="30px"
@@ -69,14 +72,20 @@ export default {
   components: {},
   data () {
     return {
-      selectedYear: '',
-      years: ['2022', '2021', '2020', '2019', '2018'],
+      selectedYear: new Date().getFullYear(),
+      years: [2023, 2022, 2021, 2020, 2019],
       selectedMonth: '',
-      months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+      months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      selectedCategory: '',
+      categories: ['세제', '방향제', '말통', '광택제', '박스'],
+      selectedItem: '',
+      items: []
     }
   },
   setup () {},
-  created () {},
+  created () {
+    this.selectedYear = new Date().getFullYear()
+  },
   mounted () {},
   unmounted () {},
   methods: {}

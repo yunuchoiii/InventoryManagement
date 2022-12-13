@@ -2,7 +2,7 @@
   <body style="padding-bottom: 25px">
     <div class="head-box">
       <div class="title-box">
-        <span>재고 현황</span>
+        <span>현 재고 현황</span>
       </div>
       <div class="filter-box">
         <div class="filter-card">
@@ -16,7 +16,7 @@
             </option>
           </select>
         </div>
-        <div class="filter-card">
+        <div v-if="month_show == true" class="filter-card">
           <div class="flex-center">
             <span class="filter-text">월별</span>
           </div>
@@ -60,7 +60,7 @@
             color="#3F5473"
             @click="submitFilter()"
           >
-            <span style="color: white; font-size: 15px; font-weight:700">조회</span>
+            <span style="color: white; font-size: 15px; font-weight:700; margin-left: 5px;">조회</span>
           </v-btn>
         </div>
       </div>
@@ -71,6 +71,10 @@
 export default {
   name: 'StatusFilterBox',
   components: {},
+  props: {
+    title: String,
+    month_show: Boolean
+  },
   data () {
     return {
       selectedYear: new Date().getFullYear(),

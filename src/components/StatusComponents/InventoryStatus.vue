@@ -1,27 +1,32 @@
 <template>
-  <body>
-    <v-simple-table
-    fixed-header
-    height="500px">
-      <template v-slot:default>
-        <thead>
-          <tr>
-            <th
-            v-for="item in headers"
-            :key="item"
-            style="font-size: 1vw">
-              {{item}}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td v-for="item in datas"
-            :key="item">{{ item }}</td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
+  <body style="display: flex">
+    <div v-if="clicked == true" style="width: 80%">
+      <h1>그래프</h1>
+    </div>
+    <div style="width: 100%">
+      <v-simple-table
+      fixed-header
+      height="500px">
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th
+              v-for="item in headers"
+              :key="item"
+              style="font-size: 1vw">
+                {{item}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td v-for="item in datas"
+              :key="item" @click="showGraph()">{{ item }}</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </div>
   </body>
 </template>
 <script>
@@ -34,8 +39,9 @@ export default {
   },
   data () {
     return {
-      headers: ['구분', '물품', '총 재고', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-      datas: ['세제', 'EV-1',	1,	6,	-19,	11,	-11,	50,	-46,	66,	-11,	20,	-50,	-39,	24]
+      clicked: false,
+      headers: ['구분', '물품', '물품코드', '전월 재고', '현 재고'],
+      datas: ['세제', 'EV-1',	1,	6,	-19]
     }
   },
   watch: {
@@ -47,7 +53,11 @@ export default {
   created () {},
   mounted () {},
   unmounted () {},
-  methods: {}
+  methods: {
+    showGraph () {
+      this.clicked = true
+    }
+  }
 }
 </script>
 <style>

@@ -1,6 +1,9 @@
 <template>
   <body class="body-padding">
-    <StatusFilterBox @filterData="filterEvent"></StatusFilterBox>
+    <StatusFilterBox
+    @filterData="filterEvent"
+    :title="title"
+    :month_show="true" ></StatusFilterBox>
     <InventoryStatus :filterData="filterData"></InventoryStatus>
   </body>
 </template>
@@ -16,7 +19,8 @@ export default {
   },
   data () {
     return {
-      filterData: {}
+      filterData: {},
+      title: '현 재고 현황'
     }
   },
   methods: {

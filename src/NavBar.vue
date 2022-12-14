@@ -3,7 +3,9 @@
     <div class="navBar">
       <div style="text-align: center">
         <a href="/"><img src="@/assets/logo.png" alt="" width="70%"></a>
-        <a href="/"><p class="navText">재고 관리 시스템</p></a>
+        <a href="/">
+          <p class="navText">재고 관리 시스템</p>
+        </a>
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
@@ -23,16 +25,16 @@
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
         <v-btn text rounded class="navBtn" href="">
-          입고 등록·수정
+          입고 리스트
         </v-btn>
         <v-btn text rounded class="navBtn" href="">
-          출고 등록·수정
+          출고 리스트
         </v-btn>
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
         <v-btn text rounded class="navBtn" href="">
-          상품 등록·수정
+          상품 리스트
         </v-btn>
       </div>
       <div class="icon-box">

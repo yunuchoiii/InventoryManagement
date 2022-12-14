@@ -3,7 +3,7 @@
     <StatusFilterBox
     @filterData="filterEvent"
     :title="title"
-    :month_show="true" ></StatusFilterBox>
+    :monthShow="true" ></StatusFilterBox>
     <InventoryStatus :filterData="filterData"></InventoryStatus>
   </body>
 </template>

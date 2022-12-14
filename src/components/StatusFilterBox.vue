@@ -16,7 +16,7 @@
             </option>
           </select>
         </div>
-        <div v-if="month_show == true" class="filter-card">
+        <div v-if="monthShow == true" class="filter-card">
           <div class="flex-center">
             <span class="filter-text">월별</span>
           </div>
@@ -73,7 +73,7 @@ export default {
   components: {},
   props: {
     title: String,
-    month_show: Boolean
+    monthShow: Boolean
   },
   data () {
     return {

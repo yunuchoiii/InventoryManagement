@@ -13,7 +13,7 @@
           현 재고 현황
         </v-btn>
         <v-btn text rounded class="navBtn" href="">
-          연별 재고 현황
+          월별 재고 현황
         </v-btn>
         <v-btn text rounded class="navBtn" href="">
           입고 현황

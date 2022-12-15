@@ -1,16 +1,16 @@
 <template>
   <body class="body-padding">
-    <IntroPage/>
+    <HomeDashboard/>
   </body>
 </template>
 
 <script>
-import IntroPage from '@/components/IntroPage.vue'
+import HomeDashboard from '@/components/HomeDashboard.vue'
 
 export default {
   name: 'HomePage',
   components: {
-    IntroPage
+    HomeDashboard
   }
 }
 </script>

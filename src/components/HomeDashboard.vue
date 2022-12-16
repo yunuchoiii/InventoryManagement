@@ -12,16 +12,16 @@
         <hr class="dashed-line">
       </div>
       <div class="flex">
-        <a href="/status/inventory" class="box-shadow menu-card btn mr-2 home-box">
+        <a href="/status/inventory" class="box-shadow menu-card btn mr-2per homebox">
           <div class="flex-center">
-            <img src="@/assets/now_status_icon.png" alt="현 재고 현황" width="50px" height="50px">
+            <img src="@/assets/inventory_status_icon.png" alt="현 재고 현황" width="50px" height="50px">
           </div>
           <div class="flex-center menu-card-title">
             <span>현 재고 현황</span>
             <span class="menu-card-title2"><br>현재 재고 확인 및 조회</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn mr-2 home-box">
+        <a href="" class="box-shadow menu-card btn mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/month_status_icon.png" alt="월간 재고 현황" width="50px" height="50px">
           </div>
@@ -30,7 +30,7 @@
             <span class="menu-card-title2"><br>월별 재고 확인 및 조회</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn mr-2 home-box">
+        <a href="" class="box-shadow menu-card btn mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/input_icon.png" alt="입고 현황" width="60px" height="60px">
           </div>
@@ -39,7 +39,7 @@
             <span class="menu-card-title2"><br>월별 입고량 확인 및 조회</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn home-box">
+        <a href="" class="box-shadow menu-card btn homebox">
           <div class="flex-center">
             <img src="@/assets/output_icon.png" alt="출고 현황" width="60px" height="60px">
           </div>
@@ -58,7 +58,7 @@
         <hr class="dashed-line">
       </div>
       <div class="flex">
-        <a href="" class="box-shadow menu-card btn mr-2 home-box">
+        <a href="" class="box-shadow menu-card btn mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/input_list_icon.png" alt="입고 리스트" width="50px" height="50px">
           </div>
@@ -67,7 +67,7 @@
             <span class="menu-card-title2"><br>입고 기록 조회 및 등록</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn mr-2 home-box">
+        <a href="" class="box-shadow menu-card btn mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/output_list_icon.png" alt="출고 리스트" width="50px" height="50px">
           </div>
@@ -76,7 +76,7 @@
             <span class="menu-card-title2"><br>출고 기록 조회 및 등록</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn mr-2 home-box">
+        <a href="" class="box-shadow menu-card btn mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/item_list_icon.png" alt="상품 리스트" width="60px" height="60px">
           </div>
@@ -89,13 +89,79 @@
     </div>
     <div class="home-divider"></div>
     <!-- 각종 통계 모음 -->
-    <div class="box-shadow home-box">
-      <div class="fw-700" style="font-size: 1.5rem;">
+    <div class="box-shadow homebox mb-22px"  data-aos="fade-up">
+      <div class="fw-700 homebox-title">
         <span>{{this.today_year + '년 ' + this.today_month + '월 ' + this.today_date + '일'}}</span>
       </div>
       <div class="flex">
-        <div style="width: 33%; height: 120px;">
-          <h1>sdfkj</h1>
+        <div class="flex numbox numbox-divider">
+          <div class="flex-center numbox-txtbox">
+            <p class="numbox-today1">총 재고</p>
+            <p class="numbox-today2">240</p>
+          </div>
+          <div class="flex-center numbox-txtbox">
+            <p class="numbox-yesterday1">어제 재고</p>
+            <p class="numbox-yesterday2">235</p>
+          </div>
+        </div>
+        <div class="flex numbox numbox-divider">
+          <div class="flex-center numbox-txtbox">
+            <p class="numbox-today1">입고</p>
+            <p class="numbox-today2">3</p>
+          </div>
+          <div class="flex-center numbox-txtbox">
+            <p class="numbox-yesterday1">어제 입고</p>
+            <p class="numbox-yesterday2">6</p>
+          </div>
+        </div>
+        <div class="flex numbox">
+          <div class="flex-center numbox-txtbox">
+            <p class="numbox-today1">출고</p>
+            <p class="numbox-today2">18</p>
+          </div>
+          <div class="flex-center numbox-txtbox">
+            <p class="numbox-yesterday1">어제 출고</p>
+            <p class="numbox-yesterday2">21</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-aos="fade-up">
+      <div class="flex-between mb-22px">
+        <div class="box-shadow homebox homebox-w2">
+          <div class="homebox-title fw-700">입고 변동량</div>
+          <InputBarChart
+          :labels="this.inputChart.labels"
+          :data="this.inputChart.data"/>
+        </div>
+        <div class="box-shadow homebox homebox-w2">
+          <div class="homebox-title fw-700">출고 변동량</div>
+          <OutputBarChart
+          :labels="this.outputChart.labels"
+          :data="this.outputChart.data"/>
+        </div>
+      </div>
+    </div>
+    <div data-aos="fade-up">
+      <div class="box-shadow homebox mb-22px">
+        <div class="homebox-title fw-700">연간 재고 변동량</div>
+        <div style="height: 300px">
+          <AnnualLineChart
+          :labels="this.annualChart.labels"
+          :data="this.annualChart.data"/>
+        </div>
+      </div>
+    </div>
+    <div data-aos="fade-up">
+      <div class="flex-between mb-22px">
+        <div class="box-shadow homebox homebox-w2">
+          <div class="homebox-title fw-700">재고 카테고리 비율</div>
+          <InputBarChart
+          :labels="this.inputChart.labels"
+          :data="this.inputChart.data"/>
+        </div>
+        <div class="box-shadow homebox homebox-w2">
+          <div class="homebox-title fw-700">Coming Soon</div>
         </div>
       </div>
     </div>
@@ -103,18 +169,38 @@
 </template>
 <script>
 /* eslint-disable */
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import InputBarChart from '@/components/ChartComponents/InputBarChart.vue'
+import OutputBarChart from '@/components/ChartComponents/OutputBarChart.vue'
+import AnnualLineChart from '@/components/ChartComponents/AnnualLineChart.vue'
+
 export default {
   name: 'HomeDashboard',
-  components: {},
+  components: {InputBarChart, OutputBarChart, AnnualLineChart},
   data () {
     return {
       today_year: new Date().getFullYear(),
       today_month: new Date().getMonth()+1,
       today_date: new Date().getDate(),
+      inputChart: {
+        labels: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        data: [40, 20, 12, 43, 25, 64, 74, 24, 10,24,13,53],
+      },
+      outputChart: {
+        labels: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        data: [13,22,45,24,36,14,12,52,32,13,35,72],
+      },
+      annualChart: {
+        labels: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        data: [13,22,45,24,36,14,12,52,32,13,35,72],
+      },
     }
   },
   setup () {},
-  created () {},
+  created () {
+    AOS.init();
+  },
   mounted () {},
   unmounted () {},
   methods: {}
@@ -138,10 +224,20 @@ body {background-color: #f3f3f3;}
   border: 1px dashed #A9A9A9;
   width: 100%;
 }
-.home-box {
+.homebox {
   background-color: #ffffff; 
   border-radius: 10px; 
   padding: 20px;
+}
+.homebox-w2 {
+  width: 49%;
+}
+.homebox-title {
+  padding-left: 10px;
+  font-size: 1.5rem;
+  display: flex;
+  height: 50px;
+  align-items: center;
 }
 .menu-divider {
   display: flex; 
@@ -161,8 +257,11 @@ body {background-color: #f3f3f3;}
   display: flex;
   align-items: center;
 }
-.mr-2 {
+.mr-2per {
   margin-right: 2%;
+}
+.mb-22px {
+  margin-bottom: 22px;
 }
 .menu-card-title {
   font-size: 1.3rem; 
@@ -174,5 +273,35 @@ body {background-color: #f3f3f3;}
 .menu-card-title2 {
   font-size: 1rem;
   line-height: 1rem;
+}
+.numbox {
+  width: 33.3%; 
+  height: 120px;
+}
+.numbox-divider {
+  border-right: 1px solid #f3f3f3;
+}
+.numbox-txtbox {
+  width:50%; 
+  flex-direction: column;
+}
+.numbox-today1 {
+  font-size: 1.2rem; 
+  font-weight: 700; 
+  line-height: 2.5rem;
+}
+.numbox-today2 {
+  font-size: 2.5rem; 
+  font-weight: 700; 
+  color: #F89829;
+}
+.numbox-yesterday1 {
+  font-size: 1rem; 
+  line-height: 2.5rem;
+}
+.numbox-yesterday2 {
+  font-size: 2rem; 
+  font-weight: 700; 
+  color: #3F5473;
 }
 </style>

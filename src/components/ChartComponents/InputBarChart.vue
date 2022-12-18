@@ -28,7 +28,7 @@ export default {
         labels: this.labels,
         datasets: [
           {
-            label: '변동량',
+            label: '입고량',
             backgroundColor: '#FF6B8A',
             data: this.data,
             borderRadius: 10,
@@ -37,9 +37,9 @@ export default {
       },
       chartOptions: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         plugins: {
-          legend: false
+          legend: false,
         },
         scales: {
           x: {

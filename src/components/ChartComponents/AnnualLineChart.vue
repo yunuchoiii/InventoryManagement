@@ -8,8 +8,8 @@
 <script>
 /* eslint-disable */
 import { Line as LineChartGenerator } from 'vue-chartjs'
-
 import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, LinearScale, CategoryScale, PointElement, Filler } from 'chart.js'
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, CategoryScale, PointElement, Filler)
 
@@ -57,7 +57,41 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: false
+          legend: false,
+          datalabels: {
+                        backgroundColor: function (context) {
+                            return context.dataset.backgroundColor;
+                        },
+                        borderColor: 'white',
+                        borderRadius: 30,
+                        borderWidth: 2,
+                        color: function (context) {
+                            return context.hovered ? 'black' : '#6e6d6d'
+                        },
+                        font: {
+                            weight: 'normal'
+                        },
+                        listeners: {
+                            enter: function (context) {
+                                context.hovered = true;
+                                return true;
+                            },
+                            leave: function (context) {
+                                context.hovered = false;
+                                return true;
+                            }
+                        },
+                        display: true,
+                        formatter: function (value, context) {
+                            let sum = 0;
+                            let valueArr = this.doughnutChart.datasets[0].data;
+                            for (var i in valueArr) {
+                                sum += parseInt(valueArr[i]);
+                            }
+                            let percentage = (value * 100 / sum).toFixed(2) + "%";
+                            return percentage;
+                        }.bind(this)
+                    },
         }
       }
     }

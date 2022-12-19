@@ -18,6 +18,11 @@ const routes = [
     path: '/status/months',
     name: 'InventoryStatus',
     component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/MonthStatusView.vue')
+  },
+  {
+    path: '/list/input',
+    name: 'InputList',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/ListViews/InputListView.vue')
   }
 ]
 

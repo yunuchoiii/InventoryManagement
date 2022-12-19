@@ -1,5 +1,5 @@
 <template>
-  <body style="padding-bottom: 25px">
+  <body style="padding-bottom: 10px">
     <div class="head-box">
       <div class="title-box">
         <span>{{title}}</span>

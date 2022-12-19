@@ -2,13 +2,19 @@
   <body>
     <StatusFilterBox
     @filterData="filterEvent"
-    :title="title"
-    :year-show="false"
-    :monthShow="false" />
-    <div style="width: 100%">
+    :title="title"/>
+    <div style="width: 100%;">
+      <div style="display: flex; align-items: center; justify-content: flex-end;">
+        <span style="font-size: 1.2rem; margin-right: 10px;">입고 등록 </span>
+        <v-btn class="mx-2" fab dark small color="#f89929" elevation="0">
+          <v-icon dark>
+            mdi-plus
+          </v-icon>
+        </v-btn>
+      </div>
       <v-simple-table
       fixed-header
-      height="500px">
+      height="80vh">
         <template v-slot:default>
           <thead>
             <tr>
@@ -21,9 +27,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td v-for="item in datas"
-              :key="item" @click="showGraph()">{{ item }}</td>
+            <tr v-for="item in datas" :key="item">
+              <td>{{ item[0] }}</td>
+              <td>{{ item[1] }}</td>
+              <td>{{ item[2] }}</td>
+              <td>{{ item[3] }}</td>
+              <td>{{ item[4] }}</td>
+              <td>{{ item[5] }}</td>
             </tr>
           </tbody>
         </template>
@@ -35,15 +45,17 @@
 /* eslint-disable */
 import StatusFilterBox from '@/components/StatusFilterBox.vue'
 export default {
-  name: 'InventoryStatus',
+  name: 'InputList',
   components: {StatusFilterBox},
   props: {},
   data () {
     return {
-      title: '현 재고 현황',
+      title: '입고 리스트',
       clicked: false,
-      headers: ['구분', '물품', '물품코드', '전월 입고', '전월 출고', '전월 재고', '이달 입고', '이달 출고', '이달 재고'],
-      datas: ['세제', 'EV-1',	123048,	6, 19, 20, 13, 54, 14],
+      headers: ['구분', '물품', '물품코드', '날짜', '입고량', '비고'],
+      datas: [
+        ['세제', 'EV-1',	123048,	'2022-3-16', 20, ''],
+      ],
       filterData: {}
     }
   },
@@ -55,10 +67,6 @@ export default {
   methods: {
     filterEvent (data) {
       this.filterData = data
-      console.log(this.filterData)
-    },
-    showGraph () {
-      this.clicked = true
     }
   }
 }

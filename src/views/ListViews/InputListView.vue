@@ -1,15 +1,15 @@
 <template>
   <body class="body-padding">
-    <MonthStatus></MonthStatus>
+    <InputList></InputList>
   </body>
 </template>
 
 <script>
-import MonthStatus from '@/components/StatusComponents/MonthStatus.vue'
+import InputList from '@/components/ListComponents/InputList.vue'
 
 export default {
   components: {
-    MonthStatus
+    InputList
   },
   data () {
     return {}

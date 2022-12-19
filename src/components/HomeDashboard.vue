@@ -58,7 +58,7 @@
         <hr class="dashed-line">
       </div>
       <div class="flex">
-        <a href="" class="box-shadow menu-card btn-shadow mr-2per homebox">
+        <a href="/list/input/" class="box-shadow menu-card btn-shadow mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/input_list_icon.png" alt="입고 리스트" width="50px" height="50px">
           </div>
@@ -134,7 +134,7 @@
         <div class="box-shadow homebox homebox-w2">
           <div class="homebox-titlebox homebox-title1">재고 카테고리 비율</div>
           <div class="">
-            <div style="height: 300px; padding: 15px 0px;">
+            <div style="height: 300px; padding-bottom: 15px;">
               <ItemDoughnutChart
               :labels="this.itemChart.labels"
               :data="this.itemChart.data"

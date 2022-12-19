@@ -1,6 +1,6 @@
 <template>
   <body class="body-padding">
-    <InventoryStatus :filterData="filterData"></InventoryStatus>
+    <InventoryStatus></InventoryStatus>
   </body>
 </template>
 

@@ -24,7 +24,7 @@
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
-        <v-btn text rounded class="navBtn" href="">
+        <v-btn text rounded class="navBtn" href="/list/input/">
           입고 리스트
         </v-btn>
         <v-btn text rounded class="navBtn" href="">

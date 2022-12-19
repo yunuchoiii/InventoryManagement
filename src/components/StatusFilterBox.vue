@@ -2,12 +2,12 @@
   <body style="padding-bottom: 25px">
     <div class="head-box">
       <div class="title-box">
-        <span>현 재고 현황</span>
+        <span>{{title}}</span>
       </div>
       <div class="filter-box">
-        <div class="filter-card">
-          <div class="flex-center">
-            <span class="filter-text">연도</span>
+        <div v-if="yearShow==true" class="filter-card">
+          <div class="flex-center filter-text" style="margin-left: 8px">
+            연도
           </div>
           <select v-model="selectedYear" class="filter-select">
             <option value="" disabled selected>Year</option>
@@ -16,9 +16,9 @@
             </option>
           </select>
         </div>
-        <div v-if="monthShow == true" class="filter-card">
-          <div class="flex-center">
-            <span class="filter-text">월별</span>
+        <div v-if="monthShow == true" class="filter-card" style="margin-right: 20px;">
+          <div class="flex-center filter-text">
+            월별
           </div>
           <select v-model="selectedMonth" class="filter-select">
             <option value="" disabled selected>Month</option>
@@ -27,12 +27,12 @@
             </option>
           </select>
         </div>
-        <v-divider
+        <v-divider v-if="monthShow == true || yearShow == true"
           vertical
         ></v-divider>
-        <div class="filter-card" style="margin-left: 2%;">
-          <div class="flex-center">
-            <span class="filter-text">구분</span>
+        <div class="filter-card" style="margin-left: 8px;">
+          <div class="flex-center filter-text">
+            구분
           </div>
           <select v-model="selectedCategory" class="filter-select">
             <option value="" disabled selected>Category</option>
@@ -42,8 +42,8 @@
           </select>
         </div>
         <div class="filter-card">
-          <div class="flex-center">
-            <span class="filter-text">물품</span>
+          <div class="flex-center filter-text">
+            품목
           </div>
           <select v-model="selectedItem" class="filter-select">
             <option value="" disabled selected>Item</option>
@@ -52,11 +52,11 @@
             </option>
           </select>
         </div>
-        <div style="width: 10%">
+        <div>
           <v-btn
             elevation="2"
             height="30px"
-            width="100%"
+            width="50px"
             color="#3F5473"
             @click="submitFilter()"
           >
@@ -67,13 +67,25 @@
     </div>
   </body>
 </template>
+
 <script>
+/* eslint-disable */
 export default {
   name: 'StatusFilterBox',
   components: {},
   props: {
-    title: String,
-    monthShow: Boolean
+    title: {
+      type: String,
+      required: true
+    },
+    yearShow: {
+      type: Boolean,
+      default: true
+    },
+    monthShow: {
+      type: Boolean,
+      default: true
+    },
   },
   data () {
     return {
@@ -85,7 +97,7 @@ export default {
       categories: ['세제', '방향제', '말통', '광택제', '박스'],
       selectedItem: '',
       items: [],
-      filterList: {}
+      filterData: {}
     }
   },
   setup () {},
@@ -96,13 +108,13 @@ export default {
   unmounted () {},
   methods: {
     submitFilter () {
-      this.filterList = {
+      this.filterData = {
         year: this.selectedYear,
         month: this.selectedMonth,
         category: this.selectedCategory,
         item: this.selectedItem
       }
-      this.$emit('filterData', this.filterList)
+      this.$emit('filterData', this.filterData)
     }
   }
 }

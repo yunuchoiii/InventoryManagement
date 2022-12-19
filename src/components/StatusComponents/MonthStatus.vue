@@ -2,9 +2,7 @@
   <body>
     <StatusFilterBox
     @filterData="filterEvent"
-    :title="title"
-    :year-show="false"
-    :monthShow="false" />
+    :title="title"/>
     <div style="width: 100%">
       <v-simple-table
       fixed-header
@@ -35,21 +33,23 @@
 /* eslint-disable */
 import StatusFilterBox from '@/components/StatusFilterBox.vue'
 export default {
-  name: 'InventoryStatus',
+  name: 'MonthStatus',
   components: {StatusFilterBox},
   props: {},
   data () {
     return {
-      title: '현 재고 현황',
+      title: '월간 재고 현황',
       clicked: false,
-      headers: ['구분', '물품', '물품코드', '전월 입고', '전월 출고', '전월 재고', '이달 입고', '이달 출고', '이달 재고'],
-      datas: ['세제', 'EV-1',	123048,	6, 19, 20, 13, 54, 14],
+      headers: ['구분', '물품', '물품코드',],
+      datas: ['세제', 'EV-1',	123048,	6, -19, 20, 13, 54, 14, 6, -19, 20, 13, 54, 14],
       filterData: {}
     }
   },
   watch: {},
   setup () {},
-  created () {},
+  created () {
+    this.getMonthsList()
+  },
   mounted () {},
   unmounted () {},
   methods: {
@@ -58,6 +58,20 @@ export default {
     },
     showGraph () {
       this.clicked = true
+    },
+    //일년치 월 리스트 구하기
+    getMonthsList () {
+      var month = new Date(new Date().setMonth(new Date().getMonth() + 2)).getMonth() == 0 ? 12 : new Date(new Date().setMonth(new Date().getMonth() + 2)).getMonth()
+      this.headers.push(month + '월')
+      for (var i=0; i < 11; i++) {
+        if(month + 1 == 13) {
+          month = 1
+          this.headers.push(1 + '월')
+        } else {
+          month = month + 1
+          this.headers.push(month + '월')
+        }
+      }
     }
   }
 }

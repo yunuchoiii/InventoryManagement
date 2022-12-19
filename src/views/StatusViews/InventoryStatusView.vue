@@ -1,0 +1,19 @@
+<template>
+  <body class="body-padding">
+    <InventoryStatus :filterData="filterData"></InventoryStatus>
+  </body>
+</template>
+
+<script>
+import InventoryStatus from '@/components/StatusComponents/InventoryStatus.vue'
+
+export default {
+  components: {
+    InventoryStatus
+  },
+  data () {
+    return {}
+  },
+  methods: {}
+}
+</script>

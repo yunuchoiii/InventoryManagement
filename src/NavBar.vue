@@ -12,8 +12,8 @@
         <v-btn text rounded class="navBtn" href="/status/inventory/">
           현 재고 현황
         </v-btn>
-        <v-btn text rounded class="navBtn" href="">
-          월별 재고 현황
+        <v-btn text rounded class="navBtn" href="/status/months/">
+          월간 재고 현황
         </v-btn>
         <v-btn text rounded class="navBtn" href="">
           입고 현황

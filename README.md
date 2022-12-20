@@ -1,4 +1,4 @@
-# stock_management
+# 재고관리시스템 (Inventory Management)
 
 ## Project setup
 ```

@@ -1,5 +1,6 @@
 body {
   font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f0f0f0;
 }
 a {
   text-decoration: none;
@@ -9,11 +10,20 @@ a:visited { color: black; text-decoration: none;}
 a:hover { color: black; text-decoration: none;}
 .body-padding {
   padding: 25px;
-  margin-left: 180px;
+  margin-left: 190px;
   height: 100vh;
 }
 .fw-700 {
   font-weight: 700;
+}
+.br-10 {
+  border-radius: 10px;
+}
+.w-35 {
+  width: 35%;
+}
+.box-shadow {
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.12);
 }
 .flex {
   display: flex;
@@ -40,7 +50,7 @@ a:hover { color: black; text-decoration: none;}
   text-align: center;
 }
 .navBar {
-  width: 180px;
+  width: 190px;
   height: 100%;
   background-color: #3F5473;
   display: flex;
@@ -53,6 +63,7 @@ a:hover { color: black; text-decoration: none;}
   margin: 5px;
   font-size: 18px !important;
   color: white !important;
+  justify-content: flex-start;
 }
 .navBtn-clicked {
   margin: 5px;
@@ -67,10 +78,17 @@ a:hover { color: black; text-decoration: none;}
   color: white;
 }
 .navDivider {
-  width: 80%;
+  width: 85%;
   height: 1px;
   background-color: #a9a9a9;
   margin: 10px;
+}
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  filter: invert(100);
+  margin-right: 5px;
+  margin-top: 3px;
 }
 .home-divider {
   width: 100%;
@@ -96,23 +114,24 @@ a:hover { color: black; text-decoration: none;}
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+  border-radius: 8px;
 }
 .title-box {
   height: 40px;
-  font-size: 3vh;
+  font-size: 3.5vh;
   font-weight: 700;
   line-height: 3vh;
-  padding-left: 1vw;
+  padding-left: 0.5vw;
   color: #4a4a4a;
   display: flex;
   align-items: center;
-  justify-content: center;
+  margin-bottom: 25px;
 }
 .filter-box {
-  height: 40px;
-  background-color: #f0f0f0;
   border-radius: 5px;
-  padding: 5px;
+  padding-right: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -126,7 +145,7 @@ a:hover { color: black; text-decoration: none;}
   font-size: 2vh;
   font-weight: 700;
   color: #3F5473;
-  width: 3vw;
+  padding: 5px;
   line-height: 2vh;
 }
 .filter-select {
@@ -134,14 +153,8 @@ a:hover { color: black; text-decoration: none;}
   height: 30px;
   border-radius: 5px;
   text-align: center;
-  background-color: white;
+  background-color: #f0f0f0;
   width: 10vw;
-}
-.w-35 {
-  width: 35%;
-}
-.box-shadow {
-  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Home Dashboard */

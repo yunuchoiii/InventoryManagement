@@ -9,31 +9,38 @@
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
-        <v-btn text rounded class="navBtn" href="/status/inventory/">
+        <v-btn text tile width="190" class="navBtn" href="/status/inventory/">
+          <img src="https://cdn-icons-png.flaticon.com/512/8917/8917230.png" alt="" class="nav-icon">
           현 재고 현황
         </v-btn>
-        <v-btn text rounded class="navBtn" href="/status/months/">
+        <v-btn text tile width="190" class="navBtn" href="/status/months/">
+          <img src="https://cdn-icons-png.flaticon.com/512/2401/2401234.png" alt="" class="nav-icon">
           월간 재고 현황
         </v-btn>
-        <v-btn text rounded class="navBtn" href="">
+        <v-btn text tile width="190" class="navBtn" href="">
+          <img src="https://cdn-icons-png.flaticon.com/512/8944/8944312.png" alt="" class="nav-icon">
           입고 현황
         </v-btn>
-        <v-btn text rounded class="navBtn" href="">
+        <v-btn text tile width="190" class="navBtn" href="">
+          <img src="https://cdn-icons-png.flaticon.com/512/8944/8944313.png" alt="" class="nav-icon">
           출고 현황
         </v-btn>
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
-        <v-btn text rounded class="navBtn" href="/list/input/">
+        <v-btn text tile width="190" class="navBtn" href="/list/input/">
+          <img src="https://cdn-icons-png.flaticon.com/512/4211/4211448.png" alt="" class="nav-icon">
           입고 리스트
         </v-btn>
-        <v-btn text rounded class="navBtn" href="">
+        <v-btn text tile width="190" class="navBtn" href="">
+          <img src="https://cdn-icons-png.flaticon.com/512/4211/4211448.png" alt="" class="nav-icon">
           출고 리스트
         </v-btn>
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
-        <v-btn text rounded class="navBtn" href="">
+        <v-btn text tile width="190" class="navBtn" href="">
+          <img src="https://cdn-icons-png.flaticon.com/512/8572/8572537.png" alt="" class="nav-icon">
           상품 리스트
         </v-btn>
       </div>

@@ -60,7 +60,7 @@
             color="#3F5473"
             @click="submitFilter()"
           >
-            <span style="color: white; font-size: 15px; font-weight:700; margin-left: 5px;">조회</span>
+            <span style="color: white; font-size: 15px; font-weight:700;">조회</span>
           </v-btn>
         </div>
       </div>

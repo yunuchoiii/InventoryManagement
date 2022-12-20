@@ -6,7 +6,7 @@
     <div style="width: 100%;">
       <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh;">
         <span style="font-size: 1.2rem; margin-right: 10px;">입고 등록 </span>
-        <v-btn class="mx-2" fab dark small color="#f89929" elevation="0">
+        <v-btn class="mx-2" fab dark small color="#f89929" elevation="0" width="30" height="30">
           <v-icon dark>
             mdi-plus
           </v-icon>
@@ -33,7 +33,7 @@ export default {
       title: '입고 리스트',
       clicked: false,
       headers: ['구분', '물품', '물품코드', '날짜', '입고량', '비고'],
-      datas: ['세제', 'EV-1',	123048,	'2022-3-16', 20, ''],
+      datas: ['세제', 'EV-1',	'123048',	'2022-3-16', '20', ''],
       filterData: {}
     }
   },

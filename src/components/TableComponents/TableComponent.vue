@@ -43,7 +43,8 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+    }
   },
   watch: {},
   setup () {},

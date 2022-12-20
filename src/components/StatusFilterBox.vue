@@ -2,7 +2,7 @@
   <body style="padding-bottom: 10px">
     <div class="head-box">
       <div class="title-box">
-        <span>{{title}}</span>
+        <button @click="reload()"><span>{{title}}</span></button>
       </div>
       <div class="filter-box">
         <div v-if="yearShow==true" class="filter-card">
@@ -60,7 +60,7 @@
             color="#3F5473"
             @click="submitFilter()"
           >
-            <span style="color: white; font-size: 15px; font-weight:700;">조회</span>
+            <span style="color: white; font-size: 15px; font-weight:700; line-height: 14px;">조회</span>
           </v-btn>
         </div>
       </div>
@@ -115,6 +115,9 @@ export default {
         item: this.selectedItem
       }
       this.$emit('filterData', this.filterData)
+    },
+    reload () {
+      location.reload()
     }
   }
 }

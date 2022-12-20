@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <body style="padding-bottom: 2vh">
     <div style="font-size: 2.3rem; font-weight: 700;">
       <span style="color: #c41230">원샷솔브코리아 </span>
       <span>재고 관리 시스템</span>
@@ -134,7 +134,7 @@
         <div class="box-shadow homebox homebox-w2">
           <div class="homebox-titlebox homebox-title1">재고 카테고리 비율</div>
           <div class="">
-            <div style="height: 300px; padding-bottom: 15px;">
+            <div style="height: 37vh; padding-bottom: 15px;">
               <ItemDoughnutChart
               :labels="this.itemChart.labels"
               :data="this.itemChart.data"
@@ -156,7 +156,7 @@
             <span class="homebox-title1">월별 입고 현황</span>
             <span class="homebox-title2">최근 1년</span>
           </div>
-          <div style="height: 300px">
+          <div style="height: 37vh">
             <InputBarChart
             :labels="this.monthsList"
             :data="this.inputChart.data"/>
@@ -167,7 +167,7 @@
             <span class="homebox-title1">월별 출고 현황</span>
             <span class="homebox-title2">최근 1년</span>
           </div>
-          <div style="height: 300px">
+          <div style="height: 37vh">
             <OutputBarChart
             :labels="this.monthsList"
             :data="this.outputChart.data"/>
@@ -181,7 +181,7 @@
             <span class="homebox-title1">연간 재고 현황</span>
             <span class="homebox-title2">최근 1년</span>
           </div>
-          <div style="height: 300px;">
+          <div style="height: 37vh;">
           <AnnualLineChart
           :labels="this.monthsList"
           :data="this.annualChart.data"/>
@@ -258,119 +258,5 @@ export default {
 @import "@/styles/styles.css";
 
 body {background-color: #f3f3f3;}
-.btn-shadow:active {
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  color: #3e3e3e;
-}
-.btn-shadow:hover {
-  background-color: #fafafa;
-}
-.homebox {
-  background-color: #ffffff; 
-  border-radius: 10px; 
-  padding: 20px;
-}
-.homebox-w2 {
-  width: 49%;
-}
-.homebox-h3 {
-  height: 29.5%;
-}
-.homebox-titlebox {
-  height: 50px;
-  padding: 0px 10px;
-  display: flex;
-  justify-content: space-between;
-}
-.homebox-title1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-.homebox-title2 {
-  font-size: 1rem;
-  font-weight: 300;
-}
-.menu-divider {
-  display: flex; 
-  flex-direction: row; 
-  align-items: center; 
-  margin: 25px 0px;
-}
-.menu-divider-title {
-  padding: 3px; 
-  background-color: #f3f3f3; 
-  font-size: 1.5rem; 
-  font-weight: 700;
-}
-.menu-card {
-  width: 23.5%; 
-  height: 110px;
-  display: flex;
-  align-items: center;
-}
-.mr-2per {
-  margin-right: 2%;
-}
-.mb-22px {
-  margin-bottom: 22px;
-}
-.menu-card-title {
-  font-size: 1.3rem; 
-  width: 100%; 
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-}
-.menu-card-title2 {
-  font-size: 1rem;
-  line-height: 1rem;
-}
-.numbox {
-  width: 33.3%; 
-  height: 120px;
-}
-.numbox-divider {
-  border-right: 1px solid #f3f3f3;
-}
-.numbox-txtbox {
-  width:50%; 
-  flex-direction: column;
-}
-.numbox-today1 {
-  font-size: 1.2rem; 
-  font-weight: 700; 
-  line-height: 2.5rem;
-}
-.numbox-today2 {
-  font-size: 2.5rem; 
-  font-weight: 700; 
-  color: #F89829;
-}
-.numbox-yesterday1 {
-  font-size: 1rem; 
-  line-height: 2.5rem;
-}
-.numbox-yesterday2 {
-  font-size: 2rem; 
-  font-weight: 700; 
-  color: #3F5473;
-}
-.color-circle {
-  width: 20px;
-  height: 20px;
-  border-radius: 30px;
-  margin-right: 15px;
-}
-.flex-leftcenter {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-}
-.flex-rightcenter {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  flex-direction: column;
-}
+
 </style>

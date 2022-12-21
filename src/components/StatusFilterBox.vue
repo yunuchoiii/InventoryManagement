@@ -4,11 +4,8 @@
       <button @click="reload()"><span>{{title}}</span></button>
     </div>
     <div class="head-box box-shadow">
-      <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh; margin-left: 10px">
+      <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh; margin-left: 0.7vh">
         <div v-if="register" class="flex-center">
-          <div class="flex-center filter-text">
-            입고 등록 버튼 들어올거임
-          </div>
         </div>
         <div v-else>
           뭘로 채우지?
@@ -65,7 +62,7 @@
         <div>
           <v-btn
             elevation="0"
-            height="4.5vh"
+            height="4vh"
             width="50px"
             color="#3F5473"
             @click="submitFilter()"

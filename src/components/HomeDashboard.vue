@@ -144,25 +144,25 @@
         </div>
         <div class="homebox-w2 flex-column">
           <div class="box-shadow homebox homebox-h3 flex-center-between">
-            <div class="homebox-title1 flex-center">
+            <div class="homebox-title3 flex-center">
               <img src="https://cdn-icons-png.flaticon.com/512/1670/1670341.png" alt="" class="home-icon">
               재고 금액
             </div>
             <div class="numbox-today2">
-              12932원
+              ₩12,932
             </div>
           </div>
           <div class="box-shadow homebox homebox-h3 flex-center-between">
-            <div class="homebox-title1 flex-center">
+            <div class="homebox-title3 flex-center">
               <img src="https://cdn-icons-png.flaticon.com/512/567/567600.png" alt="" class="home-icon">
               출고 금액
             </div>
             <div class="numbox-today2">
-              12932원
+              ₩12,932
             </div>
           </div>
           <div class="box-shadow homebox homebox-h3 flex-center-between">
-            <div class="homebox-title1 flex-center">
+            <div class="homebox-title3 flex-center">
               <img src="https://cdn-icons-png.flaticon.com/512/3712/3712196.png" alt="" class="home-icon">
               최다 판매
             </div>

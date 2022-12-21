@@ -134,7 +134,7 @@
         <div class="box-shadow homebox homebox-w2">
           <div class="homebox-titlebox homebox-title1">재고 카테고리 비율</div>
           <div class="">
-            <div style="height: 37vh; padding-bottom: 15px;">
+            <div style="height: 35vh; padding-bottom: 15px;">
               <ItemDoughnutChart
               :labels="this.itemChart.labels"
               :data="this.itemChart.data"
@@ -143,9 +143,33 @@
           </div>
         </div>
         <div class="homebox-w2 flex-column">
-          <div class="box-shadow homebox homebox-h3"></div>
-          <div class="box-shadow homebox homebox-h3"></div>
-          <div class="box-shadow homebox homebox-h3"></div>
+          <div class="box-shadow homebox homebox-h3 flex-center-between">
+            <div class="homebox-title1 flex-center">
+              <img src="https://cdn-icons-png.flaticon.com/512/1670/1670341.png" alt="" class="home-icon">
+              재고 금액
+            </div>
+            <div class="numbox-today2">
+              12932원
+            </div>
+          </div>
+          <div class="box-shadow homebox homebox-h3 flex-center-between">
+            <div class="homebox-title1 flex-center">
+              <img src="https://cdn-icons-png.flaticon.com/512/567/567600.png" alt="" class="home-icon">
+              출고 금액
+            </div>
+            <div class="numbox-today2">
+              12932원
+            </div>
+          </div>
+          <div class="box-shadow homebox homebox-h3 flex-center-between">
+            <div class="homebox-title1 flex-center">
+              <img src="https://cdn-icons-png.flaticon.com/512/3712/3712196.png" alt="" class="home-icon">
+              최다 판매
+            </div>
+            <div class="numbox-today2">
+              세제
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -156,7 +180,7 @@
             <span class="homebox-title1">월별 입고 현황</span>
             <span class="homebox-title2">최근 1년</span>
           </div>
-          <div style="height: 37vh">
+          <div style="height: 35vh">
             <InputBarChart
             :labels="this.monthsList"
             :data="this.inputChart.data"/>
@@ -167,7 +191,7 @@
             <span class="homebox-title1">월별 출고 현황</span>
             <span class="homebox-title2">최근 1년</span>
           </div>
-          <div style="height: 37vh">
+          <div style="height: 35vh">
             <OutputBarChart
             :labels="this.monthsList"
             :data="this.outputChart.data"/>
@@ -181,7 +205,7 @@
             <span class="homebox-title1">연간 재고 현황</span>
             <span class="homebox-title2">최근 1년</span>
           </div>
-          <div style="height: 37vh;">
+          <div style="height: 35vh;">
           <AnnualLineChart
           :labels="this.monthsList"
           :data="this.annualChart.data"/>
@@ -258,5 +282,9 @@ export default {
 @import "@/styles/styles.css";
 
 body {background-color: #f3f3f3;}
-
+.home-icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
 </style>

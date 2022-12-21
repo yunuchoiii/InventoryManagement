@@ -64,8 +64,8 @@
         </div>
         <div>
           <v-btn
-            elevation="2"
-            height="3.7vh"
+            elevation="0"
+            height="4.5vh"
             width="50px"
             color="#3F5473"
             @click="submitFilter()"

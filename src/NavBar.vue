@@ -10,7 +10,7 @@
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
         <v-btn text tile width="190" class="navBtn" href="/status/inventory/">
-          <img src="https://cdn-icons-png.flaticon.com/512/8917/8917230.png" alt="" class="nav-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/747/747327.png" alt="" class="nav-icon">
           현 재고 현황
         </v-btn>
         <v-btn text tile width="190" class="navBtn" href="/status/months/">

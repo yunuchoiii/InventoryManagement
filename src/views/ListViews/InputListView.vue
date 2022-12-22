@@ -3,7 +3,11 @@
     <StatusFilterBox
     @filterData="filterEvent"
     :register="true"
-    :title="title"/>
+    :register_name="register_name"
+    :title="title"
+    :month_show="false"
+    :year_show="false"
+    :date_range="true"/>
     <TableComponent
     :headers="headers"
     :datas="datas"
@@ -22,6 +26,7 @@ export default {
   data () {
     return {
       title: '입고 리스트',
+      register_name: '입고',
       clicked: false,
       headers: ['구분', '물품', '물품코드', '날짜', '입고량', '비고'],
       datas: ['세제', 'EV-1',	'123048',	'2022-3-16', '20', ''],

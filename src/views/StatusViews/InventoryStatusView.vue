@@ -4,7 +4,7 @@
     @filterData="filterEvent"
     :title="title"
     :year-show="false"
-    :monthShow="false" />
+    :month_show="false" />
     <TableComponent
     :headers="headers"
     :datas="datas"

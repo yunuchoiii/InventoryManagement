@@ -164,7 +164,7 @@
           <div class="box-shadow homebox homebox-h3 flex-center-between">
             <div class="homebox-title3 flex-center">
               <img src="https://cdn-icons-png.flaticon.com/512/3712/3712196.png" alt="" class="home-icon">
-              최다 판매
+              인기 제품
             </div>
             <div class="numbox-today2">
               세제

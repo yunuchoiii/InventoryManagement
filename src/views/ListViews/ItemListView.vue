@@ -2,30 +2,38 @@
   <body class="body-padding">
     <StatusFilterBox
     @filterData="filterEvent"
+    :register="true"
+    :register_name="register_name"
     :title="title"
+    :month_show="false"
     :year_show="false"
-    :month_show="false" />
+    :date_range="true"/>
     <TableComponent
     :headers="headers"
     :datas="datas"
     :filterData="filterData"/>
+    <div>
+      <input type="text">
+    </div>
   </body>
 </template>
 <script>
 /* eslint-disable */
 import StatusFilterBox from '@/components/StatusFilterBox.vue'
 import TableComponent from '@/components/TableComponents/TableComponent.vue'
+
 export default {
-  name: 'InventoryStatus',
+  name: 'InputList',
   components: {StatusFilterBox, TableComponent},
   props: {},
   data () {
     return {
-      title: '현 재고 현황',
+      title: '상품 리스트',
+      register_name: '상품',
       clicked: false,
-      headers: ['구분', '물품', '물품코드', '전월 입고', '전월 출고', '전월 재고', '이달 입고', '이달 출고', '이달 재고'],
-      datas: ['세제', 'EV-1',	123048,	6, 19, 20, 13, 54, 14],
-      filterData: {}
+      headers: ['구분', '구분코드', '물품', '물품코드', '판매단가', '비고'],
+      datas: ['세제', '01', '좋은 세제', '294721', '20,000', ''],
+      filterData: {},
     }
   },
   watch: {},
@@ -36,7 +44,6 @@ export default {
   methods: {
     filterEvent (data) {
       this.filterData = data
-      console.log(this.filterData)
     }
   }
 }

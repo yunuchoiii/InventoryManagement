@@ -1,6 +1,6 @@
 <template>
   <body style="padding-bottom: 2vh">
-    <div style="font-size: 2.3rem; font-weight: 700;">
+    <div style="font-size: 2.3rem; font-weight: 700; padding-top: 25px;">
       <span style="color: #c41230">원샷솔브코리아 </span>
       <span>재고 관리 시스템</span>
     </div>
@@ -67,7 +67,7 @@
             <span class="menu-card-title2"><br>입고 기록 조회 및 등록</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn-shadow mr-2per homebox">
+        <a href="/list/output" class="box-shadow menu-card btn-shadow mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/output_list_icon.png" alt="출고 리스트" width="50px" height="50px">
           </div>

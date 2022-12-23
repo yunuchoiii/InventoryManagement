@@ -10,30 +10,30 @@
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
         <v-btn text tile width="190" class="navBtn" href="/status/inventory/">
-          <img src="https://cdn-icons-png.flaticon.com/512/2769/2769160.png" alt="" class="nav-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/2312/2312686.png" alt="" class="nav-icon">
           현 재고 현황
         </v-btn>
         <v-btn text tile width="190" class="navBtn" href="/status/months/">
-          <img src="https://cdn-icons-png.flaticon.com/512/2401/2401234.png" alt="" class="nav-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/4227/4227865.png" alt="" class="nav-icon">
           월간 재고 현황
         </v-btn>
         <v-btn text tile width="190" class="navBtn" href="">
-          <img src="https://cdn-icons-png.flaticon.com/512/8944/8944312.png" alt="" class="nav-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/8901/8901382.png" alt="" class="nav-icon">
           입고 현황
         </v-btn>
         <v-btn text tile width="190" class="navBtn" href="">
-          <img src="https://cdn-icons-png.flaticon.com/512/8944/8944313.png" alt="" class="nav-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/8901/8901383.png" alt="" class="nav-icon">
           출고 현황
         </v-btn>
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
         <v-btn text tile width="190" class="navBtn" href="/list/input/">
-          <img src="https://cdn-icons-png.flaticon.com/512/4211/4211448.png" alt="" class="nav-icon">
+          <img src="https://cdn-icons-png.flaticon.com/512/7794/7794603.png" alt="" class="nav-icon">
           입고 리스트
         </v-btn>
-        <v-btn text tile width="190" class="navBtn" href="">
-          <img src="https://cdn-icons-png.flaticon.com/512/4211/4211448.png" alt="" class="nav-icon">
+        <v-btn text tile width="190" class="navBtn" href="/list/output">
+          <img src="https://cdn-icons-png.flaticon.com/512/7794/7794607.png" alt="" class="nav-icon">
           출고 리스트
         </v-btn>
       </div>

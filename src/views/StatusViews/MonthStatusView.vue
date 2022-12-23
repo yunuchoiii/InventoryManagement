@@ -2,6 +2,7 @@
   <body class="body-padding">
     <StatusFilterBox
     @filterData="filterEvent"
+    :month_show="false"
     :title="title"/>
     <TableComponent
     :headers="headers"

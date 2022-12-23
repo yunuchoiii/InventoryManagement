@@ -3,7 +3,7 @@
     <div class="box-shadow" style="border-radius: 10px; overflow: hidden">
       <v-simple-table
       fixed-header
-      height="83vh">
+      height="81vh">
         <template v-slot:default>
           <thead>
             <tr>

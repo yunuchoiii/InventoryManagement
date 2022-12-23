@@ -3,154 +3,11 @@
     <div class="title-box">
       <button @click="reload()"><span>{{title}}</span></button>
       <!-- 입출고, 상품 등록 팝업 -->
-      <div v-if="register" class="flex-center"  data-aos="fade-left">
-        <span style="font-size: 22px; font-weight:700; line-height: 14px; margin-right: 15px;">{{ register_name }} 등록</span>
-        <v-app>
-          <div class="text-center">
-            <v-dialog
-              v-model="dialog"
-              width="600"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  class="mx-2"
-                  small
-                  fab
-                  dark
-                  color="#f89929"
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  <v-icon dark>
-                    mdi-plus
-                  </v-icon>
-                </v-btn>
-              </template>
-
-              <v-card>
-                <v-card-title class="text-h5 lighten-2 homebox-title3 flex-center">
-                  {{ register_name }} 등록
-                </v-card-title>
-
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <!-- 구분 선택 -->
-                      <v-col
-                        cols="12"
-                        sm="6"
-                      >
-                        <v-select
-                          :items="categories"
-                          label="구분"
-                          required
-                          v-model="register_info.category"
-                        ></v-select>
-                      </v-col>
-                      <!-- 물품 선택 -->
-                      <v-col
-                        cols="12"
-                        sm="6"
-                      >
-                      <v-autocomplete
-                          :items="items"
-                          label="물품"
-                          required
-                          v-model="register_info.item"
-                        ></v-autocomplete>
-                      </v-col>
-                      <!-- 날짜 기입 -->
-                      <v-col
-                        cols="12"
-                        sm="6"
-                      >
-                      <v-menu
-                        ref="menu"
-                        v-model="menu"
-                        :close-on-content-click="false"
-                        :return-value.sync="register_info.date"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="auto"
-                      >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-text-field
-                            v-model="register_info.date"
-                            label= "일자"
-                            readonly
-                            v-bind="attrs"
-                            v-on="on"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker
-                          v-model="register_info.date"
-                          no-title
-                          scrollable
-                        >
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            text
-                            color="primary"
-                            @click="menu = false"
-                          >
-                            Cancel
-                          </v-btn>
-                          <v-btn
-                            text
-                            color="primary"
-                            @click="$refs.menu.save(register_info.date)"
-                          >
-                            OK
-                          </v-btn>
-                        </v-date-picker>
-                      </v-menu>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="6"
-                      >
-                        <v-text-field
-                          label="수량"
-                          type="number"
-                          v-model="register_info.quantity"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col
-                        cols="12"
-                        sm="12"
-                      >
-                        <v-text-field
-                          label="비고"
-                          v-model="register_info.etc"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="primary"
-                    text
-                    @click="dialog = false"
-                  >
-                    취소
-                  </v-btn>
-                  <v-btn
-                    color="primary"
-                    text
-                    @click="dialog = false"
-                  >
-                    저장
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </div>
-        </v-app>
+      <div v-if="register" data-aos="fade-left">
+        <RegisterDialog
+        :register_name="register_name"
+        :categories="categories"
+        :items="items"/>
       </div>
     </div>
     <div class="head-box box-shadow">
@@ -232,12 +89,13 @@
 
 <script>
 /* eslint-disable */
+import RegisterDialog from '@/components/DialogComponent.vue'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 export default {
   name: 'StatusFilterBox',
-  components: {},
+  components: {RegisterDialog},
   props: {
     title: {
       type: String,
@@ -274,18 +132,6 @@ export default {
       selectedItem: '',
       items: ['a','b','c'],
       filterData: {},
-      dialog: false,
-      register_info: {
-        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        category: '',
-        item: '',
-        quantity: null,
-        etc: ''
-      },
-      
-      menu: false,
-      modal: false,
-      menu2: false,
     }
   },
   setup () {},
@@ -320,5 +166,8 @@ export default {
 }
 .theme--light.v-application {
   background: transparent;
+}
+.v-dialog {
+  box-shadow: none !important;
 }
 </style>

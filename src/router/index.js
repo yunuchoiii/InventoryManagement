@@ -28,6 +28,11 @@ const routes = [
     path: '/list/output',
     name: 'OutputList',
     component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/ListViews/OutputListView.vue')
+  },
+  {
+    path: '/list/product',
+    name: 'ProductList',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/ListViews/ProductListView.vue')
   }
 ]
 

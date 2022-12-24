@@ -17,7 +17,7 @@
 <script>
 /* eslint-disable */
 import StatusFilterBox from '@/components/StatusFilterBox.vue'
-import TableComponent from '@/components/TableComponents/TableComponent.vue'
+import TableComponent from '@/components/TableComponent.vue'
 
 export default {
   name: 'InputList',
@@ -28,7 +28,7 @@ export default {
       title: '입고 리스트',
       register_name: '입고',
       clicked: false,
-      headers: ['구분', '물품', '물품코드', '날짜', '입고량', '비고'],
+      headers: ['구분', '품목', '품목코드', '날짜', '입고량', '비고'],
       datas: ['세제', 'EV-1',	'123048',	'2022-3-16', '20', ''],
       filterData: {},
     }

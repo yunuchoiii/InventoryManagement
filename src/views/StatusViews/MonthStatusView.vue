@@ -13,7 +13,7 @@
 <script>
 /* eslint-disable */
 import StatusFilterBox from '@/components/StatusFilterBox.vue'
-import TableComponent from '@/components/TableComponents/TableComponent.vue'
+import TableComponent from '@/components/TableComponent.vue'
 
 export default {
   name: 'MonthStatus',
@@ -23,7 +23,7 @@ export default {
     return {
       title: '월간 재고 현황',
       clicked: false,
-      headers: ['구분', '물품', '물품코드',],
+      headers: ['구분', '품목', '품목코드',],
       datas: ['세제', 'EV-1',	123048,	6, -19, 20, 13, 54, 14, 6, -19, 20, 13, 54, 14],
       filterData: {}
     }

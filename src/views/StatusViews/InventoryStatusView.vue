@@ -14,7 +14,7 @@
 <script>
 /* eslint-disable */
 import StatusFilterBox from '@/components/StatusFilterBox.vue'
-import TableComponent from '@/components/TableComponents/TableComponent.vue'
+import TableComponent from '@/components/TableComponent.vue'
 export default {
   name: 'InventoryStatus',
   components: {StatusFilterBox, TableComponent},
@@ -23,7 +23,7 @@ export default {
     return {
       title: '현 재고 현황',
       clicked: false,
-      headers: ['구분', '물품', '물품코드', '전월 입고', '전월 출고', '전월 재고', '이달 입고', '이달 출고', '이달 재고'],
+      headers: ['구분', '품목', '품목코드', '전월 입고', '전월 출고', '전월 재고', '이달 입고', '이달 출고', '이달 재고'],
       datas: ['세제', 'EV-1',	123048,	6, 19, 20, 13, 54, 14],
       filterData: {}
     }

@@ -7,7 +7,7 @@
     :title="title"
     :month_show="false"
     :year_show="false"
-    :date_range="true"/>
+    :date_range="false"/>
     <TableComponent
     :headers="headers"
     :datas="datas"
@@ -20,10 +20,10 @@
 <script>
 /* eslint-disable */
 import StatusFilterBox from '@/components/StatusFilterBox.vue'
-import TableComponent from '@/components/TableComponents/TableComponent.vue'
+import TableComponent from '@/components/TableComponent.vue'
 
 export default {
-  name: 'InputList',
+  name: 'ProductList',
   components: {StatusFilterBox, TableComponent},
   props: {},
   data () {
@@ -31,7 +31,7 @@ export default {
       title: '상품 리스트',
       register_name: '상품',
       clicked: false,
-      headers: ['구분', '구분코드', '물품', '물품코드', '판매단가', '비고'],
+      headers: ['구분', '구분코드', '품목', '품목코드', '판매단가', '비고'],
       datas: ['세제', '01', '좋은 세제', '294721', '20,000', ''],
       filterData: {},
     }

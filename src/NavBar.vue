@@ -39,7 +39,7 @@
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
-        <v-btn text tile width="190" class="navBtn" href="">
+        <v-btn text tile width="190" class="navBtn" href="/list/product">
           <img src="https://cdn-icons-png.flaticon.com/512/8572/8572537.png" alt="" class="nav-icon">
           상품 리스트
         </v-btn>

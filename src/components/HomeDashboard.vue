@@ -76,7 +76,7 @@
             <span class="menu-card-title2"><br>출고 기록 조회 및 등록</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn-shadow mr-2per homebox">
+        <a href="/list/product" class="box-shadow menu-card btn-shadow mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/item_list_icon.png" alt="상품 리스트" width="60px" height="60px">
           </div>

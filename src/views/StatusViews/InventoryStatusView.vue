@@ -1,6 +1,6 @@
 <template>
   <body class="body-padding">
-    <StatusFilterBox
+    <FilterBoxComponent
     @filterData="filterEvent"
     :title="title"
     :year_show="false"
@@ -13,11 +13,11 @@
 </template>
 <script>
 /* eslint-disable */
-import StatusFilterBox from '@/components/StatusFilterBox.vue'
+import FilterBoxComponent from '@/components/FilterBoxComponent.vue'
 import TableComponent from '@/components/TableComponent.vue'
 export default {
   name: 'InventoryStatus',
-  components: {StatusFilterBox, TableComponent},
+  components: {FilterBoxComponent, TableComponent},
   props: {},
   data () {
     return {

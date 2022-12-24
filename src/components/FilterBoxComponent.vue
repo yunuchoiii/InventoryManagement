@@ -94,7 +94,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 export default {
-  name: 'StatusFilterBox',
+  name: 'FilterBoxComponent',
   components: {RegisterDialog},
   props: {
     title: {

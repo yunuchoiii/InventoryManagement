@@ -47,7 +47,16 @@ export default {
             data: this.data,
             borderColor: '#9a66ff',
             pointBorderColor: '#9a66ff',
-            backgroundColor: "rgba(204, 178, 255, 0.4)",
+            // backgroundColor: "rgba(204, 178, 255, 0.4)",
+            backgroundColor: (ctx) => {
+              const canvas = ctx.chart.ctx;
+              const gradient = canvas.createLinearGradient(0,0,0,290);
+
+              gradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+              gradient.addColorStop(1, 'rgba(155, 102, 255, 0.5)');
+
+              return gradient;
+            },
             borderWidth: 4,
             fill: 'origin'
           }

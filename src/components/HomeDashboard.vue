@@ -30,7 +30,7 @@
             <span class="menu-card-title2"><br>월별 재고 확인 및 조회</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn-shadow mr-2per homebox">
+        <a href="" class="box-shadow menu-card btn-shadow mr-2per homebox" style="padding-left: 20px">
           <div class="flex-center">
             <img src="@/assets/input_icon.png" alt="입고 현황" width="60px" height="60px">
           </div>
@@ -39,7 +39,7 @@
             <span class="menu-card-title2"><br>월별 입고량 확인 및 조회</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn-shadow homebox">
+        <a href="" class="box-shadow menu-card btn-shadow homebox" style="padding-left: 20px">
           <div class="flex-center">
             <img src="@/assets/output_icon.png" alt="출고 현황" width="60px" height="60px">
           </div>

@@ -1,6 +1,6 @@
 <template>
   <body class="body-padding">
-    <StatusFilterBox
+    <FilterBoxComponent
     @filterData="filterEvent"
     :register="true"
     :register_name="register_name"
@@ -16,12 +16,12 @@
 </template>
 <script>
 /* eslint-disable */
-import StatusFilterBox from '@/components/StatusFilterBox.vue'
+import FilterBoxComponent from '@/components/FilterBoxComponent.vue'
 import TableComponent from '@/components/TableComponent.vue'
 
 export default {
   name: 'InputList',
-  components: {StatusFilterBox, TableComponent},
+  components: {FilterBoxComponent, TableComponent},
   props: {},
   data () {
     return {

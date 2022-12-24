@@ -3,7 +3,7 @@
     <div class="box-shadow" style="border-radius: 10px; overflow: hidden">
       <v-simple-table
       fixed-header
-      height="80vh">
+      height="79vh">
         <template v-slot:default>
           <thead>
             <tr>
@@ -27,10 +27,10 @@
 </template>
 <script>
 /* eslint-disable */
-import StatusFilterBox from '@/components/StatusFilterBox.vue'
+import FilterBoxComponent from '@/components/FilterBoxComponent.vue'
 export default {
   name: 'InventoryStatus',
-  components: {StatusFilterBox},
+  components: {FilterBoxComponent},
   props: {
     headers: {
       type: Array,

@@ -98,7 +98,7 @@
         <div class="flex">
           <div class="flex numbox numbox-divider">
             <div class="flex-center numbox-txtbox">
-              <p class="numbox-today1">총 재고</p>
+              <p class="numbox-today1">오늘 재고</p>
               <p class="numbox-today2">240</p>
             </div>
             <div class="flex-center numbox-txtbox">
@@ -108,7 +108,7 @@
           </div>
           <div class="flex numbox numbox-divider">
             <div class="flex-center numbox-txtbox">
-              <p class="numbox-today1">입고</p>
+              <p class="numbox-today1">오늘 입고</p>
               <p class="numbox-today2">3</p>
             </div>
             <div class="flex-center numbox-txtbox">
@@ -118,7 +118,7 @@
           </div>
           <div class="flex numbox">
             <div class="flex-center numbox-txtbox">
-              <p class="numbox-today1">출고</p>
+              <p class="numbox-today1">오늘 출고</p>
               <p class="numbox-today2">18</p>
             </div>
             <div class="flex-center numbox-txtbox">

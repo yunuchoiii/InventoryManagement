@@ -50,7 +50,7 @@ export default {
             // backgroundColor: "rgba(204, 178, 255, 0.4)",
             backgroundColor: (ctx) => {
               const canvas = ctx.chart.ctx;
-              const gradient = canvas.createLinearGradient(0,0,0,290);
+              const gradient = canvas.createLinearGradient(0,0,0,250);
 
               gradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
               gradient.addColorStop(1, 'rgba(155, 102, 255, 0.5)');

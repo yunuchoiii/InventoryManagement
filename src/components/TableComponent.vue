@@ -48,17 +48,16 @@ export default {
     return {
     }
   },
-  watch: {},
+  watch: {
+    filterData () {
+      console.log(this.filterData)
+    }
+  },
   setup () {},
   created () {},
   mounted () {},
   unmounted () {},
-  methods: {
-    filterEvent (data) {
-      this.filterData = data
-      console.log(this.filterData)
-    },
-  }
+  methods: {}
 }
 </script>
 <style>

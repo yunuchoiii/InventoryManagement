@@ -11,17 +11,24 @@
       </div>
     </div>
     <div class="head-box box-shadow">
-      <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh; margin-left: 0.7vh">
-        <div v-if="register" class="flex-center">
-        </div>
-        <div v-else>
-          뭘로 채우지?
+      <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh; margin-left: 10px">
+        <div>
+          <v-icon white>
+            mdi-magnify
+          </v-icon>
         </div>
       </div>
       <div class="filter-box">
         <div v-if="date_range" class="filter-card">
           <div class="flex-center filter-text" style="margin-left: 8px">
             기간
+            <FunctionalCalendar
+              v-model="calendarData"
+              :is-modal='true'
+              :is-date-picker='true'
+              :is-date-range='true'
+              :configs="calendarConfigs"
+            ></FunctionalCalendar>
           </div>
         </div>
         <div v-if="year_show" class="filter-card">
@@ -92,10 +99,11 @@
 import RegisterDialog from '@/components/DialogComponent.vue'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { FunctionalCalendar } from 'vue-functional-calendar';
 
 export default {
   name: 'FilterBoxComponent',
-  components: {RegisterDialog},
+  components: {RegisterDialog, FunctionalCalendar},
   props: {
     title: {
       type: String,
@@ -131,7 +139,27 @@ export default {
       categories: ['세제', '방향제', '말통', '광택제', '박스'],
       selectedItem: '',
       items: ['a','b','c'],
+      calendarData: {
+        dateRange : {
+          start: "",
+          end: ""
+        }
+      },
+      calendarConfigs: {
+          sundayStart: true,
+          dateFormat: 'yyyy-mm-dd',
+          isDatePicker: false,
+          isDateRange: true,
+          isModal: true,
+          placeholder: 'Date'
+      },
       filterData: {},
+    }
+  },
+  watch: {
+    calendarData () {
+      deep: true
+      handler: console.log('sdfklj')
     }
   },
   setup () {},
@@ -144,16 +172,42 @@ export default {
   unmounted () {},
   methods: {
     submitFilter () {
+      this.modifyDate()
+      this.emitFilter()
+    },
+    reload () {
+      location.reload()
+    },
+    modifyDate () {
+      const start_arr = this.calendarData.dateRange.start.split('-')
+      const end_arr = this.calendarData.dateRange.end.split('-')
+
+      for (var i=0; i<3; i++) {
+        if (start_arr[i] < 10) {
+          start_arr[i] = '0' + start_arr[i]
+          this.calendarData.dateRange.start = start_arr[0] + '-' + start_arr[1] + '-' + start_arr[2]
+        } else {
+          // pass
+        }
+
+        if (end_arr[i] < 10) {
+          end_arr[i] = '0' + end_arr[i]
+          this.calendarData.dateRange.end = end_arr[0] + '-' + end_arr[1] + '-' + end_arr[2]
+        } else {
+          // pass
+        }        
+      }
+    },
+    emitFilter () {
       this.filterData = {
         year: this.selectedYear,
         month: this.selectedMonth,
         category: this.selectedCategory,
-        item: this.selectedItem
+        item: this.selectedItem,
+        start_date: this.calendarData.dateRange.start,
+        end_date: this.calendarData.dateRange.end
       }
       this.$emit('filterData', this.filterData)
-    },
-    reload () {
-      location.reload()
     }
   }
 }
@@ -169,5 +223,18 @@ export default {
 }
 .v-dialog {
   box-shadow: none !important;
+}
+.vfc-multiple-input input:first-child, .vfc-multiple-input input:last-child {
+  margin-left: 10px;
+  height: 4vh;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #f0f0f0;
+  width: 10vw;
+  color: #757575;
+  font-weight: 500;
+}
+.filter-select {
+  color: #757575
 }
 </style>

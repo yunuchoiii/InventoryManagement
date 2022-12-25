@@ -36,7 +36,6 @@ export default {
   methods: {
     filterEvent (data) {
       this.filterData = data
-      console.log(this.filterData)
     }
   }
 }

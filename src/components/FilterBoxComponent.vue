@@ -11,8 +11,19 @@
       </div>
     </div>
     <div class="head-box box-shadow">
-      <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh; margin-left: 10px">
-        <div>
+      <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh;">
+        <div v-if="register_name == '입고' || register_name == '출고'">
+          <v-btn
+            elevation="0"
+            height="4vh"
+            width="120px"
+            color="#3F5473"
+            @click="closeRegister()"
+          >
+            <span style="color: white; font-size: 15px; line-height: 14px;">월간 {{register_name}} 마감</span>
+          </v-btn>
+        </div>
+        <div v-else>
           <v-icon white>
             mdi-magnify
           </v-icon>
@@ -53,8 +64,9 @@
             </option>
           </select>
         </div>
-        <v-divider v-if="month_show || year_show"
+        <v-divider v-if="month_show || year_show || date_range"
           vertical
+          style="margin: 0px 10px"
         ></v-divider>
         <div class="filter-card" style="margin-left: 8px;">
           <div class="flex-center filter-text">
@@ -86,7 +98,7 @@
             color="#3F5473"
             @click="submitFilter()"
           >
-            <span style="color: white; font-size: 15px; font-weight:700; line-height: 14px;">조회</span>
+            <span style="color: white; font-size: 15px; line-height: 14px;">조회</span>
           </v-btn>
         </div>
       </div>
@@ -174,6 +186,9 @@ export default {
     submitFilter () {
       this.modifyDate()
       this.emitFilter()
+    },
+    closeRegister () {
+      alert('월간 ' + this.register_name + ' 등록 마감이 완료되었습니다.')
     },
     reload () {
       location.reload()

@@ -26,11 +26,11 @@
             <img src="@/assets/month_status_icon.png" alt="월간 재고 현황" width="50px" height="50px">
           </div>
           <div class="flex-center menu-card-title">
-            <span>월별 재고 현황</span>
+            <span>월간 재고 현황</span>
             <span class="menu-card-title2"><br>월별 재고 확인 및 조회</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn-shadow mr-2per homebox" style="padding-left: 20px">
+        <a href="/status/warehousing" class="box-shadow menu-card btn-shadow mr-2per homebox" style="padding-left: 20px">
           <div class="flex-center">
             <img src="@/assets/input_icon.png" alt="입고 현황" width="60px" height="60px">
           </div>
@@ -39,7 +39,7 @@
             <span class="menu-card-title2"><br>월별 입고량 확인 및 조회</span>
           </div>
         </a>
-        <a href="" class="box-shadow menu-card btn-shadow homebox" style="padding-left: 20px">
+        <a href="/status/shipped" class="box-shadow menu-card btn-shadow homebox" style="padding-left: 20px">
           <div class="flex-center">
             <img src="@/assets/output_icon.png" alt="출고 현황" width="60px" height="60px">
           </div>
@@ -58,7 +58,7 @@
         <hr class="dashed-line">
       </div>
       <div class="flex">
-        <a href="/list/input/" class="box-shadow menu-card btn-shadow mr-2per homebox">
+        <a href="/list/warehousing/" class="box-shadow menu-card btn-shadow mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/input_list_icon.png" alt="입고 리스트" width="50px" height="50px">
           </div>
@@ -67,7 +67,7 @@
             <span class="menu-card-title2"><br>입고 기록 조회 및 등록</span>
           </div>
         </a>
-        <a href="/list/output" class="box-shadow menu-card btn-shadow mr-2per homebox">
+        <a href="/list/shipped" class="box-shadow menu-card btn-shadow mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/output_list_icon.png" alt="출고 리스트" width="50px" height="50px">
           </div>
@@ -148,7 +148,7 @@
               <img src="https://cdn-icons-png.flaticon.com/512/1670/1670341.png" alt="" class="home-icon">
               재고 금액
             </div>
-            <div class="numbox-today2">
+            <div class="numbox-today2 fs-22">
               ₩12,932
             </div>
           </div>
@@ -157,7 +157,7 @@
               <img src="https://cdn-icons-png.flaticon.com/512/567/567600.png" alt="" class="home-icon">
               출고 금액
             </div>
-            <div class="numbox-today2">
+            <div class="numbox-today2 fs-22">
               ₩12,932
             </div>
           </div>
@@ -166,7 +166,7 @@
               <img src="https://cdn-icons-png.flaticon.com/512/3712/3712196.png" alt="" class="home-icon">
               인기 제품
             </div>
-            <div class="numbox-today2">
+            <div class="numbox-today2 fs-22">
               세제
             </div>
           </div>
@@ -181,9 +181,9 @@
             <span class="homebox-title2">최근 1년</span>
           </div>
           <div style="height: 35vh">
-            <InputBarChart
+            <WarehousingBarChart
             :labels="this.monthsList"
-            :data="this.inputChart.data"/>
+            :data="this.warehousingChart.data"/>
           </div>
         </div>
         <div class="box-shadow homebox homebox-w2">
@@ -192,9 +192,9 @@
             <span class="homebox-title2">최근 1년</span>
           </div>
           <div style="height: 35vh">
-            <OutputBarChart
+            <ShippedBarChart
             :labels="this.monthsList"
-            :data="this.outputChart.data"/>
+            :data="this.shippedChart.data"/>
           </div>
         </div>
       </div>
@@ -218,14 +218,14 @@
 /* eslint-disable */
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import InputBarChart from '@/components/ChartComponents/InputBarChart.vue'
-import OutputBarChart from '@/components/ChartComponents/OutputBarChart.vue'
+import WarehousingBarChart from '@/components/ChartComponents/WarehousingBarChart.vue'
+import ShippedBarChart from '@/components/ChartComponents/ShippedBarChart.vue'
 import AnnualLineChart from '@/components/ChartComponents/AnnualLineChart.vue'
 import ItemDoughnutChart from '@/components/ChartComponents/ItemDoughnutChart.vue'
 
 export default {
   name: 'HomeDashboard',
-  components: {InputBarChart, OutputBarChart, AnnualLineChart, ItemDoughnutChart},
+  components: {WarehousingBarChart, ShippedBarChart, AnnualLineChart, ItemDoughnutChart},
   data () {
     return {
       today_year: new Date().getFullYear(),
@@ -234,11 +234,11 @@ export default {
       last_year: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).getFullYear(),
       last_month: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).getMonth()+1,
       monthsList: [],
-      inputChart: {
+      warehousingChart: {
         labels: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
         data: [40, 20, 12, 43, 25, 64, 74, 24, 10,24,13,53],
       },
-      outputChart: {
+      shippedChart: {
         labels: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
         data: [13,22,45,24,36,14,12,52,32,13,35,72],
       },
@@ -286,5 +286,8 @@ body {background-color: #f3f3f3;}
   width: 50px;
   height: 50px;
   margin-right: 20px;
+}
+.fs-22 {
+  font-size: 2.2rem;
 }
 </style>

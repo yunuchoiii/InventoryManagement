@@ -20,14 +20,24 @@ const routes = [
     component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/MonthStatusView.vue')
   },
   {
-    path: '/list/input',
-    name: 'InputList',
-    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/ListViews/InputListView.vue')
+    path: '/status/warehousing',
+    name: 'WarehousingStatus',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/WarehousingStatusView.vue')
   },
   {
-    path: '/list/output',
-    name: 'OutputList',
-    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/ListViews/OutputListView.vue')
+    path: '/status/shipped',
+    name: 'ShippedStatus',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/ShippedStatusView.vue')
+  },
+  {
+    path: '/list/warehousing',
+    name: 'WarehousingList',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/ListViews/WarehousingListView.vue')
+  },
+  {
+    path: '/list/shipped',
+    name: 'ShippedList',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/ListViews/ShippedListView.vue')
   },
   {
     path: '/list/product',

@@ -101,12 +101,14 @@ a:hover { color: black; text-decoration: none;}
   background-color: #a9a9a9;
   margin: 37px 0px;
 }
-.icon-box {
+.nav-footer {
   display: flex;
-  width: 60%;
   justify-content: space-around;
   position: absolute;
   bottom: 30px;
+  color: #a0a0a0;
+  font-size: 0.7rem;
+  text-align: center;
 }
 .title {
   font-size: 32px;
@@ -198,7 +200,7 @@ a:hover { color: black; text-decoration: none;}
   font-weight: 300;
 }
 .homebox-title3 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700 !important;
   color: #3f5473;
 }

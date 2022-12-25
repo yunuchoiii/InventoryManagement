@@ -9,30 +9,30 @@
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
-        <v-btn text tile width="190" class="navBtn" href="/status/inventory/">
+        <v-btn text tile width="190" class="navBtn" href="/status/inventory">
           <img src="https://cdn-icons-png.flaticon.com/512/2312/2312686.png" alt="" class="nav-icon">
           현 재고 현황
         </v-btn>
-        <v-btn text tile width="190" class="navBtn" href="/status/months/">
+        <v-btn text tile width="190" class="navBtn" href="/status/months">
           <img src="https://cdn-icons-png.flaticon.com/512/4227/4227865.png" alt="" class="nav-icon">
           월간 재고 현황
         </v-btn>
-        <v-btn text tile width="190" class="navBtn" href="">
+        <v-btn text tile width="190" class="navBtn" href="/status/warehousing">
           <img src="https://cdn-icons-png.flaticon.com/512/8901/8901382.png" alt="" class="nav-icon">
           입고 현황
         </v-btn>
-        <v-btn text tile width="190" class="navBtn" href="">
+        <v-btn text tile width="190" class="navBtn" href="/status/shipped">
           <img src="https://cdn-icons-png.flaticon.com/512/8901/8901383.png" alt="" class="nav-icon">
           출고 현황
         </v-btn>
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
-        <v-btn text tile width="190" class="navBtn" href="/list/input/">
+        <v-btn text tile width="190" class="navBtn" href="/list/warehousing">
           <img src="https://cdn-icons-png.flaticon.com/512/7794/7794603.png" alt="" class="nav-icon">
           입고 리스트
         </v-btn>
-        <v-btn text tile width="190" class="navBtn" href="/list/output">
+        <v-btn text tile width="190" class="navBtn" href="/list/shipped">
           <img src="https://cdn-icons-png.flaticon.com/512/7794/7794607.png" alt="" class="nav-icon">
           출고 리스트
         </v-btn>
@@ -44,9 +44,8 @@
           상품 리스트
         </v-btn>
       </div>
-      <div class="icon-box">
-        <a href=""><img src="@/assets/setting_icon.png" alt="" width="25px" style="filter: invert(90%);"></a>
-        <a href=""><img src="@/assets/logout_icon.png" alt="" width="25px" style="filter: invert(90%);"></a>
+      <div class="nav-footer">
+        <span>Copyright 2023.<br>yunuchoiii, cl-kim <br>All Rights Reserved.</span>
       </div>
     </div>
     <router-view></router-view>

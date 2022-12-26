@@ -8,7 +8,7 @@
     <!-- 현황 메뉴 모음 -->
     <div>
       <div class="menu-divider">
-        <div class="menu-divider-title" style="width: 55px">현황</div>
+        <div class="menu-divider-title">현황</div>
         <hr class="dashed-line">
       </div>
       <div class="flex">
@@ -54,7 +54,7 @@
     <!-- 리스트 메뉴 모음 -->
     <div>
       <div class="menu-divider">
-        <div class="menu-divider-title" style="width: 80px">리스트</div>
+        <div class="menu-divider-title">리스트</div>
         <hr class="dashed-line">
       </div>
       <div class="flex">

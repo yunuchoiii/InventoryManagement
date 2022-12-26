@@ -1,7 +1,24 @@
 <template>
-  <body>
+  <v-app>
     <div class="title-box">
-      <button @click="reload()"><span>{{title}}</span></button>
+      <div class="flex-center">
+        <button @click="reload()"><span>{{title}}</span></button>
+        <div v-if="tooltip_msg != ''" style="margin: 0px 0px 5px 10px;">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                color="#f9a13a"
+                white
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-help-circle-outline
+              </v-icon>
+            </template>
+            <span>{{ tooltip_msg }}</span>
+          </v-tooltip>
+        </div>
+      </div>
       <!-- 입출고, 상품 등록 팝업 -->
       <div v-if="register" data-aos="fade-left">
         <RegisterDialog
@@ -10,17 +27,16 @@
         :items="items"/>
       </div>
     </div>
-    <div style="display: flex; flex-direction: row; align-items: center; margin-bottom: 2vh;">
+    <div class="filter-head">
       <div v-if="register_name == '입고' || register_name == '출고'" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
         <v-btn
           elevation="0"
           height="5.4vh"
-          width="120px"
           color="#c41230"
           data-aos="zoom-in"
           @click="closeRegister()"
         >
-          <span style="color: white; font-size: 15px; line-height: 14px;">{{last_month}}월  {{register_name}} 마감</span>
+          <span style="color: white; font-size: 1.8vh;">{{last_month}}월  {{register_name}} 마감</span>
         </v-btn>
       </div>
       <div class="head-box box-shadow" style="flex: 1">
@@ -28,7 +44,7 @@
           <div>
             <v-btn
               icon
-              color="green"
+              color="#3F5473"
               @click="emitReRender()"
             >
               <v-icon>mdi-cached</v-icon>
@@ -42,9 +58,6 @@
               기간
               <FunctionalCalendar
                 v-model="calendarData"
-                :is-modal='true'
-                :is-date-picker='true'
-                :is-date-range='true'
                 :configs="calendarConfigs"
               ></FunctionalCalendar>
             </div>
@@ -105,13 +118,13 @@
               color="#3F5473"
               @click="submitFilter()"
             >
-              <span style="color: white; font-size: 15px; line-height: 14px;">조회</span>
+              <span style="color: white; font-size: 1.8vh;">조회</span>
             </v-btn>
           </div>
         </div>
       </div>
     </div>
-  </body>
+  </v-app>
 </template>
 
 <script>
@@ -147,6 +160,10 @@ export default {
     },
     register_name: {
       type: String
+    },
+    tooltip_msg: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -173,17 +190,14 @@ export default {
           isDateRange: true,
           isModal: true,
           placeholder: 'Date',
+          dayNames: ['월', '화', '수', '목', '금', '토', '일'],
+          monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
       },
       filterData: {},
       componentKey: 0
     }
   },
-  watch: {
-    calendarData () {
-      deep: true
-      handler: console.log('sdfklj')
-    }
-  },
+  watch: {},
   setup () {},
   created () {
     this.selectedYear = new Date().getFullYear()
@@ -193,16 +207,20 @@ export default {
   },
   unmounted () {},
   methods: {
+    // 입출고 등록 마감
+    closeRegister () {
+      if (confirm(this.last_month + '월 ' + this.register_name + ' 등록을 마감하시겠습니까?')) {
+        alert(this.last_month + '월 ' + this.register_name + ' 등록이 마감되었습니다.')
+      } else {
+        //pass
+      }
+    },
+    // 조회버튼 클릭
     submitFilter () {
       this.modifyDate()
       this.emitFilter()
     },
-    closeRegister () {
-      alert(this.last_month + '월 ' + this.register_name + ' 등록이 마감되었습니다.')
-    },
-    reload () {
-      location.reload()
-    },
+    // 10 이하면 앞에 0 붙이는 이벤트
     modifyDate () {
       const start_arr = this.calendarData.dateRange.start.split('-')
       const end_arr = this.calendarData.dateRange.end.split('-')
@@ -223,6 +241,7 @@ export default {
         }        
       }
     },
+    // 테이블 컴포넌트로 조회 항목 보내기
     emitFilter () {
       this.filterData = {
         year: this.selectedYear,
@@ -234,10 +253,25 @@ export default {
       }
       this.$emit('filterData', this.filterData)
     },
+    // 조회 조건 초기화
     emitReRender () {
+      this.selectedYear = new Date().getFullYear()
+      this.selectedMonth = ''
+      this.selectedCategory = ''
+      this.selectedItem = ''
+      this.calendarData = {
+        dateRange : {
+          start: "",
+          end: ""
+        }
+      }
+
       this.componentKey += 1
       this.$emit('componentKey', this.componentKey)
-    }
+    },
+    reload () {
+      location.reload()
+    },
   }
 }
 </script>
@@ -252,6 +286,9 @@ export default {
 }
 .v-dialog {
   box-shadow: none !important;
+}
+.vfc-calendar .vfc-content {
+  font-family: Pretendard, -apple-system, 'Noto Sans KR', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .vfc-multiple-input input:first-child, .vfc-multiple-input input:last-child {
   margin-left: 10px;

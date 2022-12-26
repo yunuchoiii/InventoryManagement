@@ -1,6 +1,9 @@
 body {
-  /* font-family: sans-serif, 'Noto Sans KR', ; */
+  font-family:Pretendard, -apple-system, 'Noto Sans KR', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
   background-color: #f5f5f5;
+}
+.v-application {
+  font-family:Pretendard, -apple-system, 'Noto Sans KR', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
 }
 a {
   text-decoration: none;
@@ -48,8 +51,8 @@ a:hover { color: black; text-decoration: none;}
   justify-content: space-between;
 }
 .dashed-line {
+  flex: 1;
   border: 1px dashed #A9A9A9;
-  width: 100%;
 }
 .tx-center {
   text-align: center;
@@ -114,6 +117,12 @@ a:hover { color: black; text-decoration: none;}
   font-size: 32px;
   font-weight: 700;
   color: #5B5B5B;
+}
+.filter-head {
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  margin-bottom: 2vh;
 }
 .head-box {
   height: 5.5vh;
@@ -207,7 +216,7 @@ a:hover { color: black; text-decoration: none;}
   margin: 25px 0px;
 }
 .menu-divider-title {
-  padding: 3px; 
+  padding: 10px; 
   background-color: #f3f3f3; 
   font-size: 1.5rem; 
   font-weight: 700;
@@ -293,4 +302,6 @@ a:hover { color: black; text-decoration: none;}
 .dialog-titlebox {
   height: 80px; 
   color: #3F5473;
+  font-size: 2rem;
+  font-weight: 700;
 }

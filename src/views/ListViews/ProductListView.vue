@@ -8,7 +8,8 @@
     :title="title"
     :month_show="false"
     :year_show="false"
-    :date_range="false"/>
+    :date_range="false"
+    :tooltip_msg="tooltip_msg"/>
     <TableComponent
     :headers="headers"
     :datas="datas"
@@ -37,7 +38,8 @@ export default {
       headers: ['구분', '구분코드', '품목', '품목코드', '판매단가', '용량', '개수', '비고'],
       datas: ['세제', '01', '좋은 세제', '294721', '20,000', '300ml', '50', ''],
       filterData: {},
-      componentKey: 0
+      componentKey: 0,
+      tooltip_msg: ""
     }
   },
   watch: {},

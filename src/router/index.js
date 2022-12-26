@@ -15,9 +15,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/InventoryStatusView.vue')
   },
   {
-    path: '/status/months',
-    name: 'InventoryStatus',
-    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/MonthStatusView.vue')
+    path: '/status/monthly',
+    name: 'MonthlyInventoryStatus',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/MonthlyStatusView.vue')
   },
   {
     path: '/status/warehousing',

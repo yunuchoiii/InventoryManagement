@@ -2,12 +2,14 @@
   <body class="body-padding">
     <FilterBoxComponent
     @filterData="filterEvent"
+    @componentKey="componentKeyEvent"
     :month_show="false"
     :title="title"/>
     <TableComponent
     :headers="headers"
     :datas="datas"
-    :filterData="filterData"/>
+    :filterData="filterData"
+    :key="componentKey"/>
   </body>
 </template>
 <script>
@@ -25,7 +27,8 @@ export default {
       clicked: false,
       headers: ['구분', '품목', '품목코드',],
       datas: ['세제', 'EV-1',	123048,	6, -19, 20, 13, 54, 14, 6, -19, 20, 13, 54, 14],
-      filterData: {}
+      filterData: {},
+      componentKey: 0
     }
   },
   watch: {},
@@ -38,6 +41,9 @@ export default {
   methods: {
     filterEvent (data) {
       this.filterData = data
+    },
+    componentKeyEvent (data) {
+      this.componentKey = data
     },
     //일년치 월 리스트 구하기
     getMonthsList () {

@@ -13,7 +13,7 @@
           <img src="https://cdn-icons-png.flaticon.com/512/2312/2312686.png" alt="" class="nav-icon">
           현 재고 현황
         </v-btn>
-        <v-btn text tile width="190" class="navBtn" href="/status/months">
+        <v-btn text tile width="190" class="navBtn" href="/status/monthly">
           <img src="https://cdn-icons-png.flaticon.com/512/4227/4227865.png" alt="" class="nav-icon">
           월간 재고 현황
         </v-btn>
@@ -45,7 +45,7 @@
         </v-btn>
       </div>
       <div class="nav-footer">
-        <span>Copyright 2023.<br>yunuchoiii, cl-kim <br>All Rights Reserved.</span>
+        <span>Copyright 2023.<br>yunuchoiii · cl-kim <br>All Rights Reserved.</span>
       </div>
     </div>
     <router-view></router-view>

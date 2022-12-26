@@ -10,96 +10,104 @@
         :items="items"/>
       </div>
     </div>
-    <div class="head-box box-shadow">
-      <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh;">
-        <div v-if="register_name == '입고' || register_name == '출고'">
-          <v-btn
-            elevation="0"
-            height="4vh"
-            width="120px"
-            color="#3F5473"
-            @click="closeRegister()"
-          >
-            <span style="color: white; font-size: 15px; line-height: 14px;">월간 {{register_name}} 마감</span>
-          </v-btn>
-        </div>
-        <div v-else>
-          <v-icon white>
-            mdi-magnify
-          </v-icon>
-        </div>
+    <div style="display: flex; flex-direction: row; align-items: center; margin-bottom: 2vh;">
+      <div v-if="register_name == '입고' || register_name == '출고'" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
+        <v-btn
+          elevation="0"
+          height="5.4vh"
+          width="120px"
+          color="#c41230"
+          data-aos="zoom-in"
+          @click="closeRegister()"
+        >
+          <span style="color: white; font-size: 15px; line-height: 14px;">{{last_month}}월  {{register_name}} 마감</span>
+        </v-btn>
       </div>
-      <div class="filter-box">
-        <div v-if="date_range" class="filter-card">
-          <div class="flex-center filter-text" style="margin-left: 8px">
-            기간
-            <FunctionalCalendar
-              v-model="calendarData"
-              :is-modal='true'
-              :is-date-picker='true'
-              :is-date-range='true'
-              :configs="calendarConfigs"
-            ></FunctionalCalendar>
+      <div class="head-box box-shadow" style="flex: 1">
+        <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh;">
+          <div>
+            <v-btn
+              icon
+              color="green"
+              @click="emitReRender()"
+            >
+              <v-icon>mdi-cached</v-icon>
+            </v-btn>
+            <span style="color: #757575; font-size: 15px; font-weight: 700;">초기화</span>
           </div>
         </div>
-        <div v-if="year_show" class="filter-card">
-          <div class="flex-center filter-text" style="margin-left: 8px">
-            연도
+        <div class="filter-box">
+          <div v-if="date_range" class="filter-card">
+            <div class="flex-center filter-text" style="margin-left: 8px">
+              기간
+              <FunctionalCalendar
+                v-model="calendarData"
+                :is-modal='true'
+                :is-date-picker='true'
+                :is-date-range='true'
+                :configs="calendarConfigs"
+              ></FunctionalCalendar>
+            </div>
           </div>
-          <select v-model="selectedYear" class="filter-select">
-            <option value="" disabled selected>Year</option>
-            <option v-for="option in years" :value="option" :key="option">
-              {{ option }}년
-            </option>
-          </select>
-        </div>
-        <div v-if="month_show" class="filter-card" style="margin-right: 20px;">
-          <div class="flex-center filter-text">
-            월별
+          <div v-if="year_show" class="filter-card">
+            <div class="flex-center filter-text" style="margin-left: 8px">
+              연도
+            </div>
+            <select v-model="selectedYear" class="filter-select">
+              <option value="" disabled selected>Year</option>
+              <option v-for="option in years" :value="option" :key="option">
+                {{ option }}년
+              </option>
+            </select>
           </div>
-          <select v-model="selectedMonth" class="filter-select">
-            <option value="" disabled selected>Month</option>
-            <option v-for="option in months" :value="option" :key="option">
-              {{ option }}월
-            </option>
-          </select>
-        </div>
-        <v-divider v-if="month_show || year_show || date_range"
-          vertical
-          style="margin: 0px 10px"
-        ></v-divider>
-        <div class="filter-card" style="margin-left: 8px;">
-          <div class="flex-center filter-text">
-            구분
+          <div v-if="month_show" class="filter-card" style="margin-right: 20px;">
+            <div class="flex-center filter-text">
+              월별
+            </div>
+            <select v-model="selectedMonth" class="filter-select">
+              <option value="" disabled selected>Month</option>
+              <option v-for="option in months" :value="option" :key="option">
+                {{ option }}월
+              </option>
+            </select>
           </div>
-          <select v-model="selectedCategory" class="filter-select">
-            <option value="" disabled selected>Category</option>
-            <option v-for="option in categories" :value="option" :key="option">
-              {{ option }}
-            </option>
-          </select>
-        </div>
-        <div class="filter-card">
-          <div class="flex-center filter-text">
-            품목
+          <v-divider v-if="month_show || year_show || date_range"
+            vertical
+            style="margin: 0px 10px"
+          ></v-divider>
+          <div class="filter-card" style="margin-left: 8px;">
+            <div class="flex-center filter-text">
+              구분
+            </div>
+            <select v-model="selectedCategory" class="filter-select">
+              <option value="" disabled selected>Category</option>
+              <option v-for="option in categories" :value="option" :key="option">
+                {{ option }}
+              </option>
+            </select>
           </div>
-          <select v-model="selectedItem" class="filter-select">
-            <option value="" disabled selected>Item</option>
-            <option v-for="option in items" :value="option" :key="option">
-              {{ option }}
-            </option>
-          </select>
-        </div>
-        <div>
-          <v-btn
-            elevation="0"
-            height="4vh"
-            width="50px"
-            color="#3F5473"
-            @click="submitFilter()"
-          >
-            <span style="color: white; font-size: 15px; line-height: 14px;">조회</span>
-          </v-btn>
+          <div class="filter-card">
+            <div class="flex-center filter-text">
+              품목
+            </div>
+            <select v-model="selectedItem" class="filter-select">
+              <option value="" disabled selected>Item</option>
+              <option v-for="option in items" :value="option" :key="option">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <div>
+            <v-btn
+              elevation="0"
+              height="4vh"
+              width="50px"
+              color="#3F5473"
+              @click="submitFilter()"
+            >
+              <span style="color: white; font-size: 15px; line-height: 14px;">조회</span>
+            </v-btn>
+          </div>
         </div>
       </div>
     </div>
@@ -151,6 +159,7 @@ export default {
       categories: ['세제', '방향제', '말통', '광택제', '박스'],
       selectedItem: '',
       items: ['a','b','c'],
+      last_month: new Date().getMonth(),
       calendarData: {
         dateRange : {
           start: "",
@@ -163,9 +172,10 @@ export default {
           isDatePicker: false,
           isDateRange: true,
           isModal: true,
-          placeholder: 'Date'
+          placeholder: 'Date',
       },
       filterData: {},
+      componentKey: 0
     }
   },
   watch: {
@@ -188,7 +198,7 @@ export default {
       this.emitFilter()
     },
     closeRegister () {
-      alert('월간 ' + this.register_name + ' 등록 마감이 완료되었습니다.')
+      alert(this.last_month + '월 ' + this.register_name + ' 등록이 마감되었습니다.')
     },
     reload () {
       location.reload()
@@ -223,6 +233,10 @@ export default {
         end_date: this.calendarData.dateRange.end
       }
       this.$emit('filterData', this.filterData)
+    },
+    emitReRender () {
+      this.componentKey += 1
+      this.$emit('componentKey', this.componentKey)
     }
   }
 }

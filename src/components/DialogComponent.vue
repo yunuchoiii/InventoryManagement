@@ -1,8 +1,8 @@
 <template>
 <div class="flex-center">
-  <span style="font-size: 22px; font-weight:700; line-height: 14px; margin-right: 15px;">{{ register_name }} 등록</span>
+  <span style="font-size: 22px; font-weight:700; margin-right: 15px;">{{ register_name }} 등록</span>
   <v-app>
-    <div class="text-center">
+    <div class="text-center" style="margin-bottom: 5px">
       <v-dialog
         v-model="dialog"
         width="600"

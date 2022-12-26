@@ -2,6 +2,7 @@
   <body class="body-padding">
     <FilterBoxComponent
     @filterData="filterEvent"
+    @componentKey="componentKeyEvent"
     :register="true"
     :register_name="register_name"
     :title="title"
@@ -11,7 +12,8 @@
     <TableComponent
     :headers="headers"
     :datas="datas"
-    :filterData="filterData"/>
+    :filterData="filterData"
+    :key="componentKey"/>
   </body>
 </template>
 <script>
@@ -31,6 +33,7 @@ export default {
       headers: ['구분', '품목', '품목코드', '날짜', '출고량', '비고'],
       datas: ['세제', 'EV-1',	'123048',	'2022-3-16', '20', ''],
       filterData: {},
+      componentKey: 0
     }
   },
   watch: {},
@@ -41,6 +44,9 @@ export default {
   methods: {
     filterEvent (data) {
       this.filterData = data
+    },
+    componentKeyEvent (data) {
+      this.componentKey = data
     }
   }
 }

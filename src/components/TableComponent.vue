@@ -42,11 +42,10 @@ export default {
     },
     filterData: {
       type: Object
-    },
+    }
   },
   data () {
-    return {
-    }
+    return { }
   },
   watch: {
     filterData () {
@@ -54,7 +53,7 @@ export default {
     }
   },
   setup () {},
-  created () {},
+  created () {console.log('rerender')},
   mounted () {},
   unmounted () {},
   methods: {}

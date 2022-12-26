@@ -21,7 +21,7 @@
             <span class="menu-card-title2"><br>현재 재고 확인 및 조회</span>
           </div>
         </a>
-        <a href="/status/months" class="box-shadow menu-card btn-shadow mr-2per homebox">
+        <a href="/status/monthly" class="box-shadow menu-card btn-shadow mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/month_status_icon.png" alt="월간 재고 현황" width="50px" height="50px">
           </div>
@@ -131,7 +131,7 @@
     </div>
     <div data-aos="fade-up">
       <div class="flex-between mb-22px">
-        <div class="box-shadow homebox homebox-w2">
+        <a href="/list/product" class="box-shadow homebox homebox-w2">
           <div class="homebox-titlebox homebox-title1">재고 카테고리 비율</div>
           <div class="">
             <div style="height: 35vh; padding-bottom: 15px;">
@@ -141,7 +141,7 @@
               :colors="this.itemChart.colors"/>
             </div>
           </div>
-        </div>
+        </a>
         <div class="homebox-w2 flex-column">
           <div class="box-shadow homebox homebox-h3 flex-center-between">
             <div class="homebox-title3 flex-center">
@@ -175,7 +175,7 @@
     </div>
     <div data-aos="fade-up">
       <div class="flex-between mb-22px">
-        <div class="box-shadow homebox homebox-w2">
+        <a href="/status/warehousing" class="box-shadow homebox homebox-w2">
           <div class="homebox-titlebox">
             <span class="homebox-title1">월별 입고 현황</span>
             <span class="homebox-title2">최근 1년</span>
@@ -185,8 +185,8 @@
             :labels="this.monthsList"
             :data="this.warehousingChart.data"/>
           </div>
-        </div>
-        <div class="box-shadow homebox homebox-w2">
+        </a>
+        <a href="/list/shipped" class="box-shadow homebox homebox-w2">
           <div class="homebox-titlebox">
             <span class="homebox-title1">월별 출고 현황</span>
             <span class="homebox-title2">최근 1년</span>
@@ -196,21 +196,23 @@
             :labels="this.monthsList"
             :data="this.shippedChart.data"/>
           </div>
-        </div>
+        </a>
       </div>
     </div>
     <div data-aos="fade-up">
-      <div class="box-shadow homebox mb-22px">
-        <div class="homebox-titlebox">
+      <a href="/status/monthly">
+        <div class="box-shadow homebox mb-22px">
+          <div class="homebox-titlebox">
             <span class="homebox-title1">연간 재고 현황</span>
             <span class="homebox-title2">최근 1년</span>
           </div>
           <div style="height: 35vh;">
-          <AnnualLineChart
-          :labels="this.monthsList"
-          :data="this.annualChart.data"/>
+            <AnnualLineChart
+            :labels="this.monthsList"
+            :data="this.annualChart.data"/>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
   </body>
 </template>

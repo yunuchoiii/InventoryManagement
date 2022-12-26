@@ -2,6 +2,7 @@
   <body class="body-padding">
     <FilterBoxComponent
     @filterData="filterEvent"
+    @componentKey="componentKeyEvent"
     :register="true"
     :register_name="register_name"
     :title="title"
@@ -11,7 +12,8 @@
     <TableComponent
     :headers="headers"
     :datas="datas"
-    :filterData="filterData"/>
+    :filterData="filterData"
+    :key="componentKey"/>
     <div>
       <input type="text">
     </div>
@@ -26,6 +28,7 @@ export default {
   name: 'ProductList',
   components: {FilterBoxComponent, TableComponent},
   props: {},
+  watch: {},
   data () {
     return {
       title: '상품 리스트',
@@ -34,6 +37,7 @@ export default {
       headers: ['구분', '구분코드', '품목', '품목코드', '판매단가', '용량', '개수', '비고'],
       datas: ['세제', '01', '좋은 세제', '294721', '20,000', '300ml', '50', ''],
       filterData: {},
+      componentKey: 0
     }
   },
   watch: {},
@@ -44,6 +48,9 @@ export default {
   methods: {
     filterEvent (data) {
       this.filterData = data
+    },
+    componentKeyEvent (data) {
+      this.componentKey = data
     }
   }
 }

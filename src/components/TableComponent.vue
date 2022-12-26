@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <v-app>
     <div class="box-shadow" style="border-radius: 10px; overflow: hidden">
       <v-simple-table
       fixed-header
@@ -16,21 +16,26 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr @click="editItem()">
               <td v-for="item in datas" :key="item">{{ item }}</td>
             </tr>
           </tbody>
         </template>
       </v-simple-table>
     </div>
-  </body>
+    <EditDialogComponentVue
+    v-if="edit_dialog == true"
+    @edit_dialog="closeDialog()"
+    :register_name="register_name"/>
+  </v-app>
 </template>
 <script>
 /* eslint-disable */
-import FilterBoxComponent from '@/components/FilterBoxComponent.vue'
+import EditDialogComponentVue from './EditDialogComponent.vue'
+
 export default {
   name: 'InventoryStatus',
-  components: {FilterBoxComponent},
+  components: {EditDialogComponentVue},
   props: {
     headers: {
       type: Array,
@@ -42,10 +47,16 @@ export default {
     },
     filterData: {
       type: Object
+    },
+    register_name: {
+      type: String
+    },
+    edit_dialog: {
+      type: Boolean
     }
   },
   data () {
-    return { }
+    return {}
   },
   watch: {
     filterData () {
@@ -53,16 +64,23 @@ export default {
     }
   },
   setup () {},
-  created () {console.log('rerender')},
+  created () {},
   mounted () {},
   unmounted () {},
-  methods: {}
+  methods: {
+    editItem() {
+      this.edit_dialog = true
+    },
+    closeDialog (data) {
+      this.edit_dialog = data
+    }
+  }
 }
 </script>
 <style>
 /* eslint-disable */
 @import '@/styles/styles.css';
-td {
+.v-application--is-ltr .v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-application--is-ltr .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-application--is-ltr .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
   text-align: center;
 }
 </style>

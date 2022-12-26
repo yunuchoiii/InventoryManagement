@@ -5,6 +5,7 @@
     <div class="text-center" style="margin-bottom: 5px">
       <v-dialog
         v-model="dialog"
+        persistent
         width="600"
       >
         <template v-slot:activator="{ on, attrs }">

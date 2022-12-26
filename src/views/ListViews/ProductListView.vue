@@ -14,7 +14,8 @@
     :headers="headers"
     :datas="datas"
     :filterData="filterData"
-    :key="componentKey"/>
+    :key="componentKey"
+    :register_name="register_name"/>
     <div>
       <input type="text">
     </div>

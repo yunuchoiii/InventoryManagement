@@ -13,7 +13,8 @@
     :headers="headers"
     :datas="datas"
     :filterData="filterData"
-    :key="componentKey"/>
+    :key="componentKey"
+    :register_name="register_name"/>
   </body>
 </template>
 <script>

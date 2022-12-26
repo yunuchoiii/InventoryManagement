@@ -11,7 +11,7 @@
         <div class="menu-divider-title">현황</div>
         <hr class="dashed-line">
       </div>
-      <div class="flex">
+      <div class="flex" data-aos="zoom-in">
         <a href="/status/inventory/" class="box-shadow menu-card btn-shadow mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/inventory_status_icon.png" alt="현 재고 현황" width="50px" height="50px">
@@ -57,7 +57,7 @@
         <div class="menu-divider-title">리스트</div>
         <hr class="dashed-line">
       </div>
-      <div class="flex">
+      <div class="flex" data-aos="zoom-in">
         <a href="/list/warehousing/" class="box-shadow menu-card btn-shadow mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/input_list_icon.png" alt="입고 리스트" width="50px" height="50px">

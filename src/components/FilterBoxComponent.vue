@@ -129,7 +129,7 @@
 
 <script>
 /* eslint-disable */
-import RegisterDialog from '@/components/DialogComponent.vue'
+import RegisterDialog from '@/components/RegisterDialogComponent.vue'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FunctionalCalendar } from 'vue-functional-calendar';

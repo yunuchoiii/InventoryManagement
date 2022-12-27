@@ -29,7 +29,7 @@ export default {
   props: {},
   data () {
     return {
-      title: '출고 리스트',
+      title: '출고 내역',
       register_name: '출고',
       clicked: false,
       headers: ['구분', '품목', '품목코드', '날짜', '출고량', '비고'],

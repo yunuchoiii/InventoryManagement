@@ -75,7 +75,7 @@ export default {
   unmounted () {},
   methods: {
     editItem() {
-      if (this.title == '출고 리스트' || this.title == '입고 리스트' || this.title == '상품 리스트') {
+      if (this.title == '출고 내역' || this.title == '입고 내역' || this.title == '상품 목록') {
         this.edit_dialog = true
       }
     },

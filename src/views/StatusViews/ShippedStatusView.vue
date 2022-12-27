@@ -24,7 +24,7 @@ export default {
   props: {},
   data () {
     return {
-      title: '출고 현황',
+      title: '월간 출고 현황',
       clicked: false,
       headers: ['구분', '품목', '품목코드',],
       datas: ['세제', 'EV-1',	123048,	6, -19, 20, 13, 54, 14, 6, -19, 20, 13, 54, 14],

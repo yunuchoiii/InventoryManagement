@@ -19,29 +19,26 @@
         </v-btn>
         <v-btn text tile width="190" class="navBtn" href="/status/warehousing">
           <img src="https://cdn-icons-png.flaticon.com/512/8901/8901382.png" alt="" class="nav-icon">
-          입고 현황
+          월간 입고 현황
         </v-btn>
         <v-btn text tile width="190" class="navBtn" href="/status/shipped">
           <img src="https://cdn-icons-png.flaticon.com/512/8901/8901383.png" alt="" class="nav-icon">
-          출고 현황
+          월간 출고 현황
         </v-btn>
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
         <v-btn text tile width="190" class="navBtn" href="/list/warehousing">
           <img src="https://cdn-icons-png.flaticon.com/512/7794/7794603.png" alt="" class="nav-icon">
-          입고 리스트
+          입고 내역
         </v-btn>
         <v-btn text tile width="190" class="navBtn" href="/list/shipped">
           <img src="https://cdn-icons-png.flaticon.com/512/7794/7794607.png" alt="" class="nav-icon">
-          출고 리스트
+          출고 내역
         </v-btn>
-      </div>
-      <div class="navDivider"></div>
-      <div style="display: inline-grid;">
         <v-btn text tile width="190" class="navBtn" href="/list/product">
           <img src="https://cdn-icons-png.flaticon.com/512/8572/8572537.png" alt="" class="nav-icon">
-          상품 리스트
+          상품 목록
         </v-btn>
       </div>
       <div class="nav-footer">

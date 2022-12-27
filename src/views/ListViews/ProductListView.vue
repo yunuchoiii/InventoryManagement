@@ -34,7 +34,7 @@ export default {
   watch: {},
   data () {
     return {
-      title: '상품 리스트',
+      title: '상품 목록',
       register_name: '상품',
       clicked: false,
       headers: ['구분', '구분코드', '품목', '품목코드', '판매단가', '용량', '개수', '비고'],

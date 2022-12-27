@@ -35,7 +35,7 @@
             <img src="@/assets/input_icon.png" alt="입고 현황" width="60px" height="60px">
           </div>
           <div class="flex-center menu-card-title">
-            <span>입고 현황</span>
+            <span>월간 입고 현황</span>
             <span class="menu-card-title2"><br>월별 입고량 확인 및 조회</span>
           </div>
         </a>
@@ -44,7 +44,7 @@
             <img src="@/assets/output_icon.png" alt="출고 현황" width="60px" height="60px">
           </div>
           <div class="flex-center menu-card-title">
-            <span>출고 현황</span>
+            <span>월간 출고 현황</span>
             <span class="menu-card-title2"><br>월별 출고량 확인 및 조회</span>
           </div>
         </a>
@@ -63,7 +63,7 @@
             <img src="@/assets/input_list_icon.png" alt="입고 리스트" width="50px" height="50px">
           </div>
           <div class="flex-center menu-card-title">
-            <span>입고 리스트</span>
+            <span>입고 내역</span>
             <span class="menu-card-title2"><br>입고 기록 조회 및 등록</span>
           </div>
         </a>
@@ -72,7 +72,7 @@
             <img src="@/assets/output_list_icon.png" alt="출고 리스트" width="50px" height="50px">
           </div>
           <div class="flex-center menu-card-title">
-            <span>출고 리스트</span>
+            <span>출고 내역</span>
             <span class="menu-card-title2"><br>출고 기록 조회 및 등록</span>
           </div>
         </a>
@@ -81,7 +81,7 @@
             <img src="@/assets/item_list_icon.png" alt="상품 리스트" width="60px" height="60px">
           </div>
           <div class="flex-center menu-card-title">
-            <span>상품 리스트</span>
+            <span>상품 목록</span>
             <span class="menu-card-title2"><br>상품 조회 및 등록</span>
           </div>
         </a>

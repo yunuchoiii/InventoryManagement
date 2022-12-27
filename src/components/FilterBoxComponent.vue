@@ -36,7 +36,7 @@
           data-aos="zoom-in"
           @click="closeRegister()"
         >
-          <span style="color: white; font-size: 1.8vh; font-weight: 700;">{{last_month}}월  {{register_name}} 마감</span>
+          <span style="color: white; font-size: 1.1vw; font-weight: 700;">{{last_month}}월  {{register_name}} 마감</span>
         </v-btn>
       </div>
       <div class="head-box box-shadow" style="flex: 1">
@@ -118,7 +118,7 @@
               color="#3F5473"
               @click="submitFilter()"
             >
-              <span style="color: white; font-size: 1.8vh; font-weight: 700;">조회</span>
+              <span style="color: white; font-size: 1.1vw; font-weight: 700;">조회</span>
             </v-btn>
           </div>
         </div>

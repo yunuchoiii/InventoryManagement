@@ -6,6 +6,7 @@
     :month_show="false"
     :title="title"/>
     <TableComponent
+    :title="title"
     :headers="headers"
     :datas="datas"
     :filterData="filterData"

@@ -11,6 +11,7 @@
     :date_range="false"
     :tooltip_msg="tooltip_msg"/>
     <TableComponent
+    :title="title"
     :headers="headers"
     :datas="datas"
     :filterData="filterData"

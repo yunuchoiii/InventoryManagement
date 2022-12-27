@@ -31,12 +31,18 @@
 </template>
 <script>
 /* eslint-disable */
-import EditDialogComponentVue from './EditDialogComponent.vue'
+import EditDialogComponentVue from '@/components/DialogComponents/EditDialogComponent.vue'
 
 export default {
   name: 'InventoryStatus',
   components: {EditDialogComponentVue},
   props: {
+    title : {
+      type: String
+    },
+    register_name: {
+      type: String
+    },
     headers: {
       type: Array,
       required: true
@@ -69,7 +75,9 @@ export default {
   unmounted () {},
   methods: {
     editItem() {
-      this.edit_dialog = true
+      if (this.title == '출고 리스트' || this.title == '입고 리스트' || this.title == '상품 리스트') {
+        this.edit_dialog = true
+      }
     },
     closeDialog (data) {
       this.edit_dialog = data

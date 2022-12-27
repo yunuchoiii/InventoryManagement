@@ -10,6 +10,7 @@
     :year_show="false"
     :date_range="true"/>
     <TableComponent
+    :title="title"
     :headers="headers"
     :datas="datas"
     :filterData="filterData"

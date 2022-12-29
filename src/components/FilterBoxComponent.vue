@@ -36,21 +36,19 @@
           data-aos="zoom-in"
           @click="closeRegister()"
         >
-          <span style="color: white; font-size: 1.1vw; font-weight: 700;">{{last_month}}월  {{register_name}} 마감</span>
+          <span class="navBtnText">{{last_month}}월  {{register_name}} 마감</span>
         </v-btn>
       </div>
       <div class="head-box box-shadow" style="flex: 1">
         <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh;">
-          <div>
-            <v-btn
-              icon
-              color="#3F5473"
-              @click="emitReRender()"
-            >
-              <v-icon>mdi-cached</v-icon>
-            </v-btn>
-            <span style="color: #757575; font-size: 15px; font-weight: 700;">초기화</span>
-          </div>
+          <v-btn
+            icon
+            color="#3F5473"
+            @click="emitReRender()"
+          >
+            <v-icon>mdi-cached</v-icon>
+          </v-btn>
+          <span style="color: #3F5473; font-size: 2vh; font-weight: 700;">초기화</span>
         </div>
         <div class="filter-box">
           <div v-if="date_range" class="filter-card">
@@ -118,7 +116,7 @@
               color="#3F5473"
               @click="submitFilter()"
             >
-              <span style="color: white; font-size: 1.1vw; font-weight: 700;">조회</span>
+              <span class="navBtnText">조회</span>
             </v-btn>
           </div>
         </div>

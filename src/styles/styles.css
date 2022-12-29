@@ -79,6 +79,12 @@ a:hover { color: black; text-decoration: none;}
   color: black !important;
   background-color: white;
 }
+.navBtnText {
+  color: white; 
+  font-size: 2vh; 
+  font-weight: 700; 
+  line-height: 2vh;
+}
 .navText {
   font-size: 15px !important;
   margin-top: 20px;

@@ -10,7 +10,7 @@
               <th
               v-for="item in headers"
               :key="item"
-              style="font-size: 1vw">
+              style="font-size: 1rem">
                 {{item}}
               </th>
             </tr>

@@ -127,7 +127,7 @@
 
           <div class="flex-center" style="height:100px;">
             <v-btn
-            width="100"
+            width="150"
             height="40"
             color="#c41230"
             rounded
@@ -135,12 +135,12 @@
             dark
             style="margin-right: 20px"
             @click="deleteItem()">
-              <span style="font-size: 1.2rem">삭제</span>
+              <span style="font-size: 1.2rem">판매 중지</span>
             </v-btn>
             <v-btn
             width="100"
             height="40"
-            color="#3F5473"
+            color="#254359"
             rounded
             dark
             @click="editItem()">
@@ -294,7 +294,7 @@
             <v-btn
             width="100"
             height="40"
-            color="#3F5473"
+            color="#254359"
             rounded
             dark
             @click="editItem()">
@@ -363,8 +363,14 @@ export default {
       }, "300")
     },
     deleteItem () {
-      if(confirm('해당 항목을 삭제하시겠습니까?')) {
-        this.emitClose()
+      if (this.register_name == '상품') {
+        if(confirm('해당 품목을 판매 중지하시겠습니까?')) {
+          this.emitClose()
+        }
+      } else {
+        if(confirm('해당 내역을 삭제하시겠습니까?')) {
+          this.emitClose()
+        }
       }
     },
     editItem () {

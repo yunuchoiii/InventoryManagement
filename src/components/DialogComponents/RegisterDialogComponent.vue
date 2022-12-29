@@ -163,7 +163,7 @@
             <v-btn
             width="130"
             height="40"
-            color="#3F5473"
+            color="#254359"
             rounded
             dark
             @click="dialog = false">
@@ -306,7 +306,7 @@
             <v-btn
             width="130"
             height="40"
-            color="#3F5473"
+            color="#254359"
             rounded
             dark
             @click="dialog = false">

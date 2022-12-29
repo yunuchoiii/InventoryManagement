@@ -60,7 +60,7 @@ a:hover { color: black; text-decoration: none;}
 .navBar {
   width: 190px;
   height: 100%;
-  background-color: #3F5473;
+  background-color: #254359;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -163,7 +163,7 @@ a:hover { color: black; text-decoration: none;}
 .filter-text {
   font-size: 2vh;
   font-weight: 700;
-  color: #3F5473;
+  color: #254359;
   line-height: 2vh;
 }
 .filter-select {
@@ -213,7 +213,7 @@ a:hover { color: black; text-decoration: none;}
 .homebox-title3 {
   font-size: 1.8rem;
   font-weight: 700 !important;
-  color: #3f5473;
+  color: #254359;
 }
 .menu-divider {
   display: flex; 
@@ -280,7 +280,7 @@ a:hover { color: black; text-decoration: none;}
 .numbox-yesterday2 {
   font-size: 2rem; 
   font-weight: 700; 
-  color: #3F5473;
+  color: #254359;
 }
 .color-circle {
   width: 20px;
@@ -302,12 +302,12 @@ a:hover { color: black; text-decoration: none;}
 }
 .dialog-text {
   font-size: 1rem;
-  color: #3f5473;
+  color: #254359;
   font-weight: 700;
 }
 .dialog-titlebox {
   height: 80px; 
-  color: #3F5473;
+  color: #254359;
   font-size: 3.5vh;
   font-weight: 700;
 }

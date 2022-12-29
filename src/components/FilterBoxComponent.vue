@@ -43,12 +43,12 @@
         <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh;">
           <v-btn
             icon
-            color="#3F5473"
+            color="#254359"
             @click="emitReRender()"
           >
             <v-icon>mdi-cached</v-icon>
           </v-btn>
-          <span style="color: #3F5473; font-size: 2vh; font-weight: 700;">초기화</span>
+          <span style="color: #254359; font-size: 2vh; font-weight: 700;">초기화</span>
         </div>
         <div class="filter-box">
           <div v-if="date_range" class="filter-card">
@@ -113,7 +113,7 @@
               elevation="0"
               height="4vh"
               width="50px"
-              color="#3F5473"
+              color="#254359"
               @click="submitFilter()"
             >
               <span class="navBtnText">조회</span>

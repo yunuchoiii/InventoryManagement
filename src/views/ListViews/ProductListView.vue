@@ -37,16 +37,19 @@ export default {
       title: '상품 목록',
       register_name: '상품',
       clicked: false,
-      headers: ['구분', '구분코드', '품목', '품목코드', '판매단가', '용량', '개수', '비고'],
-      datas: ['세제', '01', '좋은 세제', '294721', '20,000', '300ml', '50', ''],
+      headers: ['순번', '구분', '품목', '품목코드', '판매단가', '용량', '상태', '비고'],
+      datas: [],
       filterData: {},
       componentKey: 0,
-      tooltip_msg: ""
+      tooltip_msg: "",
+      tableData: []
     }
   },
   watch: {},
   setup () {},
-  created () {},
+  created () {
+    this.getProductData()
+  },
   mounted () {},
   unmounted () {},
   methods: {
@@ -55,6 +58,17 @@ export default {
     },
     componentKeyEvent (data) {
       this.componentKey = data
+    },
+    getProductData () {
+      const url = '/products';
+      this.$axios.get(url, {
+        params: {},
+      }).then((res) => {
+        console.log(res.data);
+        this.datas = res.data.content
+      }).catch((error) => {
+        console.log(error);
+      })
     }
   }
 }

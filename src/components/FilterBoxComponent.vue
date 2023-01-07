@@ -36,7 +36,7 @@
           data-aos="zoom-in"
           @click="closeRegister()"
         >
-          <span class="navBtnText">{{last_month}}월  {{register_name}} 마감</span>
+          <span class="navBtnText">{{last_month == 0 ? 12 : last_month}}월  {{register_name}} 마감</span>
         </v-btn>
       </div>
       <div class="head-box box-shadow" style="flex: 1">
@@ -167,11 +167,11 @@ export default {
   data () {
     return {
       selectedYear: new Date().getFullYear(),
-      years: [2023, 2022, 2021, 2020, 2019],
+      years: [],
       selectedMonth: '',
       months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       selectedCategory: '',
-      categories: ['세제', '방향제', '말통', '광택제', '박스'],
+      categories: [],
       selectedItem: '',
       items: ['a','b','c'],
       last_month: new Date().getMonth(),
@@ -199,12 +199,33 @@ export default {
   setup () {},
   created () {
     this.selectedYear = new Date().getFullYear()
+    this.getCategories()
+    this.addYearsList()
   },
   mounted () {
     AOS.init()
   },
   unmounted () {},
   methods: {
+    // 카테고리 목록 가져오기
+    getCategories () {
+      const url = '/categories';
+      this.$axios.get(url, {
+        params: {},
+      }).then((res) => {
+        console.log(res.data);
+        this.categories = res.data
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
+    // 연도 셀렉트박스 올해까지 추가
+    addYearsList () {
+      let thisYear = new Date().getFullYear() 
+      for (var i=2019; i<=thisYear; i++) {
+        this.years.push(i)
+      }
+    },
     // 입출고 등록 마감
     closeRegister () {
       if (confirm(this.last_month + '월 ' + this.register_name + ' 등록을 마감하시겠습니까?')) {

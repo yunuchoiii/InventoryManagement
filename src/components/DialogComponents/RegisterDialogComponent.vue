@@ -1,7 +1,7 @@
 <template>
 <div class="flex-center">
   <span style="font-size: 22px; font-weight:700; margin-right: 15px;">{{ register_name }} 등록</span>
-  <v-app>
+  <v-form>
     <div class="text-center" style="margin-bottom: 5px">
       <v-dialog
         v-model="dialog"
@@ -54,7 +54,7 @@
                     required
                     outlined
                     label="* 구분"
-                    v-model="product_info.category"
+                    v-model="product_info.categoryName"
                   ></v-select>
                 </v-col>
 
@@ -68,39 +68,23 @@
                     required
                     outlined
                     label="* 품목명"
-                    v-model="product_info.product"
+                    v-model="product_info.productName"
                   ></v-text-field>
                 </v-col>
 
-              <!-- 품목코드 입력 -->
+                <!-- 판매 상태 -->
                 <v-col
                   cols="12"
-                  sm="1"
+                  sm="6"
                 >
-                  <v-tooltip bottom>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-icon
-                        color="primary"
-                        dark
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        mdi-help-circle-outline
-                      </v-icon>
-                    </template>
-                    <span>빈칸으로 저장시 코드가 자동생성됩니다.</span>
-                  </v-tooltip>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="5"
-                >
-                <v-text-field
+                  <v-select
+                    :items="status"
                     dense
+                    required
                     outlined
-                    label="품목 코드"
-                    v-model="product_info.product_code"
-                  ></v-text-field>
+                    label="판매 상태"
+                    v-model="product_info.productStatus"
+                  ></v-select>
                 </v-col>
 
               <!-- 판매단가 입력 -->
@@ -128,7 +112,7 @@
                     required
                     outlined
                     label='단위'
-                    v-model="product_info.unit"
+                    v-model="product_info.productUnit"
                   ></v-select>
                 </v-col>
                 <v-col
@@ -140,7 +124,7 @@
                     outlined
                     label='용량'
                     type="number"
-                    v-model="product_info.capacity"
+                    v-model="product_info.amount"
                   ></v-text-field>
                 </v-col>
 
@@ -166,7 +150,7 @@
             color="#254359"
             rounded
             dark
-            @click="dialog = false">
+            @click="RegisterProduct()">
               <span style="font-size: 1.2rem">저장</span>
             </v-btn>
           </div>
@@ -290,6 +274,19 @@
               <!-- 비고 입력 -->
                 <v-col
                   cols="12"
+                  v-if="register_name == '출고'"
+                >
+                  <v-text-field
+                    dense
+                    outlined
+                    label='고객'
+                    v-model="register_info.customer"
+                  ></v-text-field>
+                </v-col>
+
+              <!-- 비고 입력 -->
+                <v-col
+                  cols="12"
                 >
                   <v-text-field
                     dense
@@ -316,7 +313,7 @@
         </v-card>
       </v-dialog>
     </div>
-  </v-app>
+  </v-form>
 </div>
 </template>
 
@@ -346,28 +343,47 @@ export default {
         category: '',
         product: '',
         quantity: null,
+        customer: '',
         memo: ''
       },
       product_info: {
-        category: '',
-        product: '',
-        product_code: '',
+        categoryName: '',
+        productName: '',
+        productStatus: '',
         price: null,
-        unit: '',
-        capacity: null,
+        productUnit: '',
+        amount: null,
         memo: ''
       },
       menu: false,
       modal: false,
       menu2: false,
-      unit: ['L', 'mL', 'kg', 'g']
+      unit: ['L', 'mL', 'kg', 'g'],
+      status: ['판매 예정', '판매 중', '판매 중단']
     }
   },
   setup () {},
   created () {},
   mounted () {},
   unmounted () {},
-  methods: {}
+  methods: {
+    RegisterProduct () {
+      if (this.product_info.categoryName != '' || this.product_info.productName != '') {
+        const url = '/products';
+        this.$axios.post(url, this.product_info,
+        ).then((res) => {
+          console.log(res.data);
+          this.dialog = false
+          window.location.reload()
+        }).catch((error) => {
+          console.log(error);
+        })
+      } else {
+        alert('구분과 품목명은 필수 기재 항목입니다.')
+      }
+
+    }
+  }
 }
 </script>
 <style>

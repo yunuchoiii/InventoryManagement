@@ -15,9 +15,16 @@
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr @click="editItem()">
-              <td v-for="item in datas" :key="item">{{ item }}</td>
+          <tbody v-if="register_name == '상품'">
+            <tr v-for="(item, idx) in datas" :key="idx" @click="editItem(item)">
+              <td>{{ idx + 1 }}</td>
+              <td>{{ item.categoryName }}</td>
+              <td>{{ item.productName }}</td>
+              <td>{{ item.productCode }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.amount }} {{item.productUnit}}</td>
+              <td>{{ item.productStatus }}</td>
+              <td>{{ item.memo }}</td>
             </tr>
           </tbody>
         </template>
@@ -26,7 +33,8 @@
     <EditDialogComponentVue
     v-if="edit_dialog == true"
     @edit_dialog="closeDialog()"
-    :register_name="register_name"/>
+    :register_name="register_name"
+    :itemInfo="itemInfo"/>
   </v-app>
 </template>
 <script>
@@ -62,7 +70,9 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+      itemInfo: {}
+    }
   },
   watch: {
     filterData () {
@@ -74,7 +84,8 @@ export default {
   mounted () {},
   unmounted () {},
   methods: {
-    editItem() {
+    editItem(item) {
+      this.itemInfo = item
       if (this.title == '출고 내역' || this.title == '입고 내역' || this.title == '상품 목록') {
         this.edit_dialog = true
       }

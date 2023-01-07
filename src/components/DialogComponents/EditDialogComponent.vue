@@ -42,6 +42,21 @@
                   ></v-select>
                 </v-col>
 
+                <!-- 판매상태 -->
+                <v-col
+                  cols="12"
+                  sm="6"
+                >
+                  <v-select
+                    :items="status"
+                    dense
+                    required
+                    outlined
+                    label="* 상태"
+                    v-model="product_info.status"
+                  ></v-select>
+                </v-col>
+
               <!-- 품목 선택 -->
                 <v-col
                   cols="12"
@@ -113,6 +128,7 @@
               <!-- 비고 입력 -->
                 <v-col
                   cols="12"
+                  sm="6"
                 >
                   <v-text-field
                     dense
@@ -324,6 +340,9 @@ export default {
     },
     items: {
       type: Array
+    },
+    itemInfo: {
+      type: Object
     }
   },
   data () {
@@ -343,12 +362,14 @@ export default {
         price: null,
         unit: '',
         capacity: null,
-        memo: ''
+        memo: '',
+        status: ''
       },
       menu: false,
       modal: false,
       menu2: false,
       unit: ['L', 'mL', 'kg', 'g'],
+      status: ['판매 예정', '판매 중', '판매 중단']
     }
   },
   setup () {},

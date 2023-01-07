@@ -368,20 +368,21 @@ export default {
   unmounted () {},
   methods: {
     RegisterProduct () {
-      if (this.product_info.categoryName != '' || this.product_info.productName != '') {
-        const url = '/products';
-        this.$axios.post(url, this.product_info,
-        ).then((res) => {
-          console.log(res.data);
-          this.dialog = false
-          window.location.reload()
-        }).catch((error) => {
-          console.log(error);
-        })
-      } else {
-        alert('구분과 품목명은 필수 기재 항목입니다.')
+      if (this.register_name == '상품') {
+        if (this.product_info.categoryName != '' && this.product_info.productName != '') {
+          const url = '/products';
+          this.$axios.post(url, this.product_info,
+          ).then((res) => {
+            alert('상품 등록이 완료되었습니다.')
+            this.dialog = false
+            window.location.reload()
+          }).catch((error) => {
+            console.log(error);
+          })
+        } else {
+          alert('구분과 품목명은 필수 기재 항목입니다.')
+        }        
       }
-
     }
   }
 }

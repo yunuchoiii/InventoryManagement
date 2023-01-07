@@ -213,7 +213,6 @@ export default {
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
-        console.log(res.data);
         this.categories = res.data
       }).catch((error) => {
         console.log(error);

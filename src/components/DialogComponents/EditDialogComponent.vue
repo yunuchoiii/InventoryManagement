@@ -25,7 +25,6 @@
 
           <v-card-text>
             <v-container>
-
               <!-- 구분 선택 -->
               <v-row>
                 <v-col
@@ -38,22 +37,7 @@
                     required
                     outlined
                     label="* 구분"
-                    v-model="product_info.category"
-                  ></v-select>
-                </v-col>
-
-                <!-- 판매상태 -->
-                <v-col
-                  cols="12"
-                  sm="6"
-                >
-                  <v-select
-                    :items="status"
-                    dense
-                    required
-                    outlined
-                    label="* 상태"
-                    v-model="product_info.status"
+                    v-model="product_info.categoryName"
                   ></v-select>
                 </v-col>
 
@@ -67,7 +51,7 @@
                     required
                     outlined
                     label="* 품목명"
-                    v-model="product_info.product"
+                    v-model="product_info.productName"
                   ></v-text-field>
                 </v-col>
 
@@ -80,14 +64,14 @@
                     dense
                     outlined
                     label="품목 코드"
-                    v-model="product_info.product_code"
+                    v-model="product_info.productCode"
                   ></v-text-field>
                 </v-col>
 
               <!-- 판매단가 입력 -->
                 <v-col
                   cols="12"
-                  sm="6"
+                  sm="5"
                 >
                   <v-text-field
                     dense
@@ -97,11 +81,29 @@
                     v-model="product_info.price"
                   ></v-text-field>
                 </v-col>
+                <v-col
+                  cols="12"
+                  sm="1"
+                >
+                  <span style="font-size:1.2rem">원</span>
+                </v-col>
 
                 <!-- 용량, 단위 입력 -->
                 <v-col
                   cols="12"
-                  sm="6"
+                  sm="3"
+                >
+                  <v-text-field
+                    dense
+                    outlined
+                    label='용량'
+                    type="number"
+                    v-model="product_info.amount"
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="3"
                 >
                   <v-select
                     :items="unit"
@@ -109,26 +111,29 @@
                     required
                     outlined
                     label='단위'
-                    v-model="product_info.unit"
+                    v-model="product_info.productUnit"
                   ></v-select>
                 </v-col>
+
+                <!-- 판매상태 -->
                 <v-col
                   cols="12"
                   sm="6"
                 >
-                  <v-text-field
+                  <v-select
+                    :items="status"
                     dense
+                    required
                     outlined
-                    label='용량'
-                    type="number"
-                    v-model="product_info.capacity"
-                  ></v-text-field>
+                    label="판매 상태"
+                    v-model="product_info.productStatus"
+                  ></v-select>
                 </v-col>
 
               <!-- 비고 입력 -->
                 <v-col
                   cols="12"
-                  sm="6"
+                  sm="12"
                 >
                   <v-text-field
                     dense
@@ -142,17 +147,6 @@
           </v-card-text>
 
           <div class="flex-center" style="height:100px;">
-            <v-btn
-            width="150"
-            height="40"
-            color="#c41230"
-            rounded
-            outlined
-            dark
-            style="margin-right: 20px"
-            @click="deleteItem()">
-              <span style="font-size: 1.2rem">판매 중지</span>
-            </v-btn>
             <v-btn
             width="100"
             height="40"
@@ -206,7 +200,7 @@
                   sm="6"
                 >
                 <v-autocomplete
-                    :items="items"
+                    :items="productList"
                     dense
                     required
                     outlined
@@ -334,11 +328,7 @@ export default {
       type: String,
       required: true
     },
-    categories: {
-      type: Array,
-      default: ['세제', '방향제', '말통', '광택제', '박스']
-    },
-    items: {
+    productList: {
       type: Array
     },
     itemInfo: {
@@ -347,6 +337,7 @@ export default {
   },
   data () {
     return {
+      categories: [],
       dialog: true,
       register_info: {
         date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
@@ -356,14 +347,16 @@ export default {
         memo: ''
       },
       product_info: {
-        category: '',
-        product: '',
-        product_code: '',
-        price: null,
-        unit: '',
-        capacity: null,
-        memo: '',
-        status: ''
+        id: this.itemInfo.id, 
+        categoryCode: this.itemInfo.categoryCode, 
+        categoryName: this.itemInfo.categoryName, 
+        productCode: this.itemInfo.productCode, 
+        productName: this.itemInfo.productName, 
+        productUnit: this.itemInfo.productUnit, 
+        amount: this.itemInfo.amount, 
+        price: this.itemInfo.price, 
+        productStatus: this.itemInfo.productStatus,
+        memo: this.itemInfo.memo 
       },
       menu: false,
       modal: false,
@@ -372,11 +365,33 @@ export default {
       status: ['판매 예정', '판매 중', '판매 중단']
     }
   },
+  watch : {
+    itemInfo : {
+      deep : true,
+      handler() {
+        console.log(itemInfo)
+      }
+    }
+  },
   setup () {},
-  created () {},
+  created () {
+    this.getCategories()
+  },
   mounted () {},
   unmounted () {},
+  computed : {},
   methods: {
+    // 카테고리 목록 가져오기
+    getCategories () {
+      const url = '/categories';
+      this.$axios.get(url, {
+        params: {},
+      }).then((res) => {
+        this.categories = res.data
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
     emitClose () {
       this.dialog = false
       setTimeout(() => {
@@ -396,7 +411,15 @@ export default {
     },
     editItem () {
       if(confirm('해당 항목을 수정하시겠습니까?')) {
-        this.emitClose()
+        const url = `/products/${this.product_info.id}`;
+        this.$axios.put(url, this.product_info
+        ).then((res) => {
+          alert('수정이 완료되었습니다.')
+          this.emitClose()
+          window.location.reload()
+        }).catch((error) => {
+          console.log(error);
+        })
       }
     }
   }
@@ -418,6 +441,6 @@ export default {
   padding: 0px 12px;
 }
 .col-sm-1, .col-1 {
-    padding: 10px 0px 10px 20px !important;
+    padding: 7px 0px 10px 0px !important;
 }
 </style>

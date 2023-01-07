@@ -64,7 +64,6 @@ export default {
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
-        console.log(res.data);
         this.datas = res.data.content
       }).catch((error) => {
         console.log(error);

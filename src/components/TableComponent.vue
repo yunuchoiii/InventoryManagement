@@ -16,8 +16,8 @@
             </tr>
           </thead>
           <tbody v-if="register_name == '상품'">
-            <tr v-for="(item, idx) in datas" :key="idx" @click="editItem(item)">
-              <td>{{ idx + 1 }}</td>
+            <tr v-for="(item, index) in datas" :key="index" @click="editItem(index)">
+              <td>{{ index + 1 }}</td>
               <td>{{ item.categoryName }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
@@ -77,15 +77,15 @@ export default {
   watch: {
     filterData () {
       console.log(this.filterData)
-    }
+    },
   },
   setup () {},
   created () {},
   mounted () {},
   unmounted () {},
   methods: {
-    editItem(item) {
-      this.itemInfo = item
+    editItem(index) {
+      this.itemInfo = this.datas[index]
       if (this.title == '출고 내역' || this.title == '입고 내역' || this.title == '상품 목록') {
         this.edit_dialog = true
       }

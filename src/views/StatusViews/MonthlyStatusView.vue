@@ -10,7 +10,7 @@
     :headers="headers"
     :datas="datas"
     :filterData="filterData"
-    :key="componentKey"/>
+    :componentKey="componentKey"/>
   </body>
 </template>
 <script>

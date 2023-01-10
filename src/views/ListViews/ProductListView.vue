@@ -15,7 +15,7 @@
     :headers="headers"
     :datas="datas"
     :filterData="filterData"
-    :key="componentKey"
+    :componentKey="componentKey"
     :register_name="register_name"/>
     <div>
       <input type="text">
@@ -40,6 +40,7 @@ export default {
       headers: ['순번', '구분', '품목', '품목코드', '판매단가', '용량', '상태', '비고'],
       datas: [],
       filterData: {},
+      categoryCode: "",
       componentKey: 0,
       tooltip_msg: "",
       tableData: []
@@ -48,19 +49,23 @@ export default {
   watch: {},
   setup () {},
   created () {
-    this.getProductData()
+    this.getDataList()
   },
   mounted () {},
   unmounted () {},
   methods: {
     filterEvent (data) {
       this.filterData = data
+      // this.categoryCode = ""
+      this.getDataList()
     },
     componentKeyEvent (data) {
       this.componentKey = data
     },
-    getProductData () {
-      const url = '/products';
+    getDataList () {
+      const url = this.categoryCode != "" 
+        ? `/products?categoryCode=${this.categoryCode}` 
+        : `/products`
       this.$axios.get(url, {
         params: {},
       }).then((res) => {

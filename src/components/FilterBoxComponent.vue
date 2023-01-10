@@ -3,28 +3,12 @@
     <div class="title-box">
       <div class="flex-center">
         <button @click="reload()"><span>{{title}}</span></button>
-        <div v-if="tooltip_msg != ''" style="margin: 0px 0px 5px 10px;">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                color="#f9a13a"
-                white
-                v-bind="attrs"
-                v-on="on"
-              >
-                mdi-help-circle-outline
-              </v-icon>
-            </template>
-            <span>{{ tooltip_msg }}</span>
-          </v-tooltip>
-        </div>
       </div>
       <!-- 입출고, 상품 등록 팝업 -->
       <div v-if="register" data-aos="fade-left">
         <RegisterDialog
         :register_name="register_name"
-        :categories="categories"
-        :items="items"/>
+        :categories="categories"/>
       </div>
     </div>
     <div class="filter-head">
@@ -90,20 +74,9 @@
             <div class="flex-center filter-text">
               구분
             </div>
-            <select v-model="selectedCategory" class="filter-select">
+            <select v-model="selectedCategory" class="filter-select" @change="getCategoryProducts()">
               <option value="" disabled selected>Category</option>
               <option v-for="option in categories" :value="option" :key="option">
-                {{ option }}
-              </option>
-            </select>
-          </div>
-          <div class="filter-card">
-            <div class="flex-center filter-text">
-              품목
-            </div>
-            <select v-model="selectedItem" class="filter-select">
-              <option value="" disabled selected>Item</option>
-              <option v-for="option in items" :value="option" :key="option">
                 {{ option }}
               </option>
             </select>
@@ -172,8 +145,6 @@ export default {
       months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       selectedCategory: '',
       categories: [],
-      selectedItem: '',
-      items: ['a','b','c'],
       last_month: new Date().getMonth(),
       calendarData: {
         dateRange : {
@@ -218,6 +189,10 @@ export default {
         console.log(error);
       })
     },
+    // 카테고리별 품목 리스트 가져오기
+    getCategoryProducts () {
+      console.log(this.selectedCategory)
+    },
     // 연도 셀렉트박스 올해까지 추가
     addYearsList () {
       let thisYear = new Date().getFullYear() 
@@ -235,8 +210,12 @@ export default {
     },
     // 조회버튼 클릭
     submitFilter () {
-      this.modifyDate()
-      this.emitFilter()
+      if (this.calendarData.dateRange.start != "") {
+        this.modifyDate()
+        this.emitFilter()        
+      } else {
+        this.emitFilter()      
+      }
     },
     // 10 이하면 앞에 0 붙이는 이벤트
     modifyDate () {

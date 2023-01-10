@@ -14,7 +14,7 @@
     :headers="headers"
     :datas="datas"
     :filterData="filterData"
-    :key="componentKey"
+    :componentKey="componentKey"
     :register_name="register_name"/>
   </body>
 </template>
@@ -32,23 +32,38 @@ export default {
       title: '입고 내역',
       register_name: '입고',
       clicked: false,
-      headers: ['구분', '품목', '품목코드', '날짜', '입고량', '비고'],
-      datas: ['세제', 'EV-1',	'123048',	'2022-3-16', '20', ''],
+      headers: ['순번', '구분', '품목', '품목코드', '입고날짜', '입고량', '비고'],
+      datas: [],
       filterData: {},
       componentKey: 0
     }
   },
   watch: {},
   setup () {},
-  created () {},
+  created () {
+    this.getDataList()
+  },
   mounted () {},
   unmounted () {},
   methods: {
     filterEvent (data) {
       this.filterData = data
+      // this.categoryCode = ""
+      this.getDataList()
     },
     componentKeyEvent (data) {
       this.componentKey = data
+    },
+    getDataList () {
+      const url = `/in-stock`
+      this.$axios.get(url, {
+        params: {},
+      }).then((res) => {
+        this.datas = res.data.content
+        console.log(this.datas)
+      }).catch((error) => {
+        console.log(error);
+      })
     }
   }
 }

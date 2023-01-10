@@ -327,17 +327,12 @@ export default {
       type: String,
       required: true
     },
-    categories: {
-      type: Array,
-      default: ['세제', '방향제', '말통', '광택제', '박스']
-    },
-    items: {
-      type: Array
-    }
   },
   data () {
     return {
       dialog: false,
+      categories: [],
+      items: [],
       register_info: {
         date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         category: '',
@@ -363,10 +358,23 @@ export default {
     }
   },
   setup () {},
-  created () {},
+  created () {
+    this.getCategories()
+  },
   mounted () {},
   unmounted () {},
   methods: {
+    // 카테고리 목록 가져오기
+    getCategories () {
+      const url = '/categories';
+      this.$axios.get(url, {
+        params: {},
+      }).then((res) => {
+        this.categories = res.data
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
     RegisterProduct () {
       if (this.register_name == '상품') {
         if (this.product_info.categoryName != '' && this.product_info.productName != '') {

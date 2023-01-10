@@ -3,7 +3,8 @@
     <div class="box-shadow" style="border-radius: 10px; overflow: hidden">
       <v-simple-table
       fixed-header
-      height="79vh">
+      height="79vh"
+      :key="this.componentKey">
         <template v-slot:default>
           <thead>
             <tr>
@@ -24,6 +25,30 @@
               <td>{{ item.price }}</td>
               <td>{{ item.amount }} {{item.productUnit}}</td>
               <td>{{ item.productStatus }}</td>
+              <td>{{ item.memo }}</td>
+            </tr>
+          </tbody>
+          <tbody v-if="register_name == '입고'">
+            <tr v-for="(item, index) in datas" :key="index" @click="editItem(index)">
+              <td>{{ index + 1 }}</td>
+              <td>{{ item.categoryName }}</td>
+              <td>{{ item.productName }}</td>
+              <td>{{ item.productCode }}</td>
+              <td>{{ item.inStockDate }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.memo }}</td>
+            </tr>
+          </tbody>
+          <tbody v-if="register_name == '출고'">
+            <tr v-for="(item, index) in datas" :key="index" @click="editItem(index)">
+              <td>{{ index + 1 }}</td>
+              <td>{{ item.categoryName }}</td>
+              <td>{{ item.productName }}</td>
+              <td>{{ item.productCode }}</td>
+              <td>{{ item.outStockDate }}</td>
+              <td>{{ item.customer }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.quantity }}</td>
               <td>{{ item.memo }}</td>
             </tr>
           </tbody>
@@ -67,6 +92,9 @@ export default {
     },
     edit_dialog: {
       type: Boolean
+    },
+    componentKey: {
+      type: Number
     }
   },
   data () {
@@ -74,11 +102,7 @@ export default {
       itemInfo: {}
     }
   },
-  watch: {
-    filterData () {
-      console.log(this.filterData)
-    },
-  },
+  watch: {},
   setup () {},
   created () {},
   mounted () {},

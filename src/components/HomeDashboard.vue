@@ -265,7 +265,7 @@ export default {
   methods: {
     //일년치 월 리스트 구하기
     getMonthsList () {
-      var month = new Date(new Date().setMonth(new Date().getMonth() + 1)).getMonth() == 0 ? 12 : new Date(new Date().setMonth(new Date().getMonth() + 1)).getMonth()
+      let month = new Date(new Date().setMonth(new Date().getMonth() + 1)).getMonth() == 0 ? 12 : new Date(new Date().setMonth(new Date().getMonth() + 1)).getMonth()
       this.monthsList.push(month + '월')
       for (var i=0; i < 11; i++) {
         if(month + 1 == 13) {

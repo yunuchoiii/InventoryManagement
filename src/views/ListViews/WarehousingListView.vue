@@ -60,7 +60,6 @@ export default {
         params: {},
       }).then((res) => {
         this.datas = res.data.content
-        console.log(this.datas)
       }).catch((error) => {
         console.log(error);
       })

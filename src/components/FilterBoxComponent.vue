@@ -180,11 +180,15 @@ export default {
   methods: {
     // 카테고리 목록 가져오기
     getCategories () {
+      const arr = [];
       const url = '/categories';
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
-        this.categories = res.data
+        res.data.forEach(function(number) {
+          arr.push(number.name)
+        })
+        this.categories = arr
       }).catch((error) => {
         console.log(error);
       })

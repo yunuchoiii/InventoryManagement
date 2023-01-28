@@ -11,7 +11,7 @@
         <!-- 상품 등록 -->
         <v-card v-if="register_name == '상품'" style="border-radius: 20px">
           <div class="flex-center dialog-titlebox">
-            {{ register_name }} 수정
+            {{ register_name }} 정보 수정
           </div>
           <div style="position: absolute; top: 10px; right: 10px;" >
             <v-btn
@@ -160,21 +160,22 @@
         </v-card>
 
         <!------------------------------------------------------------------------------------>
-        <!-- 입출고 등록 -->
-        <v-card v-else style="border-radius: 20px">
+        <!-- 입고 수정 -->
+        <v-card v-if="register_name == '입고'" style="border-radius: 20px">
           <div class="flex-center dialog-titlebox">
-            {{ register_name }} 수정
+            {{ register_name }} 내역 수정
           </div>
           <div style="position: absolute; top: 10px; right: 10px;" >
             <v-btn
               icon
               dark
               @click="emitClose()"
-            >
+            >x
               <v-icon color="black">mdi-close</v-icon>
             </v-btn>
           </div>
 
+          {{ this.itemInfo }}
           <v-card-text>
             <v-container>
               <v-row>
@@ -190,7 +191,162 @@
                     required
                     outlined
                     label='* 구분'
-                    v-model="register_info.category"
+                    v-model="this.selectedCategory"
+                  ></v-select>
+                </v-col>
+
+              <!-- 품목 선택 -->
+                <v-col
+                  cols="12"
+                  sm="6"
+                >
+                <v-autocomplete
+                    :items="items"
+                    dense
+                    required
+                    outlined
+                    label='* 품목'
+                    aria-required=""
+                    v-model="this.selectedProduct"
+                  ></v-autocomplete>
+                </v-col>
+
+                <!-- 입고일자 선택 -->
+                <v-col
+                  cols="12"
+                  sm="6"
+                >
+                  <v-menu
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :return-value.sync="inStock_info.inStockDate"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="inStock_info.inStockDate"
+                        dense
+                        readonly
+                        outlined
+                        label='* 입고일'
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="inStock_info.inStockDate"
+                      no-title
+                      scrollable
+                    >
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="menu = false"
+                      >
+                        취소
+                      </v-btn>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="$refs.menu.save(inStock_info.inStockDate)"
+                      >
+                        확인
+                      </v-btn>
+                    </v-date-picker>
+                  </v-menu>
+                </v-col>
+
+              <!-- 수량 입력 -->
+                <v-col
+                  cols="12"
+                  sm="6"
+                >
+                  <v-text-field
+                    dense
+                    outlined
+                    required
+                    label='* 수량'
+                    type="number"
+                    v-model="inStock_info.quantity"
+                  ></v-text-field>
+                </v-col>
+
+              <!-- 비고 입력 -->
+                <v-col
+                  cols="12"
+                >
+                  <v-text-field
+                    dense
+                    outlined
+                    label='비고'
+                    v-model="inStock_info.memo"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+
+          <div class="flex-center" style="height:100px;">
+            <v-btn
+            width="100"
+            height="40"
+            color="#c41230"
+            rounded
+            outlined
+            dark
+            style="margin-right: 20px"
+            @click="deleteItem()">
+              <span style="font-size: 1.2rem">삭제</span>
+            </v-btn>
+            <v-btn
+            width="100"
+            height="40"
+            color="#254359"
+            rounded
+            dark
+            @click="editItem()">
+              <span style="font-size: 1.2rem">저장</span>
+            </v-btn>
+          </div>
+        </v-card>
+
+        <!---------------------------------------------------------------->
+        <!-- 출고 등록 -->
+        <v-card  v-if="register_name == '출고'" style="border-radius: 20px">
+          <div class="flex-center dialog-titlebox">
+            {{ register_name }} 내역 수정
+          </div>
+          <div style="position: absolute; top: 10px; right: 10px;" >
+            <v-btn
+              icon
+              dark
+              @click="emitClose()"
+            >x
+              <v-icon color="black">mdi-close</v-icon>
+            </v-btn>
+          </div>
+
+          {{ this.itemInfo }}
+          <v-card-text>
+            <v-container>
+              <v-row>
+
+              <!-- 구분 선택 -->
+                <v-col
+                  cols="12"
+                  sm="6"
+                >
+                  <v-select
+                    :items="categories"
+                    dense
+                    required
+                    outlined
+                    label='* 구분'
+                    v-model="this.selectedCategory"
                   ></v-select>
                 </v-col>
 
@@ -206,73 +362,101 @@
                     outlined
                     label='* 품목'
                     aria-required=""
-                    v-model="register_info.product"
+                    v-model="this.selectedProduct"
                   ></v-autocomplete>
                 </v-col>
 
-                <!-- 날짜 선택 -->
+                <!-- 출고일자 선택 -->
                 <v-col
                   cols="12"
                   sm="6"
                 >
-                <v-menu
-                  ref="menu"
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  :return-value.sync="register_info.date"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="auto"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="register_info.date"
-                      dense
-                      readonly
-                      outlined
-                      label='* 일자'
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="register_info.date"
-                    no-title
-                    scrollable
+                  <v-menu
+                    ref="menu"
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :return-value.sync="outStock_info.outStockDate"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
                   >
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      text
-                      color="primary"
-                      @click="menu = false"
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="outStock_info.outStockDate"
+                        dense
+                        readonly
+                        outlined
+                        label='* 출고일'
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="outStock_info.outStockDate"
+                      no-title
+                      scrollable
                     >
-                      취소
-                    </v-btn>
-                    <v-btn
-                      text
-                      color="primary"
-                      @click="$refs.menu.save(register_info.date)"
-                    >
-                      확인
-                    </v-btn>
-                  </v-date-picker>
-                </v-menu>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="menu = false"
+                      >
+                        취소
+                      </v-btn>
+                      <v-btn
+                        text
+                        color="primary"
+                        @click="$refs.menu.save(outStock_info.outStockDate)"
+                      >
+                        확인
+                      </v-btn>
+                    </v-date-picker>
+                  </v-menu>
                 </v-col>
 
+              <!-- 고객 입력 -->
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-text-field
+                  dense
+                  outlined
+                  label='고객'
+                  v-model="outStock_info.customer"
+                ></v-text-field>
+              </v-col>
+
               <!-- 수량 입력 -->
-                <v-col
-                  cols="12"
-                  sm="6"
-                >
-                  <v-text-field
-                    dense
-                    outlined
-                    required
-                    label='* 수량'
-                    type="number"
-                    v-model="register_info.quantity"
-                  ></v-text-field>
-                </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-text-field
+                  dense
+                  outlined
+                  required
+                  label='* 수량'
+                  type="number"
+                  v-model="outStock_info.quantity"
+                ></v-text-field>
+              </v-col>
+
+              <!-- 가격 입력 -->
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-text-field
+                  dense
+                  outlined
+                  required
+                  label='* 가격'
+                  type="number"
+                  v-model="outStock_info.quantity"
+                ></v-text-field>
+              </v-col>
 
               <!-- 비고 입력 -->
                 <v-col
@@ -282,7 +466,7 @@
                     dense
                     outlined
                     label='비고'
-                    v-model="register_info.memo"
+                    v-model="outStock_info.memo"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -337,14 +521,24 @@ export default {
   },
   data () {
     return {
+      selectedCategory: this.itemInfo.categoryName,
       categories: [],
+      selectedProduct: this.itemInfo.productName,
+      productList: [],
       dialog: true,
-      register_info: {
-        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-        category: '',
-        product: '',
-        quantity: null,
-        memo: ''
+      inStock_info: {
+        inStockDate: this.itemInfo.inStockDate,
+        productId: this.itemInfo.productId,
+        quantity: this.itemInfo.quantity,
+        memo: this.itemInfo.memo
+      },
+      outStock_info: {
+        outStockDate: this.itemInfo.outStockDate,
+        productId: this.itemInfo.productId,
+        quantity: this.itemInfo.quantity,
+        customer: this.itemInfo.customer,
+        price: this.itemInfo.price,
+        memo: this.itemInfo.memo
       },
       product_info: {
         id: this.itemInfo.id, 
@@ -383,11 +577,15 @@ export default {
   methods: {
     // 카테고리 목록 가져오기
     getCategories () {
+      const arr = [];
       const url = '/categories';
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
-        this.categories = res.data
+        res.data.forEach(function(number) {
+          arr.push(number.name)
+        })
+        this.categories = arr
       }).catch((error) => {
         console.log(error);
       })

@@ -39,8 +39,14 @@ export default {
       clicked: false,
       headers: ['순번', '구분', '품목', '품목코드', '판매단가', '용량', '상태', '비고'],
       datas: [],
-      filterData: {},
-      categoryCode: "",
+      filterData: {
+        year: "",
+        month: "",
+        category: "",
+        item: "",
+        start_date: "",
+        end_date: ""
+      },
       componentKey: 0,
       tooltip_msg: "",
       tableData: []
@@ -56,15 +62,14 @@ export default {
   methods: {
     filterEvent (data) {
       this.filterData = data
-      // this.categoryCode = ""
       this.getDataList()
     },
     componentKeyEvent (data) {
       this.componentKey = data
     },
     getDataList () {
-      const url = this.categoryCode != "" 
-        ? `/products?categoryCode=${this.categoryCode}` 
+      const url = this.filterData.category != "" 
+        ? `/products?categoryCode=${this.filterData.category}` 
         : `/products`
       this.$axios.get(url, {
         params: {},

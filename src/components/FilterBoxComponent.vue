@@ -74,10 +74,10 @@
             <div class="flex-center filter-text">
               구분
             </div>
-            <select v-model="selectedCategory" class="filter-select" @change="getCategoryProducts()">
+            <select v-model="selectedCategory" class="filter-select">
               <option value="" disabled selected>Category</option>
-              <option v-for="option in categories" :value="option" :key="option">
-                {{ option }}
+              <option v-for="(option, idx) in categories" :value="option.key" :key="idx">
+                {{ option.name }}
               </option>
             </select>
           </div>
@@ -180,22 +180,14 @@ export default {
   methods: {
     // 카테고리 목록 가져오기
     getCategories () {
-      const arr = [];
       const url = '/categories';
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
-        res.data.forEach(function(number) {
-          arr.push(number.name)
-        })
-        this.categories = arr
+        this.categories = res.data
       }).catch((error) => {
         console.log(error);
       })
-    },
-    // 카테고리별 품목 리스트 가져오기
-    getCategoryProducts () {
-      console.log(this.selectedCategory)
     },
     // 연도 셀렉트박스 올해까지 추가
     addYearsList () {
@@ -218,7 +210,7 @@ export default {
         this.modifyDate()
         this.emitFilter()        
       } else {
-        this.emitFilter()      
+        this.emitFilter()
       }
     },
     // 10 이하면 앞에 0 붙이는 이벤트

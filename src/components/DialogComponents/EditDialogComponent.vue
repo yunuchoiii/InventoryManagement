@@ -7,7 +7,15 @@
         persistent
         width="600"
       >
-
+      <v-alert
+        v-model="alert"
+        close-text="Close Alert"
+        :color=alertType.color
+        :type=alertType.type
+        this.alertType.background
+      >
+        {{ alertType.msg }}
+      </v-alert>
         <!-- 상품 등록 -->
         <v-card v-if="register_name == '상품'" style="border-radius: 20px">
           <div class="flex-center dialog-titlebox">
@@ -154,7 +162,7 @@
             rounded
             dark
             @click="editItem()">
-              <span style="font-size: 1.2rem">저장</span>
+              <span style="font-size: 1.2rem">수정</span>
             </v-btn>
           </div>
         </v-card>
@@ -175,7 +183,6 @@
             </v-btn>
           </div>
 
-          {{ this.itemInfo }}
           <v-card-text>
             <v-container>
               <v-row>
@@ -191,7 +198,8 @@
                     required
                     outlined
                     label='* 구분'
-                    v-model="this.selectedCategory"
+                    v-model="selectedCategory"
+                    @change="getProductsByCategory()"
                   ></v-select>
                 </v-col>
 
@@ -201,14 +209,14 @@
                   sm="6"
                 >
                 <v-autocomplete
-                    :items="items"
+                    :items="productList"
                     dense
                     required
                     outlined
                     label='* 품목'
                     aria-required=""
-                    v-model="this.selectedProduct"
-                  ></v-autocomplete>
+                    v-model="selectedProduct"
+                    ></v-autocomplete>
                 </v-col>
 
                 <!-- 입고일자 선택 -->
@@ -309,13 +317,13 @@
             rounded
             dark
             @click="editItem()">
-              <span style="font-size: 1.2rem">저장</span>
+              <span style="font-size: 1.2rem">수정</span>
             </v-btn>
           </div>
         </v-card>
 
         <!---------------------------------------------------------------->
-        <!-- 출고 등록 -->
+        <!-- 출고 수정 -->
         <v-card  v-if="register_name == '출고'" style="border-radius: 20px">
           <div class="flex-center dialog-titlebox">
             {{ register_name }} 내역 수정
@@ -346,7 +354,8 @@
                     required
                     outlined
                     label='* 구분'
-                    v-model="this.selectedCategory"
+                    v-model="selectedCategory"
+                    @change="getProductsByCategory()"
                   ></v-select>
                 </v-col>
 
@@ -362,7 +371,7 @@
                     outlined
                     label='* 품목'
                     aria-required=""
-                    v-model="this.selectedProduct"
+                    v-model="selectedProduct"
                   ></v-autocomplete>
                 </v-col>
 
@@ -492,7 +501,7 @@
             rounded
             dark
             @click="editItem()">
-              <span style="font-size: 1.2rem">저장</span>
+              <span style="font-size: 1.2rem">수정</span>
             </v-btn>
           </div>
         </v-card>
@@ -512,27 +521,35 @@ export default {
       type: String,
       required: true
     },
-    productList: {
-      type: Array
-    },
     itemInfo: {
       type: Object
     }
   },
   data () {
     return {
+      dialog: true,
+      alert: false,
+      alertType: {
+        msg: "알림",
+        type : "info",
+        background : "dark",
+        color : "#254359"
+      },
       selectedCategory: this.itemInfo.categoryName,
       categories: [],
       selectedProduct: this.itemInfo.productName,
+      selectedProductCode: "",
       productList: [],
-      dialog: true,
+      itemsObjects: [],
       inStock_info: {
+        id: this.itemInfo.id,
         inStockDate: this.itemInfo.inStockDate,
         productId: this.itemInfo.productId,
         quantity: this.itemInfo.quantity,
         memo: this.itemInfo.memo
       },
       outStock_info: {
+        id: this.itemInfo.id,
         outStockDate: this.itemInfo.outStockDate,
         productId: this.itemInfo.productId,
         quantity: this.itemInfo.quantity,
@@ -560,16 +577,14 @@ export default {
     }
   },
   watch : {
-    itemInfo : {
-      deep : true,
-      handler() {
-        console.log(itemInfo)
-      }
+    selectedProduct () {
+      this.getStockId()
     }
   },
   setup () {},
   created () {
     this.getCategories()
+    this.getProductsByCategory()
   },
   mounted () {},
   unmounted () {},
@@ -590,6 +605,30 @@ export default {
         console.log(error);
       })
     },
+    // 카테고리별 품목 리스트 구하기
+    getProductsByCategory () {
+      const arr = [];
+      const categoryCode = this.selectedCategory=="세제" ? "00" 
+        : this.selectedCategory=="방향제" ? "01" 
+        : this.selectedCategory=="광택제" ? "02" 
+        : this.selectedCategory=="말통" ? "03" 
+        : "04"
+      this.$axios.get(`/products?categoryCode=${categoryCode}`).then((res) => {
+        this.itemsObjects = res.data.content
+        res.data.content.forEach(function(number) {
+          arr.push(number.productName)
+        })
+        this.productList = arr
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
+    // 입출고내역 id 구하기
+    getStockId () {
+      const idx = this.productList.indexOf(this.selectedProduct)
+      this.inStock_info.productId = this.itemsObjects[idx].id
+      this.outStock_info.productId = this.itemsObjects[idx].id
+    },
     emitClose () {
       this.dialog = false
       setTimeout(() => {
@@ -609,14 +648,33 @@ export default {
     },
     editItem () {
       if(confirm('해당 항목을 수정하시겠습니까?')) {
-        const url = `/products/${this.product_info.id}`;
-        this.$axios.put(url, this.product_info
+        const url = 
+          this.register_name === '상품' ? `/products/${this.product_info.id}` 
+          :this.register_name === '입고' ? `/in-stock/${this.inStock_info.id}`
+          :`/out-stock/${this.outStock_info.id}`
+        this.$axios.put(url, 
+          this.register_name === '상품' ? this.product_info
+          :this.register_name === '입고' ? this.inStock_info
+          :this.outStock_info
         ).then((res) => {
-          alert('수정이 완료되었습니다.')
-          this.emitClose()
-          window.location.reload()
+          this.alertType = {
+            msg: `${this.register_name} 수정이 완료되었습니다.`,
+            type : "success",
+            background : "light",
+            color : "green"
+          }
+          this.alert = true
+          setTimeout(() => {
+            this.emitClose()
+            window.location.reload()
+          }, 1200);
         }).catch((error) => {
           console.log(error);
+          this.alertType.msg=
+            this.register_name == "상품" ?'구분과 품목명은 필수 기재 항목입니다.'
+            :this.register_name == "입고" ? '품목, 입고일, 수량은 필수 기재 항목입니다.' 
+            :'품목, 출고일, 수량, 가격은 필수 기재 항목입니다.'
+          this.alert=true
         })
       }
     }

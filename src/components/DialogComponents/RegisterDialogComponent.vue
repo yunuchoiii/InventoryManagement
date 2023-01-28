@@ -42,7 +42,7 @@
             <v-btn
               icon
               dark
-              @click="dialog = false"
+              @click="dialog = false; alert = false;"
             >
               <v-icon color="black">mdi-close</v-icon>
             </v-btn>
@@ -175,12 +175,11 @@
             <v-btn
               icon
               dark
-              @click="dialog = false"
+              @click="dialog = false; alert = false;"
             >
               <v-icon color="black">mdi-close</v-icon>
             </v-btn>
           </div>
-          {{inStock_info}}
 
           <v-card-text>
             <v-container>
@@ -321,12 +320,11 @@
             <v-btn
               icon
               dark
-              @click="dialog = false"
+              @click="dialog = false; alert = false;"
             >
               <v-icon color="black">mdi-close</v-icon>
             </v-btn>
           </div>
-          {{outStock_info}}
 
           <v-card-text>
             <v-container>
@@ -612,7 +610,7 @@ export default {
         setTimeout(() => {
           this.dialog = false
           window.location.reload()
-        }, 1000);
+        }, 1200);
       }).catch((error) => {
         console.log(error);
         this.alertType.msg=

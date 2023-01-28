@@ -8,6 +8,15 @@
         persistent
         width="600"
       >
+      <v-alert
+        v-model="alert"
+        close-text="Close Alert"
+        :color=alertType.color
+        :type=alertType.type
+        this.alertType.background
+      >
+        {{ alertType.msg }}
+      </v-alert>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="mx-2"
@@ -150,7 +159,7 @@
             color="#254359"
             rounded
             dark
-            @click="RegisterProduct()">
+            @click="Register()">
               <span style="font-size: 1.2rem">저장</span>
             </v-btn>
           </div>
@@ -188,6 +197,8 @@
                     required
                     outlined
                     label='* 구분'
+                    v-model="selectedCategory"
+                    @change="getProductsByCategory()"
                   ></v-select>
                 </v-col>
 
@@ -203,7 +214,8 @@
                     outlined
                     label='* 품목'
                     aria-required=""
-                    v-model="inStock_info.product"
+                    v-model="selectedItem"
+                    @change="getProductId()"
                   ></v-autocomplete>
                 </v-col>
 
@@ -293,7 +305,7 @@
             color="#254359"
             rounded
             dark
-            @click="dialog = false">
+            @click="Register()">
               <span style="font-size: 1.2rem">저장</span>
             </v-btn>
           </div>
@@ -331,6 +343,8 @@
                     required
                     outlined
                     label='* 구분'
+                    v-model="selectedCategory"
+                    @change="getProductsByCategory()"
                   ></v-select>
                 </v-col>
 
@@ -346,7 +360,8 @@
                     outlined
                     label='* 품목'
                     aria-required=""
-                    v-model="outStock_info.product"
+                    v-model="selectedItem"
+                    @change="getProductId()"
                   ></v-autocomplete>
                 </v-col>
 
@@ -438,7 +453,7 @@
                   required
                   label='* 가격'
                   type="number"
-                  v-model="outStock_info.quantity"
+                  v-model="outStock_info.price"
                 ></v-text-field>
               </v-col>
 
@@ -464,7 +479,7 @@
             color="#254359"
             rounded
             dark
-            @click="dialog = false">
+            @click="Register()">
               <span style="font-size: 1.2rem">저장</span>
             </v-btn>
           </div>
@@ -489,8 +504,18 @@ export default {
   data () {
     return {
       dialog: false,
+      alert: false,
+      alertType: {
+        msg: "알림",
+        type : "info",
+        background : "dark",
+        color : "#254359"
+      },
       categories: [],
+      selectedCategory: "",
+      itemsObjects: [],
       items: [],
+      selectedItem: "",
       inStock_info: {
         inStockDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         productId: null,
@@ -543,23 +568,60 @@ export default {
         console.log(error);
       })
     },
-    RegisterProduct () {
-      if (this.register_name == '상품') {
-        if (this.product_info.categoryName != '' && this.product_info.productName != '') {
-          const url = '/products';
-          this.$axios.post(url, this.product_info,
-          ).then((res) => {
-            alert('상품 등록이 완료되었습니다.')
-            this.dialog = false
-            window.location.reload()
-          }).catch((error) => {
-            console.log(error);
-          })
-        } else {
-          alert('구분과 품목명은 필수 기재 항목입니다.')
-        }        
-      }
-    }
+    // 카테고리별 품목 리스트 구하기
+    getProductsByCategory () {
+      const arr = [];
+      const categoryCode = this.selectedCategory=="세제" ? "00" 
+        : this.selectedCategory=="방향제" ? "01" 
+        : this.selectedCategory=="광택제" ? "02" 
+        : this.selectedCategory=="말통" ? "03" 
+        : "04"
+      this.$axios.get(`/products?categoryCode=${categoryCode}`).then((res) => {
+        this.itemsObjects = res.data.content
+        res.data.content.forEach(function(number) {
+          arr.push(number.productName)
+        })
+        this.items = arr
+        console.log(this.items)
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
+    getProductId () {
+      const idx = this.items.indexOf(this.selectedItem)
+      this.inStock_info.productId = this.itemsObjects[idx].id
+      this.outStock_info.productId = this.itemsObjects[idx].id
+    },
+    Register () {
+      const url = 
+        this.register_name == "상품" ? '/products' 
+        : this.register_name == "입고" ? "/in-stock" 
+        : "/out-stock";
+      this.$axios.post(url, 
+        this.register_name == "상품" ? this.product_info 
+        : this.register_name == "입고" ? this.inStock_info 
+        : this.outStock_info
+      ).then((res) => {
+        this.alertType = {
+          msg: `${this.register_name} 등록이 완료되었습니다.`,
+          type : "success",
+          background : "light",
+          color : "green"
+        }
+        this.alert = true
+        setTimeout(() => {
+          this.dialog = false
+          window.location.reload()
+        }, 1000);
+      }).catch((error) => {
+        console.log(error);
+        this.alertType.msg=
+          this.register_name == "상품" ?'구분과 품목명은 필수 기재 항목입니다.'
+          :this.register_name == "입고" ? '품목, 입고일, 수량은 필수 기재 항목입니다.' 
+          :'품목, 출고일, 수량, 가격은 필수 기재 항목입니다.'
+        this.alert=true
+      })
+    },
   }
 }
 </script>

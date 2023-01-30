@@ -7,15 +7,35 @@
         persistent
         width="600"
       >
-      <v-alert
-        v-model="alert"
-        close-text="Close Alert"
-        :color=alertType.color
-        :type=alertType.type
-        this.alertType.background
-      >
-        {{ alertType.msg }}
-      </v-alert>
+        <v-alert
+          v-model="alert"
+          close-text="Close Alert"
+          :color=alertType.color
+          :type=alertType.type
+          alertType.background
+          :style="{top: alertHeight}"
+          class="slide-in-blurred-top dialog-alert"
+        >
+          <v-row align="center">
+            <v-col class="grow">
+              {{ alertType.msg }}
+            </v-col>
+            <v-col v-if="editConfirm" class="shrink">
+              <v-btn
+                light
+                elevation="0"
+                style="border-radius: 10px"
+                @click="editItem()">수정</v-btn>
+            </v-col>
+            <v-col v-if="deleteConfirm" class="shrink">
+              <v-btn
+                light
+                elevation="0"
+                style="border-radius: 10px"
+                @click="deleteItem()">삭제</v-btn>
+            </v-col>
+          </v-row>
+        </v-alert>
         <!-- 상품 등록 -->
         <v-card v-if="register_name == '상품'" style="border-radius: 20px">
           <div class="flex-center dialog-titlebox">
@@ -161,7 +181,7 @@
             color="#254359"
             rounded
             dark
-            @click="editItem()">
+            @click="confirmModal(1)">
               <span style="font-size: 1.2rem">수정</span>
             </v-btn>
           </div>
@@ -307,7 +327,7 @@
             outlined
             dark
             style="margin-right: 20px"
-            @click="deleteItem()">
+            @click="confirmModal(2)">
               <span style="font-size: 1.2rem">삭제</span>
             </v-btn>
             <v-btn
@@ -316,7 +336,7 @@
             color="#254359"
             rounded
             dark
-            @click="editItem()">
+            @click="confirmModal(1)">
               <span style="font-size: 1.2rem">수정</span>
             </v-btn>
           </div>
@@ -338,7 +358,6 @@
             </v-btn>
           </div>
 
-          {{ this.itemInfo }}
           <v-card-text>
             <v-container>
               <v-row>
@@ -463,7 +482,7 @@
                   required
                   label='* 가격'
                   type="number"
-                  v-model="outStock_info.quantity"
+                  v-model="outStock_info.price"
                 ></v-text-field>
               </v-col>
 
@@ -491,7 +510,7 @@
             outlined
             dark
             style="margin-right: 20px"
-            @click="deleteItem()">
+            @click="confirmModal(2)">
               <span style="font-size: 1.2rem">삭제</span>
             </v-btn>
             <v-btn
@@ -500,7 +519,7 @@
             color="#254359"
             rounded
             dark
-            @click="editItem()">
+            @click="confirmModal(1)">
               <span style="font-size: 1.2rem">수정</span>
             </v-btn>
           </div>
@@ -531,10 +550,15 @@ export default {
       alert: false,
       alertType: {
         msg: "알림",
-        type : "info",
+        type : "error",
         background : "dark",
         color : "#254359"
       },
+      alertHeight: this.register_name === '입고' ? window.innerHeight/2 - 271 + 'px' 
+        : window.innerHeight/2 - 304 + 'px',
+      confirm: false,
+      editConfirm: false,
+      deleteConfirm: false,
       selectedCategory: this.itemInfo.categoryName,
       categories: [],
       selectedProduct: this.itemInfo.productName,
@@ -629,55 +653,95 @@ export default {
       this.inStock_info.productId = this.itemsObjects[idx].id
       this.outStock_info.productId = this.itemsObjects[idx].id
     },
+    // 상위 컴포넌트로 모달창 닫는다고 보내기
     emitClose () {
       this.dialog = false
       setTimeout(() => {
         this.$emit('edit_dialog', this.dialog)
       }, "300")
     },
-    deleteItem () {
-      if (this.register_name == '상품') {
-        if(confirm('해당 품목을 판매 중지하시겠습니까?')) {
-          this.emitClose()
-        }
+    // 수정,삭제하시겠습니까? 확인창
+    confirmModal (idx) {
+      if (idx === 1) {
+        this.editConfirm = true
+        this.deleteConfirm = false
       } else {
-        if(confirm('해당 내역을 삭제하시겠습니까?')) {
-          this.emitClose()
-        }
+        this.editConfirm = false
+        this.deleteConfirm = true
       }
+      this.alertType = {
+        msg : idx === 1 ? "해당 항목을 수정하시겠습니까?" : "해당 항목을 삭제하시겠습니까?",
+        type : "info",
+        background : "light",
+        color : idx === 1 ? "#f89929" : "#c41230"
+      }
+      this.alert = true
     },
+    // 수정 api
     editItem () {
-      if(confirm('해당 항목을 수정하시겠습니까?')) {
-        const url = 
-          this.register_name === '상품' ? `/products/${this.product_info.id}` 
-          :this.register_name === '입고' ? `/in-stock/${this.inStock_info.id}`
-          :`/out-stock/${this.outStock_info.id}`
-        this.$axios.put(url, 
-          this.register_name === '상품' ? this.product_info
-          :this.register_name === '입고' ? this.inStock_info
-          :this.outStock_info
-        ).then((res) => {
-          this.alertType = {
-            msg: `${this.register_name} 수정이 완료되었습니다.`,
-            type : "success",
-            background : "light",
-            color : "green"
-          }
-          this.alert = true
-          setTimeout(() => {
-            this.emitClose()
-            window.location.reload()
-          }, 1200);
-        }).catch((error) => {
-          console.log(error);
-          this.alertType.msg=
-            this.register_name == "상품" ?'구분과 품목명은 필수 기재 항목입니다.'
+      this.confirm = false
+      const url = 
+        this.register_name === '상품' ? `/products/${this.product_info.id}` 
+        :this.register_name === '입고' ? `/in-stock/${this.inStock_info.id}`
+        :`/out-stock/${this.outStock_info.id}`
+      this.$axios.put(url, 
+        this.register_name === '상품' ? this.product_info
+        :this.register_name === '입고' ? this.inStock_info
+        :this.outStock_info
+      ).then((res) => {
+        this.alertType = {
+          msg: `${this.register_name} 수정이 완료되었습니다.`,
+          type : "success",
+          background : "light",
+          color : "green"
+        }
+        this.alert = true
+        setTimeout(() => {
+          this.emitClose()
+          window.location.reload()
+        }, 1500);
+      }).catch((error) => {
+        console.log(error);
+        this.alertType = {
+          msg: this.register_name == "상품" ?'구분과 품목명은 필수 기재 항목입니다.'
             :this.register_name == "입고" ? '품목, 입고일, 수량은 필수 기재 항목입니다.' 
-            :'품목, 출고일, 수량, 가격은 필수 기재 항목입니다.'
-          this.alert=true
-        })
-      }
-    }
+            :'품목, 출고일, 수량, 가격은 필수 기재 항목입니다.',
+          type : "error",
+          background : "dark",
+          color : "#c41230"
+        },
+        this.alert=true
+      })
+    },
+    // 삭제 api
+    deleteItem () {
+      this.confirm = false
+      const url = 
+        this.register_name === '입고' ? `/in-stock/${this.inStock_info.id}`
+        :`/out-stock/${this.outStock_info.id}`
+      this.$axios.delete(url).then((res) => {
+        this.alertType = {
+          msg: `해당 항목이 삭제되었습니다.`,
+          type : "success",
+          background : "light",
+          color : "green"
+        }
+        this.alert = true
+        setTimeout(() => {
+          this.emitClose()
+          window.location.reload()
+        }, 1500);
+      }).catch((error) => {
+        console.log(error);
+        this.alertType = {
+          msg:'다시 시도해주세요.',
+          type : "error",
+          background : "dark",
+          color : "#c41230"
+        },
+        this.alert=true
+      })
+    },
   }
 }
 </script>

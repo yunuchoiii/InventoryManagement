@@ -35,7 +35,17 @@ export default {
       headers: ['순번', '구분', '품목', '품목코드', '출고날짜', '고객명', '가격', '출고량', '비고'],
       datas: [],
       filterData: {},
-      componentKey: 0
+      componentKey: 0,
+      categoryCode: "",
+      startDate: "",
+      endDate: "",
+      pageable: {
+        "page": 0,
+        "size": 1000,
+        "sort": [
+          "string"
+        ]
+      }
     }
   },
   watch: {},

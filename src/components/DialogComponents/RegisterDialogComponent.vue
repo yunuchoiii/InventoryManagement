@@ -8,15 +8,17 @@
         persistent
         width="600"
       >
-      <v-alert
-        v-model="alert"
-        close-text="Close Alert"
-        :color=alertType.color
-        :type=alertType.type
-        this.alertType.background
-      >
-        {{ alertType.msg }}
-      </v-alert>
+        <v-alert
+          v-model="alert"
+          close-text="Close Alert"
+          :color=alertType.color
+          :type=alertType.type
+          alertType.background
+          :style="{top: alertHeight}"
+          class="slide-in-blurred-top dialog-alert"
+        >
+          {{ alertType.msg }}
+        </v-alert>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="mx-2"
@@ -505,10 +507,12 @@ export default {
       alert: false,
       alertType: {
         msg: "알림",
-        type : "info",
+        type : "error",
         background : "dark",
         color : "#254359"
       },
+      alertHeight: this.register_name === '입고' ? window.innerHeight/2 - 271 + 'px' 
+        : window.innerHeight/2 - 304 + 'px',
       categories: [],
       selectedCategory: "",
       itemsObjects: [],
@@ -610,9 +614,10 @@ export default {
         setTimeout(() => {
           this.dialog = false
           window.location.reload()
-        }, 1200);
+        }, 1500);
       }).catch((error) => {
         console.log(error);
+        this.alertType.color="#c41230"
         this.alertType.msg=
           this.register_name == "상품" ?'구분과 품목명은 필수 기재 항목입니다.'
           :this.register_name == "입고" ? '품목, 입고일, 수량은 필수 기재 항목입니다.' 

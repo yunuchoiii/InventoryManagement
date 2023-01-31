@@ -617,7 +617,7 @@ export default {
     // 카테고리 목록 가져오기
     getCategories () {
       const arr = [];
-      const url = '/categories';
+      const url = 'http://localhost:8080/categories';
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
@@ -637,7 +637,7 @@ export default {
         : this.selectedCategory=="광택제" ? "02" 
         : this.selectedCategory=="말통" ? "03" 
         : "04"
-      this.$axios.get(`/products?categoryCode=${categoryCode}`).then((res) => {
+      this.$axios.get(`http://localhost:8080/products?categoryCode=${categoryCode}`).then((res) => {
         this.itemsObjects = res.data.content
         res.data.content.forEach(function(number) {
           arr.push(number.productName)
@@ -681,9 +681,9 @@ export default {
     editItem () {
       this.confirm = false
       const url = 
-        this.register_name === '상품' ? `/products/${this.product_info.id}` 
-        :this.register_name === '입고' ? `/in-stock/${this.inStock_info.id}`
-        :`/out-stock/${this.outStock_info.id}`
+        this.register_name === '상품' ? `http://localhost:8080/products/${this.product_info.id}` 
+        :this.register_name === '입고' ? `http://localhost:8080/in-stock/${this.inStock_info.id}`
+        :`http://localhost:8080/out-stock/${this.outStock_info.id}`
       this.$axios.put(url, 
         this.register_name === '상품' ? this.product_info
         :this.register_name === '입고' ? this.inStock_info
@@ -717,8 +717,8 @@ export default {
     deleteItem () {
       this.confirm = false
       const url = 
-        this.register_name === '입고' ? `/in-stock/${this.inStock_info.id}`
-        :`/out-stock/${this.outStock_info.id}`
+        this.register_name === '입고' ? `http://localhost:8080/in-stock/${this.inStock_info.id}`
+        :`http://localhost:8080/out-stock/${this.outStock_info.id}`
       this.$axios.delete(url).then((res) => {
         this.alertType = {
           msg: `해당 항목이 삭제되었습니다.`,

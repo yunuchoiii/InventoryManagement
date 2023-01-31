@@ -180,7 +180,7 @@ export default {
   methods: {
     // 카테고리 목록 가져오기
     getCategories () {
-      const url = '/categories';
+      const url = 'http://localhost:8080/categories';
       this.$axios.get(url, {
         params: {},
       }).then((res) => {

@@ -55,7 +55,7 @@ export default {
       this.componentKey = data
     },
     getDataList () {
-      const url = `/in-stock`
+      const url = `http://localhost:8080/in-stock`
       this.$axios.get(url, {
         params: {},
       }).then((res) => {

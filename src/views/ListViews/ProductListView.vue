@@ -69,8 +69,8 @@ export default {
     },
     getDataList () {
       const url = this.filterData.category != "" 
-        ? `/products?categoryCode=${this.filterData.category}` 
-        : `/products`
+        ? `http://localhost:8080/products?categoryCode=${this.filterData.category}` 
+        : `http://localhost:8080/products`
       this.$axios.get(url, {
         params: {},
       }).then((res) => {

@@ -16,6 +16,7 @@
     :filterData="filterData"
     :componentKey="componentKey"
     :register_name="register_name"/>
+    {{ filterData }}
   </body>
 </template>
 <script>
@@ -45,7 +46,8 @@ export default {
         "sort": [
           "string"
         ]
-      }
+      },
+      querys: []
     }
   },
   watch: {},
@@ -58,17 +60,20 @@ export default {
   methods: {
     filterEvent (data) {
       this.filterData = data
-      // this.categoryCode = ""
+      this.querys = []
+      Object.keys(this.filterData).forEach(key => {
+        if (this.filterData[key] != "") {
+          this.querys.push(`${key}=${this.filterData[key]}`)
+        }
+      })
       this.getDataList()
     },
     componentKeyEvent (data) {
       this.componentKey = data
     },
     getDataList () {
-      const url = `http://localhost:8080/out-stock`
-      this.$axios.get(url, {
-        params: {},
-      }).then((res) => {
+      const url = `http://localhost:8080/out-stock?${this.querys.join('&')}`
+      this.$axios.get(url).then((res) => {
         this.datas = res.data.content
       }).catch((error) => {
         console.log(error);

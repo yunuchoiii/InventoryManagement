@@ -32,7 +32,7 @@
           >
             <v-icon>mdi-cached</v-icon>
           </v-btn>
-          <span style="color: #254359; font-size: 2vh; font-weight: 700;">초기화</span>
+          <span style="color: #254359; font-size: 2vh; font-weight: 700;">검색 초기화</span>
         </div>
         <div class="filter-box">
           <div v-if="date_range" class="filter-card">
@@ -100,13 +100,13 @@
 
 <script>
 /* eslint-disable */
-import RegisterDialog from '@/components/DialogComponents/RegisterDialogComponent.vue'
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { FunctionalCalendar } from 'vue-functional-calendar';
+import RegisterDialog from "@/components/DialogComponents/RegisterDialogComponent.vue"
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { FunctionalCalendar } from "vue-functional-calendar";
 
 export default {
-  name: 'FilterBoxComponent',
+  name: "FilterBoxComponent",
   components: {RegisterDialog, FunctionalCalendar},
   props: {
     title: {
@@ -134,16 +134,16 @@ export default {
     },
     tooltip_msg: {
       type: String,
-      default: ''
+      default: ""
     }
   },
   data () {
     return {
-      selectedYear: new Date().getFullYear(),
+      selectedYear: "",
       years: [],
-      selectedMonth: '',
+      selectedMonth: "",
       months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      selectedCategory: '',
+      selectedCategory: "",
       categories: [],
       last_month: new Date().getMonth(),
       calendarData: {
@@ -154,12 +154,12 @@ export default {
       },
       calendarConfigs: {
           sundayStart: true,
-          dateFormat: 'yyyy-mm-dd',
+          dateFormat: "yyyy-mm-dd",
           isDatePicker: false,
           isDateRange: true,
           isModal: true,
-          placeholder: 'Date',
-          dayNames: ['월', '화', '수', '목', '금', '토', '일'],
+          placeholder: "Date",
+          dayNames: ["월", "화", "수", "목", "금", "토", "일"],
           monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
       },
       filterData: {},
@@ -169,7 +169,6 @@ export default {
   watch: {},
   setup () {},
   created () {
-    this.selectedYear = new Date().getFullYear()
     this.getCategories()
     this.addYearsList()
   },
@@ -180,7 +179,7 @@ export default {
   methods: {
     // 카테고리 목록 가져오기
     getCategories () {
-      const url = 'http://localhost:8080/categories';
+      const url = "http://localhost:8080/categories";
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
@@ -198,8 +197,8 @@ export default {
     },
     // 입출고 등록 마감
     closeRegister () {
-      if (confirm(this.last_month + '월 ' + this.register_name + ' 등록을 마감하시겠습니까?')) {
-        alert(this.last_month + '월 ' + this.register_name + ' 등록이 마감되었습니다.')
+      if (confirm(this.last_month + "월 " + this.register_name + " 등록을 마감하시겠습니까?")) {
+        alert(this.last_month + "월 " + this.register_name + " 등록이 마감되었습니다.")
       } else {
         //pass
       }
@@ -215,20 +214,20 @@ export default {
     },
     // 10 이하면 앞에 0 붙이는 이벤트
     modifyDate () {
-      const start_arr = this.calendarData.dateRange.start.split('-')
-      const end_arr = this.calendarData.dateRange.end.split('-')
+      const start_arr = this.calendarData.dateRange.start.split("-")
+      const end_arr = this.calendarData.dateRange.end.split("-")
 
       for (var i=0; i<3; i++) {
-        if (start_arr[i] < 10) {
-          start_arr[i] = '0' + start_arr[i]
-          this.calendarData.dateRange.start = start_arr[0] + '-' + start_arr[1] + '-' + start_arr[2]
+        if (start_arr[i].length === 1) {
+          start_arr[i] = "0" + start_arr[i]
+          this.calendarData.dateRange.start = start_arr[0] + "-" + start_arr[1] + "-" + start_arr[2]
         } else {
           // pass
         }
 
-        if (end_arr[i] < 10) {
-          end_arr[i] = '0' + end_arr[i]
-          this.calendarData.dateRange.end = end_arr[0] + '-' + end_arr[1] + '-' + end_arr[2]
+        if (end_arr[i].length === 1) {
+          end_arr[i] = "0" + end_arr[i]
+          this.calendarData.dateRange.end = end_arr[0] + "-" + end_arr[1] + "-" + end_arr[2]
         } else {
           // pass
         }        
@@ -239,19 +238,17 @@ export default {
       this.filterData = {
         year: this.selectedYear,
         month: this.selectedMonth,
-        category: this.selectedCategory,
-        item: this.selectedItem,
-        start_date: this.calendarData.dateRange.start,
-        end_date: this.calendarData.dateRange.end
+        categoryCode: this.selectedCategory,
+        startDate: this.calendarData.dateRange.start,
+        endDate: this.calendarData.dateRange.end
       }
-      this.$emit('filterData', this.filterData)
+      this.$emit("filterData", this.filterData)
     },
     // 조회 조건 초기화
     emitReRender () {
-      this.selectedYear = new Date().getFullYear()
-      this.selectedMonth = ''
-      this.selectedCategory = ''
-      this.selectedItem = ''
+      this.selectedYear = ""
+      this.selectedMonth = ""
+      this.selectedCategory = ""
       this.calendarData = {
         dateRange : {
           start: "",
@@ -260,7 +257,7 @@ export default {
       }
 
       this.componentKey += 1
-      this.$emit('componentKey', this.componentKey)
+      this.$emit("componentKey", this.componentKey)
     },
     reload () {
       location.reload()
@@ -270,7 +267,7 @@ export default {
 </script>
 <style>
 /* eslint-disable */
-@import '@/styles/styles.css';
+@import "@/styles/styles.css";
 .v-application--wrap {
   min-height: 0vh !important;
 }
@@ -281,7 +278,7 @@ export default {
   box-shadow: none !important;
 }
 .vfc-calendar .vfc-content {
-  font-family: Pretendard, -apple-system, 'Noto Sans KR', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: Pretendard, -apple-system, "Noto Sans KR", BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 .vfc-multiple-input input:first-child, .vfc-multiple-input input:last-child {
   margin-left: 10px;

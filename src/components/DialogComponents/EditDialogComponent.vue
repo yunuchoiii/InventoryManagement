@@ -679,7 +679,8 @@ export default {
     },
     // 수정 api
     editItem () {
-      this.confirm = false
+      this.editConfirm = false
+      this.deleteConfirm = false
       const url = 
         this.register_name === '상품' ? `http://localhost:8080/products/${this.product_info.id}` 
         :this.register_name === '입고' ? `http://localhost:8080/in-stock/${this.inStock_info.id}`

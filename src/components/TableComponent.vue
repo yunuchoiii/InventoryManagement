@@ -62,6 +62,11 @@
                 @click="emitPaging()">
                 more
               </v-btn>
+              <div v-else class="flex-center" style="height: 50px">
+                <span style="color:rgba(0, 0, 0, 0.5); font-size: 0.8rem">
+                  더 이상 검색 결과가 없습니다.
+                </span>
+              </div>
             </td>
           </tr>
         </template>

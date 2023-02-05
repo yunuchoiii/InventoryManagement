@@ -10,12 +10,14 @@
     :year_show="false"
     :date_range="true"/>
     <TableComponent
+    @paging="pagingEvent"
     :title="title"
     :headers="headers"
     :datas="datas"
     :filterData="filterData"
     :componentKey="componentKey"
-    :register_name="register_name"/>
+    :register_name="register_name"
+    :isEmpty="isEmpty"/>
   </body>
 </template>
 <script>
@@ -35,8 +37,16 @@ export default {
       headers: ['순번', '구분', '품목', '품목코드', '입고날짜', '입고량', '비고'],
       datas: [],
       filterData: {},
+      pageable: {
+        "page": 0,
+        "size": 50,
+        "sort": [
+          "string"
+        ]
+      },
       componentKey: 0,
-      querys: []
+      querys: [],
+      isEmpty: false
     }
   },
   watch: {},
@@ -49,6 +59,9 @@ export default {
   methods: {
     filterEvent (data) {
       this.filterData = data
+      this.isEmpty = false
+      this.pageable.page = 0
+      this.datas = []
       this.querys = []
       Object.keys(this.filterData).forEach(key => {
         if (this.filterData[key] != "") {
@@ -60,10 +73,19 @@ export default {
     componentKeyEvent (data) {
       this.componentKey = data
     },
+    pagingEvent () {
+      this.pageable.page ++
+      this.getDataList()
+    },
     getDataList () {
-      const url = `http://localhost:8080/in-stock?${this.querys.join('&')}`
+      const url = `http://localhost:8080/in-stock?page=${this.pageable.page}&size=${this.pageable.size}&${this.querys.join('&')}`
       this.$axios.get(url).then((res) => {
-        this.datas = res.data.content
+        res.data.content.forEach(element => {
+          this.datas.push(element)
+        });
+        if (res.data.content.length < 50) {
+          this.isEmpty = true
+        }
       }).catch((error) => {
         console.log(error);
       })

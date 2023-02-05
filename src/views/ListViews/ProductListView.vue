@@ -11,12 +11,14 @@
     :date_range="false"
     :tooltip_msg="tooltip_msg"/>
     <TableComponent
+    @paging="pagingEvent"
     :title="title"
     :headers="headers"
     :datas="datas"
     :filterData="filterData"
     :componentKey="componentKey"
-    :register_name="register_name"/>
+    :register_name="register_name"
+    :isEmpty="isEmpty"/>
     <div>
       <input type="text">
     </div>
@@ -42,14 +44,21 @@ export default {
       filterData: {
         year: "",
         month: "",
-        category: "",
-        item: "",
+        categoryCode: "",
         start_date: "",
         end_date: ""
       },
+      pageable : {
+        page: 0,
+        size: 50,
+        "sort": [
+          "string"
+        ]
+      },
       componentKey: 0,
       tooltip_msg: "",
-      tableData: []
+      tableData: [],
+      isEmpty: false
     }
   },
   watch: {},
@@ -62,19 +71,31 @@ export default {
   methods: {
     filterEvent (data) {
       this.filterData = data
+      this.isEmpty = false
+      this.pageable.page = 0
+      this.datas = []
       this.getDataList()
     },
     componentKeyEvent (data) {
       this.componentKey = data
     },
+    pagingEvent () {
+      this.pageable.page ++
+      this.getDataList()
+    },
     getDataList () {
-      const url = this.filterData.category != "" 
-        ? `http://localhost:8080/products?categoryCode=${this.filterData.category}` 
-        : `http://localhost:8080/products`
+      const url = this.filterData.categoryCode != "" 
+        ? `http://localhost:8080/products?categoryCode=${this.filterData.categoryCode}&page=${this.pageable.page}&size=${this.pageable.size}` 
+        : `http://localhost:8080/products?page=${this.pageable.page}&size=${this.pageable.size}`
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
-        this.datas = res.data.content
+        res.data.content.forEach(element => {
+          this.datas.push(element)
+        })
+        if (res.data.content.length < 50) {
+          this.isEmpty = true
+        }
       }).catch((error) => {
         console.log(error);
       })

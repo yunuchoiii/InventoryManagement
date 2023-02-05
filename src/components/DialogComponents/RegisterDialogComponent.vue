@@ -584,7 +584,6 @@ export default {
           arr.push(number.productName)
         })
         this.items = arr
-        console.log(this.items)
       }).catch((error) => {
         console.log(error);
       })

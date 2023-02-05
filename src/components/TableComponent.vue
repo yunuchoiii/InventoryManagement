@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div class="box-shadow" style="border-radius: 10px; overflow: hidden">
+    <div class="box-shadow" style="border-radius: 10px; overflow: hidden;">
       <v-simple-table
       fixed-header
       height="79vh"
@@ -52,6 +52,18 @@
               <td>{{ item.memo }}</td>
             </tr>
           </tbody>
+          <!-- 더 보기 버튼 -->
+          <tr>
+            <td colspan='10'>
+              <v-btn
+                v-if="!isEmpty"
+                text
+                color="#346181"
+                @click="emitPaging()">
+                more
+              </v-btn>
+            </td>
+          </tr>
         </template>
       </v-simple-table>
     </div>
@@ -95,11 +107,16 @@ export default {
     },
     componentKey: {
       type: Number
+    },
+    isEmpty : {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
-      itemInfo: {}
+      itemInfo: {},
+      paging: 0
     }
   },
   watch: {},
@@ -116,6 +133,10 @@ export default {
     },
     closeDialog (data) {
       this.edit_dialog = data
+    },
+    emitPaging () {
+      this.paging ++
+      this.$emit("paging", this.paging)
     }
   }
 }

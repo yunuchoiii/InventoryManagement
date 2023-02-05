@@ -474,7 +474,7 @@
               <!-- 가격 입력 -->
               <v-col
                 cols="12"
-                sm="6"
+                sm="5"
               >
                 <v-text-field
                   dense
@@ -484,6 +484,12 @@
                   type="number"
                   v-model="outStock_info.price"
                 ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="1"
+              >
+                <span style="font-size:1.2rem">원</span>
               </v-col>
 
               <!-- 비고 입력 -->
@@ -716,7 +722,7 @@ export default {
     },
     // 삭제 api
     deleteItem () {
-      this.confirm = false
+      this.deleteConfirm = false
       const url = 
         this.register_name === '입고' ? `http://localhost:8080/in-stock/${this.inStock_info.id}`
         :`http://localhost:8080/out-stock/${this.outStock_info.id}`

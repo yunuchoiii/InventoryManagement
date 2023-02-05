@@ -78,8 +78,13 @@ export default {
       this.getDataList()
     },
     getDataList () {
-      const url = `http://localhost:8080/in-stock?page=${this.pageable.page}&size=${this.pageable.size}&${this.querys.join('&')}`
-      this.$axios.get(url).then((res) => {
+      const url = `http://localhost:8080/in-stock?${this.querys.join('&')}`
+      this.$axios.get(url, {
+        params: {
+          page:this.pageable.page,
+          size:this.pageable.size
+        },
+      }).then((res) => {
         res.data.content.forEach(element => {
           this.datas.push(element)
         });

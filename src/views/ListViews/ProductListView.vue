@@ -85,10 +85,13 @@ export default {
     },
     getDataList () {
       const url = this.filterData.categoryCode != "" 
-        ? `http://localhost:8080/products?categoryCode=${this.filterData.categoryCode}&page=${this.pageable.page}&size=${this.pageable.size}` 
-        : `http://localhost:8080/products?page=${this.pageable.page}&size=${this.pageable.size}`
+        ? `http://localhost:8080/products?categoryCode=${this.filterData.categoryCode}` 
+        : `http://localhost:8080/products`
       this.$axios.get(url, {
-        params: {},
+        params: {
+          page:this.pageable.page,
+          size:this.pageable.size
+        },
       }).then((res) => {
         res.data.content.forEach(element => {
           this.datas.push(element)

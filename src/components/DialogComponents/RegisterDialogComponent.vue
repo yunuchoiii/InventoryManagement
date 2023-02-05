@@ -101,7 +101,7 @@
               <!-- 판매단가 입력 -->
                 <v-col
                   cols="12"
-                  sm="6"
+                  sm="5"
                 >
                   <v-text-field
                     dense
@@ -111,8 +111,26 @@
                     v-model="product_info.price"
                   ></v-text-field>
                 </v-col>
+                <v-col
+                  cols="12"
+                  sm="1"
+                >
+                  <span style="font-size:1.2rem">원</span>
+                </v-col>
 
                 <!-- 용량, 단위 입력 -->
+                <v-col
+                  cols="12"
+                  sm="6"
+                >
+                  <v-text-field
+                    dense
+                    outlined
+                    label='용량'
+                    type="number"
+                    v-model="product_info.amount"
+                  ></v-text-field>
+                </v-col>
                 <v-col
                   cols="12"
                   sm="6"
@@ -125,18 +143,6 @@
                     label='단위'
                     v-model="product_info.productUnit"
                   ></v-select>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="6"
-                >
-                  <v-text-field
-                    dense
-                    outlined
-                    label='용량'
-                    type="number"
-                    v-model="product_info.amount"
-                  ></v-text-field>
                 </v-col>
 
               <!-- 비고 입력 -->
@@ -445,7 +451,7 @@
               <!-- 가격 입력 -->
               <v-col
                 cols="12"
-                sm="6"
+                sm="5"
               >
                 <v-text-field
                   dense
@@ -455,6 +461,12 @@
                   type="number"
                   v-model="outStock_info.price"
                 ></v-text-field>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="1"
+              >
+                <span style="font-size:1.2rem">원</span>
               </v-col>
 
               <!-- 비고 입력 -->

@@ -74,10 +74,23 @@
             <div class="flex-center filter-text">
               구분
             </div>
-            <select v-model="selectedCategory" class="filter-select">
+            <select v-model="selectedCategory" class="filter-select" @change="getProductsByCategory()">
               <option value="" disabled selected>Category</option>
               <option v-for="(option, idx) in categories" :value="option.key" :key="idx">
                 {{ option.name }}
+              </option>
+            </select>
+          </div>
+          <div v-if="register_name == '입고' || register_name == '출고'"
+            class="filter-card"
+            style="margin-left: 8px;">
+            <div class="flex-center filter-text">
+              품목
+            </div>
+            <select v-model="selectedItem" class="filter-select">
+              <option value="" disabled selected>Product</option>
+              <option v-for="(option, idx) in itemsObjects" :value="option.id" :key="idx">
+                {{ option.productName }}
               </option>
             </select>
           </div>
@@ -145,6 +158,9 @@ export default {
       months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       selectedCategory: "",
       categories: [],
+      selectedItem: "",
+      itemsObjects: {},
+      items: [],
       last_month: new Date().getMonth(),
       calendarData: {
         dateRange : {
@@ -166,7 +182,13 @@ export default {
       componentKey: 0
     }
   },
-  watch: {},
+  watch: {
+    calendarData() {
+      deep: true
+      handler()
+        this.modifyDate()
+    }
+  },
   setup () {},
   created () {
     this.getCategories()
@@ -184,6 +206,15 @@ export default {
         params: {},
       }).then((res) => {
         this.categories = res.data
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
+    // 카테고리별 품목 리스트 구하기
+    getProductsByCategory () {
+      this.$axios.get(`http://localhost:8080/products?categoryCode=${this.selectedCategory}`).then((res) => {
+        this.itemsObjects = res.data.content
+        console.log(res.data.content)
       }).catch((error) => {
         console.log(error);
       })
@@ -239,6 +270,7 @@ export default {
         year: this.selectedYear,
         month: this.selectedMonth,
         categoryCode: this.selectedCategory,
+        productId: this.selectedItem,
         startDate: this.calendarData.dateRange.start,
         endDate: this.calendarData.dateRange.end
       }
@@ -249,6 +281,7 @@ export default {
       this.selectedYear = ""
       this.selectedMonth = ""
       this.selectedCategory = ""
+      this.selectedItem = ""
       this.calendarData = {
         dateRange : {
           start: "",

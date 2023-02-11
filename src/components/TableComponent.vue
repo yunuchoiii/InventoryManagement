@@ -25,7 +25,7 @@
               <td>{{ item.price }}</td>
               <td>{{ item.amount }} {{item.productUnit}}</td>
               <td>{{ item.productStatus }}</td>
-              <td>{{ item.memo }}</td>
+              <td class="memo">{{ item.memo }}</td>
             </tr>
           </tbody>
           <tbody v-if="register_name == '입고'">
@@ -36,7 +36,7 @@
               <td>{{ item.productCode }}</td>
               <td>{{ item.inStockDate }}</td>
               <td>{{ item.quantity }}</td>
-              <td>{{ item.memo }}</td>
+              <td class="memo">{{ item.memo }}</td>
             </tr>
           </tbody>
           <tbody v-if="register_name == '출고'">
@@ -49,7 +49,7 @@
               <td>{{ item.customer }}</td>
               <td>{{ item.price }}</td>
               <td>{{ item.quantity }}</td>
-              <td>{{ item.memo }}</td>
+              <td class="memo">{{ item.memo }}</td>
             </tr>
           </tbody>
           <!-- 더 보기 버튼 -->
@@ -151,5 +151,11 @@ export default {
 @import '@/styles/styles.css';
 .v-application--is-ltr .v-data-table > .v-data-table__wrapper > table > tbody > tr > th, .v-application--is-ltr .v-data-table > .v-data-table__wrapper > table > thead > tr > th, .v-application--is-ltr .v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
   text-align: center;
+}
+.memo {
+  white-space: nowrap;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>

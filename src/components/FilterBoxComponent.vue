@@ -40,7 +40,7 @@
           data-aos="zoom-in"
           @click="closeRegister()"
         >
-          <span class="navBtnText">{{last_month == 0 ? 12 : last_month}}월  {{register_name}} 마감 해제</span>
+          <span class="navBtnText">{{selectedMonth}}월  {{register_name}} 마감 해제</span>
         </v-btn>
       </div>
       <div v-if="close_show && !stockClosed" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
@@ -51,9 +51,19 @@
           data-aos="zoom-in"
           @click="closeRegister()"
         >
-          <span class="navBtnText">{{last_month == 0 ? 12 : last_month}}월  {{register_name}} 마감</span>
+          <span class="navBtnText">{{selectedMonth}}월  {{register_name}} 마감</span>
         </v-btn>
       </div>
+
+      <!-- 재고 마감 모달창 -->
+      <CloseStockDialog
+       v-if="CloseStockDialog === true"
+       @CloseDialog="CloseDialogEvent()"
+       :year="this.selectedYear"
+       :month="this.selectedMonth"
+       :title="this.register_name"
+       :type="this.closeType"/>
+
       <div class="head-box box-shadow" style="flex: 1">
         <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh;">
           <v-btn
@@ -145,13 +155,14 @@
 <script>
 /* eslint-disable */
 import RegisterDialog from "@/components/DialogComponents/RegisterDialogComponent.vue"
+import CloseStockDialog from "./DialogComponents/CloseStockDialogComponent.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FunctionalCalendar } from "vue-functional-calendar";
 
 export default {
   name: "FilterBoxComponent",
-  components: {RegisterDialog, FunctionalCalendar},
+  components: {RegisterDialog, CloseStockDialog, FunctionalCalendar},
   props: {
     title: {
       type: String,
@@ -216,6 +227,8 @@ export default {
       // },
       filterData: {},
       stockClosed: null,
+      CloseStockDialog: false,
+      closeType:"",
       componentKey: 0,
     }
   },
@@ -277,19 +290,24 @@ export default {
     },
     // 입출고 등록 마감
     closeRegister () {
-      if (confirm(this.last_month + "월 " + this.register_name + " 등록을 마감하시겠습니까?")) {
-        alert(this.last_month + "월 " + this.register_name + " 등록이 마감되었습니다.")
-      } else {
-        //pass
-      }
+      this.CloseStockDialog = true
     },
     // 입출고 마감 확인
     closeCheck () {
       this.$axios.get(`http://localhost:8080/live-stock/check/${this.startDate}`).then((res) => {
         this.stockClosed = res.data
+        console.log(this.stockClosed)
+        if(res.data === true) {
+          this.closeType = "마감 해제"
+        } else if (res.data === false) {
+          this.closeType = "마감"
+        }
       }).catch((error) => {
         console.log(error);
       })
+    },
+    CloseDialogEvent(data){
+      this.CloseStockDialog = data
     },
     // 조회버튼 클릭
     submitFilter () {

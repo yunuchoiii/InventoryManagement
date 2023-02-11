@@ -63,9 +63,7 @@ export default {
   },
   watch: {},
   setup () {},
-  created () {
-    this.getDataList()
-  },
+  created () {},
   mounted () {},
   unmounted () {},
   methods: {

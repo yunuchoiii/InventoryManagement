@@ -1,9 +1,29 @@
 <template>
   <v-app>
     <div class="title-box">
-      <div class="flex-center">
+      <div class="flex-center" style="display: relative">
         <button @click="reload()"><span>{{title}}</span></button>
+        <div v-if="this.register_name === '입고' || this.register_name === '출고' || this.register_name === '상품'" style="margin-left: 10px; display: absolute;">
+          <v-tooltip right>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                color="#254359"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-information-outline
+              </v-icon>
+            </template>
+            <ul>
+              <li>등록 버튼을 {{ register_name }} 정보를 추가 등록할 수 있습니다.</li>
+              <li v-if="this.register_name === '입고' || this.register_name === '출고'">표의 항목을 클릭하면 수정과 삭제가 가능합니다.</li>
+              <li v-else>표의 항목을 클릭하면 상품 정보 수정이 가능합니다.</li>
+            </ul>
+          </v-tooltip>
+        </div>
       </div>
+
       <!-- 입출고, 상품 등록 팝업 -->
       <div v-if="register" data-aos="fade-left">
         <RegisterDialog
@@ -35,7 +55,7 @@
           <span style="color: #254359; font-size: 2vh; font-weight: 700;">검색 초기화</span>
         </div>
         <div class="filter-box">
-          <div v-if="date_range" class="filter-card">
+          <!-- <div v-if="date_range" class="filter-card">
             <div class="flex-center filter-text" style="margin-left: 8px">
               기간
               <FunctionalCalendar
@@ -43,7 +63,7 @@
                 :configs="calendarConfigs"
               ></FunctionalCalendar>
             </div>
-          </div>
+          </div> -->
           <div v-if="year_show" class="filter-card">
             <div class="flex-center filter-text" style="margin-left: 8px">
               연도
@@ -59,7 +79,7 @@
             <div class="flex-center filter-text">
               월별
             </div>
-            <select v-model="selectedMonth" class="filter-select">
+            <select v-model="selectedMonth" class="filter-select" @change="selectMonth()">
               <option value="" disabled selected>Month</option>
               <option v-for="option in months" :value="option" :key="option">
                 {{ option }}월
@@ -156,6 +176,8 @@ export default {
       years: [],
       selectedMonth: "",
       months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      startDate: "",
+      endDate: "",
       selectedCategory: "",
       categories: [],
       selectedItem: "",
@@ -168,31 +190,35 @@ export default {
           end: ""
         }
       },
-      calendarConfigs: {
-          sundayStart: true,
-          dateFormat: "yyyy-mm-dd",
-          isDatePicker: false,
-          isDateRange: true,
-          isModal: true,
-          placeholder: "Date",
-          dayNames: ["월", "화", "수", "목", "금", "토", "일"],
-          monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
-      },
+      // calendarConfigs: {
+      //     sundayStart: true,
+      //     dateFormat: "yyyy-mm-dd",
+      //     isDatePicker: false,
+      //     isDateRange: true,
+      //     isModal: true,
+      //     placeholder: "Date",
+      //     dayNames: ["월", "화", "수", "목", "금", "토", "일"],
+      //     monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+      // },
       filterData: {},
       componentKey: 0
     }
   },
   watch: {
-    calendarData() {
-      deep: true
-      handler()
-        this.modifyDate()
-    }
+    // calendarData() {
+    //   deep: true
+    //   handler()
+    //     this.modifyDate()
+    // }
   },
   setup () {},
   created () {
+    this.selectedYear = new Date().getFullYear()
+    this.selectedMonth = new Date().getMonth() + 1
+    this.selectMonth()
     this.getCategories()
     this.addYearsList()
+    this.submitFilter()
   },
   mounted () {
     AOS.init()
@@ -226,6 +252,14 @@ export default {
         this.years.push(i)
       }
     },
+    // 월 선택하면 기간 설정
+    selectMonth ( ) {
+      const firstDay = "01"
+      const lastDay = new Date(this.selectedYear, this.selectedMonth, 0).getDate()
+      const month = this.selectedMonth < 10 ? "0" + this.selectedMonth : this.selectedMonth
+      this.startDate = this.selectedYear + "-" + month + "-" + firstDay
+      this.endDate = this.selectedYear + "-" + month + "-" + lastDay
+    },
     // 입출고 등록 마감
     closeRegister () {
       if (confirm(this.last_month + "월 " + this.register_name + " 등록을 마감하시겠습니까?")) {
@@ -236,12 +270,15 @@ export default {
     },
     // 조회버튼 클릭
     submitFilter () {
-      if (this.calendarData.dateRange.start != "") {
-        this.modifyDate()
-        this.emitFilter()        
-      } else {
-        this.emitFilter()
+      this.filterData = {
+        year: this.selectedYear,
+        month: this.selectedMonth,
+        categoryCode: this.selectedCategory,
+        productId: this.selectedItem,
+        startDate: this.startDate,
+        endDate: this.endDate
       }
+      this.$emit("filterData", this.filterData)
     },
     // 10 이하면 앞에 0 붙이는 이벤트
     modifyDate () {
@@ -263,18 +300,6 @@ export default {
           // pass
         }        
       }
-    },
-    // 테이블 컴포넌트로 조회 항목 보내기
-    emitFilter () {
-      this.filterData = {
-        year: this.selectedYear,
-        month: this.selectedMonth,
-        categoryCode: this.selectedCategory,
-        productId: this.selectedItem,
-        startDate: this.calendarData.dateRange.start,
-        endDate: this.calendarData.dateRange.end
-      }
-      this.$emit("filterData", this.filterData)
     },
     // 조회 조건 초기화
     emitReRender () {

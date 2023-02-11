@@ -54,7 +54,7 @@
           </tbody>
           <!-- 더 보기 버튼 -->
           <tr>
-            <td colspan='10'>
+            <td colspan='20'>
               <v-btn
                 v-if="!isEmpty"
                 text

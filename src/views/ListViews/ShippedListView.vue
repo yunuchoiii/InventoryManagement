@@ -6,9 +6,9 @@
     :register="true"
     :register_name="register_name"
     :title="title"
-    :month_show="false"
-    :year_show="false"
-    :date_range="true"/>
+    :month_show="true"
+    :year_show="true"
+    :date_range="false"/>
     <TableComponent
     @paging="pagingEvent"
     :title="title"

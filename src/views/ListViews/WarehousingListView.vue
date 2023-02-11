@@ -8,6 +8,7 @@
     :title="title"
     :month_show="true"
     :year_show="true"
+    :close_show="true"
     :date_range="false"/>
     <TableComponent
     @paging="pagingEvent"

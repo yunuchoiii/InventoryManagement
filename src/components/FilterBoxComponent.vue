@@ -32,7 +32,18 @@
       </div>
     </div>
     <div class="filter-head">
-      <div v-if="register_name == '입고' || register_name == '출고'" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
+      <div v-if="close_show && stockClosed" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
+        <v-btn
+          elevation="0"
+          height="5.4vh"
+          color="#808080"
+          data-aos="zoom-in"
+          @click="closeRegister()"
+        >
+          <span class="navBtnText">{{last_month == 0 ? 12 : last_month}}월  {{register_name}} 마감 해제</span>
+        </v-btn>
+      </div>
+      <div v-if="close_show && !stockClosed" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
         <v-btn
           elevation="0"
           height="5.4vh"
@@ -154,6 +165,9 @@ export default {
       type: Boolean,
       default: true
     },
+    close_show: {
+      type: Boolean,
+    },
     date_range: {
       type: Boolean,
       default: false
@@ -201,7 +215,8 @@ export default {
       //     monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
       // },
       filterData: {},
-      componentKey: 0
+      stockClosed: null,
+      componentKey: 0,
     }
   },
   watch: {
@@ -268,6 +283,14 @@ export default {
         //pass
       }
     },
+    // 입출고 마감 확인
+    closeCheck () {
+      this.$axios.get(`http://localhost:8080/live-stock/check/${this.startDate}`).then((res) => {
+        this.stockClosed = res.data
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
     // 조회버튼 클릭
     submitFilter () {
       this.filterData = {
@@ -279,6 +302,7 @@ export default {
         endDate: this.endDate
       }
       this.$emit("filterData", this.filterData)
+      this.closeCheck()
     },
     // 10 이하면 앞에 0 붙이는 이벤트
     modifyDate () {
@@ -313,7 +337,6 @@ export default {
           end: ""
         }
       }
-
       this.componentKey += 1
       this.$emit("componentKey", this.componentKey)
     },

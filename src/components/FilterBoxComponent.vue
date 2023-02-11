@@ -40,7 +40,7 @@
           data-aos="zoom-in"
           @click="closeRegister()"
         >
-          <span class="navBtnText">{{selectedMonth}}월  {{register_name}} 마감 해제</span>
+          <span class="navBtnText">{{selectedMonth}}월 재고 마감 해제</span>
         </v-btn>
       </div>
       <div v-if="close_show && !stockClosed" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
@@ -51,7 +51,7 @@
           data-aos="zoom-in"
           @click="closeRegister()"
         >
-          <span class="navBtnText">{{selectedMonth}}월  {{register_name}} 마감</span>
+          <span class="navBtnText">{{selectedMonth}}월 재고 마감</span>
         </v-btn>
       </div>
 
@@ -61,7 +61,6 @@
        @CloseDialog="CloseDialogEvent()"
        :year="this.selectedYear"
        :month="this.selectedMonth"
-       :title="this.register_name"
        :type="this.closeType"/>
 
       <div class="head-box box-shadow" style="flex: 1">

@@ -154,7 +154,7 @@ export default {
 }
 .memo {
   white-space: nowrap;
-    max-width: 100px;
+    max-width: 5vw;
     overflow: hidden;
     text-overflow: ellipsis;
 }

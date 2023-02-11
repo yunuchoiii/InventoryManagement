@@ -101,8 +101,8 @@ export default {
       setTimeout(()=>{this.dialog = true}, 300)
     },
     // 마감 등록
-    submitClose () {
-
+    closeStock () {
+      
     }
   }
 }

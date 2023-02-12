@@ -132,9 +132,8 @@ export default {
       const month = this.month < 10 ? "0"+this.month : this.month
       const date = this.year + "-" + month + "-01"
       this.$axios.post(`http://localhost:8080/live-stock/end/${date}`).then((res) => {
-        console.log(res);
         this.alertType = {
-          msg: `${this.year}년 ${this.month}월 재고 마감 처리되었습니다.`,
+          msg: `${this.year}년 ${this.month}월 재고 마감이 완료되었습니다.`,
           type : "success",
           background : "light",
           color : "green"
@@ -153,6 +152,27 @@ export default {
     },
     // 마감 해제
     CancelCloseStock () {
+      const month = this.month < 10 ? "0"+this.month : this.month
+      const date = this.year + "-" + month + "-01"
+      this.$axios.put(`http://localhost:8080/live-stock/end-cancel/${date}`).then((res) => {
+        console.log(res);
+        this.alertType = {
+          msg: `${this.year}년 ${this.month}월 재고 마감이 해제되었습니다.`,
+          type : "success",
+          background : "light",
+          color : "green"
+        }
+        this.alert = true
+        setTimeout(() => {
+          this.dialog = false
+          window.location.reload()
+        }, 1500);
+      }).catch((error) => {
+        console.log(error);
+        this.alertType.color="#c41230"
+        this.alertType.msg='다시 시도해주세요.'
+        this.alert=true
+      })
     }
   }
 }

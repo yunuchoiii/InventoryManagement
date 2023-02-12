@@ -318,7 +318,7 @@
             </v-container>
           </v-card-text>
 
-          <div class="flex-center" style="height:100px;">
+          <div v-if="!stockClosedBool" class="flex-center" style="height:100px;">
             <v-btn
             width="100"
             height="40"
@@ -336,6 +336,28 @@
             color="#254359"
             rounded
             dark
+            @click="confirmModal(1)">
+              <span style="font-size: 1.2rem">수정</span>
+            </v-btn>
+          </div>
+          <div v-if="stockClosedBool" class="flex-center" style="height:100px;">
+            <v-btn
+            width="100"
+            height="40"
+            color="#c41230"
+            rounded
+            outlined
+            disabled
+            style="margin-right: 20px"
+            @click="confirmModal(2)">
+              <span style="font-size: 1.2rem">삭제</span>
+            </v-btn>
+            <v-btn
+            width="100"
+            height="40"
+            color="#254359"
+            rounded
+            disabled
             @click="confirmModal(1)">
               <span style="font-size: 1.2rem">수정</span>
             </v-btn>
@@ -507,7 +529,7 @@
             </v-container>
           </v-card-text>
 
-          <div class="flex-center" style="height:100px;">
+          <div v-if="!stockClosedBool" class="flex-center" style="height:100px;">
             <v-btn
             width="100"
             height="40"
@@ -525,6 +547,28 @@
             color="#254359"
             rounded
             dark
+            @click="confirmModal(1)">
+              <span style="font-size: 1.2rem">수정</span>
+            </v-btn>
+          </div>
+          <div v-if="stockClosedBool" class="flex-center" style="height:100px;">
+            <v-btn
+            width="100"
+            height="40"
+            color="#c41230"
+            rounded
+            outlined
+            disabled
+            style="margin-right: 20px"
+            @click="confirmModal(2)">
+              <span style="font-size: 1.2rem">삭제</span>
+            </v-btn>
+            <v-btn
+            width="100"
+            height="40"
+            color="#254359"
+            rounded
+            disabled
             @click="confirmModal(1)">
               <span style="font-size: 1.2rem">수정</span>
             </v-btn>
@@ -599,6 +643,7 @@ export default {
         productStatus: this.itemInfo.productStatus,
         memo: this.itemInfo.memo 
       },
+      stockClosedBool: null,
       menu: false,
       modal: false,
       menu2: false,
@@ -615,6 +660,9 @@ export default {
   created () {
     this.getCategories()
     this.getProductsByCategory()
+    if (this.register_name === '입고' ||this.register_name === '출고') {
+      this.checkStockClosed()
+    }
   },
   mounted () {},
   unmounted () {},
@@ -631,6 +679,23 @@ export default {
           arr.push(number.name)
         })
         this.categories = arr
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
+    // date 가공 & 마감 여부 확인하기
+    checkStockClosed () {
+      let date = ""
+      if (this.register_name === '입고') {
+        date = this.inStock_info.inStockDate
+      } else if (this.register_name === '출고') {
+        date = this.outStock_info.outStockDate
+      }
+      const splitedDate = date.split("-")
+      date = splitedDate[0] + "-" + splitedDate[1] + "-01"
+
+      this.$axios.get(`http://localhost:8080/live-stock/check/${date}`).then((res) => {
+        this.stockClosedBool = res.data
       }).catch((error) => {
         console.log(error);
       })

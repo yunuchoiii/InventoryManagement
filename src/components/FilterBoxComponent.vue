@@ -3,12 +3,13 @@
     <div class="title-box">
       <div class="flex-center" style="display: relative">
         <button @click="reload()"><span>{{title}}</span></button>
-        <div v-if="this.register_name === '입고' || this.register_name === '출고' || this.register_name === '상품'" style="margin-left: 10px; display: absolute;">
+        <div v-if="this.register_name === '입고' || this.register_name === '출고' || this.register_name === '상품'" style="margin: 3px 0 0 10px; display: absolute;" class="flex-center">
           <v-tooltip right>
             <template v-slot:activator="{ on, attrs }">
               <v-icon
-                color="#254359"
+                color="#a0a0a0"
                 dark
+                size="2.7vh"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -16,23 +17,25 @@
               </v-icon>
             </template>
             <ul>
-              <li>등록 버튼을 {{ register_name }} 정보를 추가 등록할 수 있습니다.</li>
+              <li>등록 버튼을 {{ register_name }} 항목을 등록할 수 있습니다.</li>
               <li v-if="this.register_name === '입고' || this.register_name === '출고'">표의 항목을 클릭하면 수정과 삭제가 가능합니다.</li>
               <li v-else>표의 항목을 클릭하면 상품 정보 수정이 가능합니다.</li>
+              <li v-if="this.register_name === '입고' || this.register_name === '출고'">재고 마감이 완료된 상태에서는 입출고 등록 및 수정이 불가합니다.</li>
             </ul>
           </v-tooltip>
         </div>
       </div>
 
       <!-- 입출고, 상품 등록 팝업 -->
-      <div v-if="register" data-aos="fade-left">
+      <div v-if="register && !stockClosedBool" data-aos="fade-left">
         <RegisterDialog
         :register_name="register_name"
         :categories="categories"/>
       </div>
     </div>
+
     <div class="filter-head">
-      <div v-if="close_show && stockClosed" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
+      <div v-if="close_show && stockClosedBool" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
         <v-btn
           elevation="0"
           height="5.4vh"
@@ -40,10 +43,10 @@
           data-aos="zoom-in"
           @click="closeRegister()"
         >
-          <span class="navBtnText">{{selectedMonth}}월 재고 마감 해제</span>
+          <span class="navBtnText">{{changedMonth}}월 마감 해제</span>
         </v-btn>
       </div>
-      <div v-if="close_show && !stockClosed" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
+      <div v-if="close_show && !stockClosedBool" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
         <v-btn
           elevation="0"
           height="5.4vh"
@@ -51,13 +54,13 @@
           data-aos="zoom-in"
           @click="closeRegister()"
         >
-          <span class="navBtnText">{{selectedMonth}}월 재고 마감</span>
+          <span class="navBtnText">{{changedMonth}}월 재고 마감</span>
         </v-btn>
       </div>
 
       <!-- 재고 마감 모달창 -->
-      <CloseStockDialog
-       v-if="CloseStockDialog === true"
+      <StockClosingDialog
+       v-if="stockClosingDialog === true"
        @CloseDialog="CloseDialogEvent()"
        :year="this.selectedYear"
        :month="this.selectedMonth"
@@ -154,14 +157,14 @@
 <script>
 /* eslint-disable */
 import RegisterDialog from "@/components/DialogComponents/RegisterDialogComponent.vue"
-import CloseStockDialog from "./DialogComponents/CloseStockDialogComponent.vue";
+import StockClosingDialog from "@/components/DialogComponents/StockClosingDialogComponent.vue"
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FunctionalCalendar } from "vue-functional-calendar";
 
 export default {
   name: "FilterBoxComponent",
-  components: {RegisterDialog, CloseStockDialog, FunctionalCalendar},
+  components: {RegisterDialog, StockClosingDialog, FunctionalCalendar},
   props: {
     title: {
       type: String,
@@ -224,9 +227,10 @@ export default {
       //     dayNames: ["월", "화", "수", "목", "금", "토", "일"],
       //     monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
       // },
+      changedMonth: "",
       filterData: {},
-      stockClosed: null,
-      CloseStockDialog: false,
+      stockClosedBool: null,
+      stockClosingDialog: false,
       closeType:"",
       componentKey: 0,
     }
@@ -242,6 +246,7 @@ export default {
   created () {
     this.selectedYear = new Date().getFullYear()
     this.selectedMonth = new Date().getMonth() + 1
+    this.changedMonth = new Date().getMonth() + 1
     this.selectMonth()
     this.getCategories()
     this.addYearsList()
@@ -289,13 +294,13 @@ export default {
     },
     // 입출고 등록 마감
     closeRegister () {
-      this.CloseStockDialog = true
+      this.stockClosingDialog = true
     },
     // 입출고 마감 확인
-    closeCheck () {
+    checkStockClosed () {
       this.$axios.get(`http://localhost:8080/live-stock/check/${this.startDate}`).then((res) => {
-        this.stockClosed = res.data
-        console.log(this.stockClosed)
+        this.stockClosedBool = res.data
+        console.log(this.stockClosedBool)
         if(res.data === true) {
           this.closeType = "마감 해제"
         } else if (res.data === false) {
@@ -306,7 +311,7 @@ export default {
       })
     },
     CloseDialogEvent(data){
-      this.CloseStockDialog = data
+      this.stockClosingDialog = data
     },
     // 조회버튼 클릭
     submitFilter () {
@@ -319,7 +324,8 @@ export default {
         endDate: this.endDate
       }
       this.$emit("filterData", this.filterData)
-      this.closeCheck()
+      this.checkStockClosed()
+      this.changedMonth = this.selectedMonth
     },
     // 10 이하면 앞에 0 붙이는 이벤트
     modifyDate () {

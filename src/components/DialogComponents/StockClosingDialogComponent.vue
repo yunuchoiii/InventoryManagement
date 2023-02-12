@@ -88,7 +88,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: 'CloseStockDialog',
+  name: 'StockClosingDialog',
   components: {},
   props: {
     year: {

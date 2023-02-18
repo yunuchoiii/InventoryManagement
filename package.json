@@ -16,7 +16,6 @@
     "core-js": "^3.8.3",
     "vue": "^2.6.14",
     "vue-chartjs": "^5.0.1",
-    "vue-functional-calendar": "^2.9.97",
     "vue-router": "^3.5.1",
     "vuetify": "^2.6.0",
     "vuex": "^3.6.2"

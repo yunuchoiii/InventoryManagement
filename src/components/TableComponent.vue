@@ -76,7 +76,9 @@
     v-if="edit_dialog == true"
     @edit_dialog="closeDialog()"
     :register_name="register_name"
-    :itemInfo="itemInfo"/>
+    :itemInfo="itemInfo"
+    :filterData="filterData"
+    />
   </v-app>
 </template>
 <script>

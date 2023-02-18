@@ -2,7 +2,6 @@
   <body class="body-padding">
     <FilterBoxComponent
     @filterData="filterEvent"
-    @componentKey="componentKeyEvent"
     :register="true"
     :register_name="register_name"
     :title="title"
@@ -16,7 +15,6 @@
     :headers="headers"
     :datas="datas"
     :filterData="filterData"
-    :componentKey="componentKey"
     :register_name="register_name"
     :isEmpty="isEmpty"/>
     <div>
@@ -55,7 +53,6 @@ export default {
           "string"
         ]
       },
-      componentKey: 0,
       tooltip_msg: "",
       tableData: [],
       isEmpty: false
@@ -73,9 +70,6 @@ export default {
       this.pageable.page = 0
       this.datas = []
       this.getDataList()
-    },
-    componentKeyEvent (data) {
-      this.componentKey = data
     },
     pagingEvent () {
       this.pageable.page ++

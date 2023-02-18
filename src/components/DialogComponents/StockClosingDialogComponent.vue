@@ -100,6 +100,9 @@ export default {
     type: {
       type: String
     },
+    filterData: {
+      type: Object
+    },
   },
   watch: {},
   data () {
@@ -129,6 +132,8 @@ export default {
     },
     // 마감 등록
     closeStock () {
+      localStorage.setItem("filterData", JSON.stringify(this.filterData))
+
       const month = this.month < 10 ? "0"+this.month : this.month
       const date = this.year + "-" + month + "-01"
       this.$axios.post(`http://localhost:8080/live-stock/end/${date}`).then((res) => {
@@ -152,6 +157,8 @@ export default {
     },
     // 마감 해제
     CancelCloseStock () {
+      localStorage.setItem("filterData", JSON.stringify(this.filterData))
+
       const month = this.month < 10 ? "0"+this.month : this.month
       const date = this.year + "-" + month + "-01"
       this.$axios.put(`http://localhost:8080/live-stock/end-cancel/${date}`).then((res) => {

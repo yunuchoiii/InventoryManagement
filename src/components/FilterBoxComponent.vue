@@ -29,8 +29,7 @@
       <!-- 입출고, 상품 등록 팝업 -->
       <div v-if="register && !stockClosedBool" data-aos="fade-left">
         <RegisterDialog
-        :register_name="register_name"
-        :categories="categories"/>
+        :register_name="register_name"/>
       </div>
     </div>
 
@@ -64,29 +63,21 @@
        @CloseDialog="CloseDialogEvent()"
        :year="this.selectedYear"
        :month="this.selectedMonth"
-       :type="this.closeType"/>
+       :type="this.closeType"
+       :filterData="filterData"/>
 
       <div class="head-box box-shadow" style="flex: 1">
         <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh;">
           <v-btn
             icon
             color="#254359"
-            @click="emitReRender()"
+            @click="renewFilter()"
           >
             <v-icon>mdi-cached</v-icon>
           </v-btn>
           <span style="color: #254359; font-size: 2vh; font-weight: 700;">검색 초기화</span>
         </div>
         <div class="filter-box">
-          <!-- <div v-if="date_range" class="filter-card">
-            <div class="flex-center filter-text" style="margin-left: 8px">
-              기간
-              <FunctionalCalendar
-                v-model="calendarData"
-                :configs="calendarConfigs"
-              ></FunctionalCalendar>
-            </div>
-          </div> -->
           <div v-if="year_show" class="filter-card">
             <div class="flex-center filter-text" style="margin-left: 8px">
               연도
@@ -160,11 +151,10 @@ import RegisterDialog from "@/components/DialogComponents/RegisterDialogComponen
 import StockClosingDialog from "@/components/DialogComponents/StockClosingDialogComponent.vue"
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { FunctionalCalendar } from "vue-functional-calendar";
 
 export default {
   name: "FilterBoxComponent",
-  components: {RegisterDialog, StockClosingDialog, FunctionalCalendar},
+  components: {RegisterDialog, StockClosingDialog},
   props: {
     title: {
       type: String,
@@ -217,36 +207,26 @@ export default {
           end: ""
         }
       },
-      // calendarConfigs: {
-      //     sundayStart: true,
-      //     dateFormat: "yyyy-mm-dd",
-      //     isDatePicker: false,
-      //     isDateRange: true,
-      //     isModal: true,
-      //     placeholder: "Date",
-      //     dayNames: ["월", "화", "수", "목", "금", "토", "일"],
-      //     monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
-      // },
       changedMonth: "",
       filterData: {},
       stockClosedBool: null,
       stockClosingDialog: false,
       closeType:"",
-      componentKey: 0,
     }
   },
-  watch: {
-    // calendarData() {
-    //   deep: true
-    //   handler()
-    //     this.modifyDate()
-    // }
-  },
+  watch: {},
   setup () {},
   created () {
-    this.selectedYear = new Date().getFullYear()
-    this.selectedMonth = new Date().getMonth() + 1
-    this.changedMonth = new Date().getMonth() + 1
+    if (localStorage.getItem("filterData") != null) {
+      const localFilterData = JSON.parse(localStorage.getItem("filterData"));
+      this.selectedYear = localFilterData.year
+      this.selectedMonth = localFilterData.month
+      this.changedMonth = localFilterData.month
+    } else {
+      this.selectedYear = new Date().getFullYear()
+      this.selectedMonth = new Date().getMonth() + 1
+      this.changedMonth = new Date().getMonth() + 1   
+    }
     this.selectMonth()
     this.getCategories()
     this.addYearsList()
@@ -349,9 +329,9 @@ export default {
       }
     },
     // 조회 조건 초기화
-    emitReRender () {
-      this.selectedYear = ""
-      this.selectedMonth = ""
+    renewFilter () {
+      this.selectedYear = new Date().getFullYear()
+      this.selectedMonth = new Date().getMonth() + 1
       this.selectedCategory = ""
       this.selectedItem = ""
       this.calendarData = {
@@ -360,8 +340,6 @@ export default {
           end: ""
         }
       }
-      this.componentKey += 1
-      this.$emit("componentKey", this.componentKey)
     },
     reload () {
       location.reload()

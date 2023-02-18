@@ -2,7 +2,6 @@
   <body class="body-padding">
     <FilterBoxComponent
     @filterData="filterEvent"
-    @componentKey="componentKeyEvent"
     :register="true"
     :register_name="register_name"
     :title="title"
@@ -16,7 +15,6 @@
     :headers="headers"
     :datas="datas"
     :filterData="filterData"
-    :componentKey="componentKey"
     :register_name="register_name"
     :isEmpty="isEmpty"/>
   </body>
@@ -38,7 +36,6 @@ export default {
       headers: ['순번', '구분', '품목', '품목코드', '출고날짜', '고객명', '가격', '출고량', '비고'],
       datas: [],
       filterData: {},
-      componentKey: 0,
       categoryCode: "",
       startDate: "",
       endDate: "",
@@ -65,15 +62,22 @@ export default {
       this.pageable.page = 0
       this.datas = []
       this.querys = []
-      Object.keys(this.filterData).forEach(key => {
-        if (this.filterData[key] != "") {
-          this.querys.push(`${key}=${this.filterData[key]}`)
-        }
-      })
+      if (localStorage.getItem("filterData") != null) {
+        const localFilterData = JSON.parse(localStorage.getItem("filterData"));
+        Object.keys(localFilterData).forEach(key => {
+          if (localFilterData[key] != "") {
+            this.querys.push(`${key}=${localFilterData[key]}`)
+          }
+        })
+        localStorage.removeItem("filterData")
+      } else {
+        Object.keys(this.filterData).forEach(key => {
+          if (this.filterData[key] != "") {
+            this.querys.push(`${key}=${this.filterData[key]}`)
+          }
+        })        
+      }
       this.getDataList()
-    },
-    componentKeyEvent (data) {
-      this.componentKey = data
     },
     pagingEvent () {
       this.pageable.page ++

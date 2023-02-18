@@ -592,7 +592,10 @@ export default {
     },
     itemInfo: {
       type: Object
-    }
+    },
+    filterData: {
+      type: Object
+    },
   },
   data () {
     return {
@@ -750,6 +753,8 @@ export default {
     },
     // 수정 api
     editItem () {
+      localStorage.setItem("filterData", JSON.stringify(this.filterData))
+
       this.editConfirm = false
       this.deleteConfirm = false
       const url = 
@@ -787,6 +792,8 @@ export default {
     },
     // 삭제 api
     deleteItem () {
+      localStorage.setItem("filterData", JSON.stringify(this.filterData))
+
       this.deleteConfirm = false
       const url = 
         this.register_name === '입고' ? `http://localhost:8080/in-stock/${this.inStock_info.id}`

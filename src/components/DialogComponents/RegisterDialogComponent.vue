@@ -1,6 +1,6 @@
 <template>
 <div class="flex-center">
-  <span style="font-size: 22px; font-weight:700; margin-right: 15px;">{{ register_name }} 등록</span>
+  <span style="font-size: 1.3rem; font-weight:700; margin-right: 8px;">{{ register_name }} 등록</span>
   <v-form>
     <div class="text-center" style="margin-bottom: 5px">
       <v-dialog
@@ -22,7 +22,8 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="mx-2"
-            small
+            height="2rem"
+            width="2rem"
             fab
             dark
             color="#f89929"

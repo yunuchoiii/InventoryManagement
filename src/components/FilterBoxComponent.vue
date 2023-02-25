@@ -9,7 +9,7 @@
               <v-icon
                 color="#a0a0a0"
                 dark
-                size="2.7vh"
+                size="1.5rem"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -34,10 +34,10 @@
     </div>
 
     <div class="filter-head">
-      <div v-if="close_show && stockClosedBool" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
+      <div v-if="close_show && stockClosedBool" style="margin-right: 1rem; border-radius: 8px; overflow: hidden;">
         <v-btn
           elevation="0"
-          height="5.4vh"
+          height="40px"
           color="#808080"
           data-aos="zoom-in"
           @click="closeRegister()"
@@ -45,10 +45,10 @@
           <span class="navBtnText">{{changedMonth}}월 마감 해제</span>
         </v-btn>
       </div>
-      <div v-if="close_show && !stockClosedBool" style="margin-right: 2vh; border-radius: 8px; overflow: hidden;">
+      <div v-if="close_show && !stockClosedBool" style="margin-right: 1rem; border-radius: 8px; overflow: hidden;">
         <v-btn
           elevation="0"
-          height="5.4vh"
+          height="40px"
           color="#c41230"
           data-aos="zoom-in"
           @click="closeRegister()"
@@ -75,7 +75,7 @@
           >
             <v-icon>mdi-cached</v-icon>
           </v-btn>
-          <span style="color: #254359; font-size: 2vh; font-weight: 700;">검색 초기화</span>
+          <span style="color: #254359; font-size: 1rem; font-weight: 700;">검색 초기화</span>
         </div>
         <div class="filter-box">
           <div v-if="year_show" class="filter-card">
@@ -131,7 +131,7 @@
           <div>
             <v-btn
               elevation="0"
-              height="4vh"
+              height="30px"
               width="50px"
               color="#254359"
               @click="submitFilter()"

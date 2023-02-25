@@ -3,7 +3,7 @@
     <div class="box-shadow" style="border-radius: 10px; overflow: hidden;">
       <v-simple-table
       fixed-header
-      height="79vh"
+      :height="this.tableHeight"
       :key="this.componentKey">
         <template v-slot:default>
           <thead>
@@ -123,7 +123,8 @@ export default {
   data () {
     return {
       itemInfo: {},
-      paging: 0
+      paging: 0,
+      tableHeight: (window.innerHeight - 150) + "px"
     }
   },
   watch: {},

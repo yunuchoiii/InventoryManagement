@@ -25,7 +25,7 @@ import FilterBoxComponent from '@/components/FilterBoxComponent.vue'
 import TableComponent from '@/components/TableComponent.vue'
 
 export default {
-  name: 'warehousingList',
+  name: 'InBoundList',
   components: {FilterBoxComponent, TableComponent},
   props: {},
   data () {

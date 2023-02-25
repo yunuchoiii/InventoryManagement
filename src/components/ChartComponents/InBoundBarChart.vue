@@ -11,7 +11,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels)
 
 export default {
-  name: 'ShippedBarChart',
+  name: 'InBoundBarChart',
   components: { Bar },
   props: {
     labels: {
@@ -29,8 +29,8 @@ export default {
         labels: this.labels,
         datasets: [
           {
-            label: '출고량',
-            backgroundColor: '#4FBAC9',
+            label: '입고량',
+            backgroundColor: '#FF6B8A',
             data: this.data,
             borderRadius: 100,
           }

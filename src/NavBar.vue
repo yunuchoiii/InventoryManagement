@@ -17,22 +17,22 @@
           <img src="https://cdn-icons-png.flaticon.com/512/4227/4227865.png" alt="" class="nav-icon">
           월간 재고 현황
         </v-btn>
-        <v-btn text tile width="190" class="navBtn" href="/status/warehousing">
+        <v-btn text tile width="190" class="navBtn" href="/status/inbound">
           <img src="https://cdn-icons-png.flaticon.com/512/8901/8901382.png" alt="" class="nav-icon">
           월간 입고 현황
         </v-btn>
-        <v-btn text tile width="190" class="navBtn" href="/status/shipped">
+        <v-btn text tile width="190" class="navBtn" href="/status/outbound">
           <img src="https://cdn-icons-png.flaticon.com/512/8901/8901383.png" alt="" class="nav-icon">
           월간 출고 현황
         </v-btn>
       </div>
       <div class="navDivider"></div>
       <div style="display: inline-grid;">
-        <v-btn text tile width="190" class="navBtn" href="/list/warehousing">
+        <v-btn text tile width="190" class="navBtn" href="/list/inbound">
           <img src="https://cdn-icons-png.flaticon.com/512/7794/7794603.png" alt="" class="nav-icon">
           입고 내역
         </v-btn>
-        <v-btn text tile width="190" class="navBtn" href="/list/shipped">
+        <v-btn text tile width="190" class="navBtn" href="/list/outbound">
           <img src="https://cdn-icons-png.flaticon.com/512/7794/7794607.png" alt="" class="nav-icon">
           출고 내역
         </v-btn>

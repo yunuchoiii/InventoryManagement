@@ -30,7 +30,7 @@
             <span class="menu-card-title2"><br>월별 재고 확인 및 조회</span>
           </div>
         </a>
-        <a href="/status/warehousing" class="box-shadow menu-card btn-shadow mr-2per homebox" style="padding-left: 20px">
+        <a href="/status/inbound" class="box-shadow menu-card btn-shadow mr-2per homebox" style="padding-left: 20px">
           <div class="flex-center">
             <img src="@/assets/input_icon.png" alt="입고 현황" width="60px" height="60px">
           </div>
@@ -39,7 +39,7 @@
             <span class="menu-card-title2"><br>월별 입고량 확인 및 조회</span>
           </div>
         </a>
-        <a href="/status/shipped" class="box-shadow menu-card btn-shadow homebox" style="padding-left: 20px">
+        <a href="/status/outbound" class="box-shadow menu-card btn-shadow homebox" style="padding-left: 20px">
           <div class="flex-center">
             <img src="@/assets/output_icon.png" alt="출고 현황" width="60px" height="60px">
           </div>
@@ -58,7 +58,7 @@
         <hr class="dashed-line">
       </div>
       <div class="flex" data-aos="zoom-in">
-        <a href="/list/warehousing" class="box-shadow menu-card btn-shadow mr-2per homebox">
+        <a href="/list/inbound" class="box-shadow menu-card btn-shadow mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/input_list_icon.png" alt="입고 리스트" width="50px" height="50px">
           </div>
@@ -67,7 +67,7 @@
             <span class="menu-card-title2"><br>입고 기록 조회 및 등록</span>
           </div>
         </a>
-        <a href="/list/shipped" class="box-shadow menu-card btn-shadow mr-2per homebox">
+        <a href="/list/outbound" class="box-shadow menu-card btn-shadow mr-2per homebox">
           <div class="flex-center">
             <img src="@/assets/output_list_icon.png" alt="출고 리스트" width="50px" height="50px">
           </div>
@@ -175,26 +175,26 @@
     </div>
     <div data-aos="fade-up">
       <div class="flex-between mb-22px">
-        <a href="/status/warehousing" class="box-shadow homebox homebox-w2">
+        <a href="/status/inbound" class="box-shadow homebox homebox-w2">
           <div class="homebox-titlebox">
             <span class="homebox-title1">월별 입고 현황</span>
             <span class="homebox-title2">최근 1년</span>
           </div>
           <div style="height: 35vh">
-            <WarehousingBarChart
+            <InBoundBarChart
             :labels="this.monthsList"
-            :data="this.warehousingChart.data"/>
+            :data="this.inBoundChart.data"/>
           </div>
         </a>
-        <a href="/list/shipped" class="box-shadow homebox homebox-w2">
+        <a href="/list/outbound" class="box-shadow homebox homebox-w2">
           <div class="homebox-titlebox">
             <span class="homebox-title1">월별 출고 현황</span>
             <span class="homebox-title2">최근 1년</span>
           </div>
           <div style="height: 35vh">
-            <ShippedBarChart
+            <OutBoundBarChart
             :labels="this.monthsList"
-            :data="this.shippedChart.data"/>
+            :data="this.outBoundChart.data"/>
           </div>
         </a>
       </div>
@@ -220,14 +220,14 @@
 /* eslint-disable */
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import WarehousingBarChart from '@/components/ChartComponents/WarehousingBarChart.vue'
-import ShippedBarChart from '@/components/ChartComponents/ShippedBarChart.vue'
+import InBoundBarChart from '@/components/ChartComponents/InBoundBarChart.vue'
+import OutBoundBarChart from '@/components/ChartComponents/OutBoundBarChart.vue'
 import AnnualLineChart from '@/components/ChartComponents/AnnualLineChart.vue'
 import ItemDoughnutChart from '@/components/ChartComponents/ItemDoughnutChart.vue'
 
 export default {
   name: 'HomeDashboard',
-  components: {WarehousingBarChart, ShippedBarChart, AnnualLineChart, ItemDoughnutChart},
+  components: {InBoundBarChart, OutBoundBarChart, AnnualLineChart, ItemDoughnutChart},
   data () {
     return {
       today_year: new Date().getFullYear(),
@@ -236,11 +236,11 @@ export default {
       last_year: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).getFullYear(),
       last_month: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).getMonth()+1,
       monthsList: [],
-      warehousingChart: {
+      inBoundChart: {
         labels: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
         data: [40, 20, 12, 43, 25, 64, 74, 24, 10,24,13,53],
       },
-      shippedChart: {
+      outBoundChart: {
         labels: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
         data: [13,22,45,24,36,14,12,52,32,13,35,72],
       },

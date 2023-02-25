@@ -115,7 +115,7 @@ export default {
         background : "dark",
         color : "#254359"
       },
-      alertHeight: window.innerHeight/2 - 230 + 'px' 
+      alertHeight: window.innerHeight/2 - 234 + 'px' 
     }
   },
   setup () {},
@@ -136,7 +136,7 @@ export default {
 
       const month = this.month < 10 ? "0"+this.month : this.month
       const date = this.year + "-" + month + "-01"
-      this.$axios.post(`http://localhost:8080/live-stock/end/${date}`).then((res) => {
+      this.$axios.post(`http://localhost:8080/inventory/end/${date}`).then((res) => {
         this.alertType = {
           msg: `${this.year}년 ${this.month}월 재고 마감이 완료되었습니다.`,
           type : "success",
@@ -151,7 +151,7 @@ export default {
       }).catch((error) => {
         console.log(error);
         this.alertType.color="#c41230"
-        this.alertType.msg='다시 시도해주세요.'
+        this.alertType.msg=error.response.data.message
         this.alert=true
       })
     },
@@ -161,8 +161,7 @@ export default {
 
       const month = this.month < 10 ? "0"+this.month : this.month
       const date = this.year + "-" + month + "-01"
-      this.$axios.put(`http://localhost:8080/live-stock/end-cancel/${date}`).then((res) => {
-        console.log(res);
+      this.$axios.delete(`http://localhost:8080/inventory/end/${date}`).then((res) => {
         this.alertType = {
           msg: `${this.year}년 ${this.month}월 재고 마감이 해제되었습니다.`,
           type : "success",
@@ -177,7 +176,7 @@ export default {
       }).catch((error) => {
         console.log(error);
         this.alertType.color="#c41230"
-        this.alertType.msg='다시 시도해주세요.'
+        this.alertType.msg=error.response.data.message
         this.alert=true
       })
     }

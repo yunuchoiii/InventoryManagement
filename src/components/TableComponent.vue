@@ -34,7 +34,7 @@
               <td>{{ item.categoryName }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
-              <td>{{ item.inStockDate }}</td>
+              <td>{{ item.inBoundDate }}</td>
               <td>{{ item.quantity }}</td>
               <td class="memo">{{ item.memo }}</td>
             </tr>
@@ -45,7 +45,7 @@
               <td>{{ item.categoryName }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
-              <td>{{ item.outStockDate }}</td>
+              <td>{{ item.outBoundDate }}</td>
               <td>{{ item.customer }}</td>
               <td>{{ item.price }}</td>
               <td>{{ item.quantity }}</td>

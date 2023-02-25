@@ -235,14 +235,14 @@
                     ref="menu"
                     v-model="menu"
                     :close-on-content-click="false"
-                    :return-value.sync="inStock_info.inStockDate"
+                    :return-value.sync="inStock_info.inBoundDate"
                     transition="scale-transition"
                     offset-y
                     min-width="auto"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="inStock_info.inStockDate"
+                        v-model="inStock_info.inBoundDate"
                         dense
                         readonly
                         outlined
@@ -252,7 +252,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="inStock_info.inStockDate"
+                      v-model="inStock_info.inBoundDate"
                       no-title
                       scrollable
                     >
@@ -267,7 +267,7 @@
                       <v-btn
                         text
                         color="primary"
-                        @click="$refs.menu.save(inStock_info.inStockDate)"
+                        @click="$refs.menu.save(inStock_info.inBoundDate)"
                       >
                         확인
                       </v-btn>
@@ -380,14 +380,14 @@
                     ref="menu"
                     v-model="menu"
                     :close-on-content-click="false"
-                    :return-value.sync="outStock_info.outStockDate"
+                    :return-value.sync="outStock_info.outBoundDate"
                     transition="scale-transition"
                     offset-y
                     min-width="auto"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="outStock_info.outStockDate"
+                        v-model="outStock_info.outBoundDate"
                         dense
                         readonly
                         outlined
@@ -397,7 +397,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="outStock_info.outStockDate"
+                      v-model="outStock_info.outBoundDate"
                       no-title
                       scrollable
                     >
@@ -412,7 +412,7 @@
                       <v-btn
                         text
                         color="primary"
-                        @click="$refs.menu.save(outStock_info.outStockDate)"
+                        @click="$refs.menu.save(outStock_info.outBoundDate)"
                       >
                         확인
                       </v-btn>
@@ -531,13 +531,13 @@ export default {
       items: [],
       selectedItem: "",
       inStock_info: {
-        inStockDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        inBoundDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         productId: null,
         quantity: null,
         memo: ''
       },
       outStock_info: {
-        outStockDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        outBoundDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         productId: null,
         quantity: null,
         customer: '',
@@ -608,8 +608,8 @@ export default {
     Register () {
       const url = 
         this.register_name == "상품" ? "http://localhost:8080/products"
-        : this.register_name == "입고" ? "http://localhost:8080/in-stock" 
-        : "http://localhost:8080/out-stock";
+        : this.register_name == "입고" ? "http://localhost:8080/inbound" 
+        : "http://localhost:8080/outbound";
       this.$axios.post(url, 
         this.register_name == "상품" ? this.product_info 
         : this.register_name == "입고" ? this.inStock_info 

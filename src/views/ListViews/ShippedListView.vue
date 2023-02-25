@@ -84,7 +84,7 @@ export default {
       this.getDataList()
     },
     getDataList () {
-      const url = `http://localhost:8080/out-stock?${this.querys.join('&')}`
+      const url = `http://localhost:8080/outbound?${this.querys.join('&')}`
       this.$axios.get(url, {
         params: {
           page:this.pageable.page,

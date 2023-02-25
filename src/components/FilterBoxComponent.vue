@@ -252,7 +252,6 @@ export default {
     getProductsByCategory () {
       this.$axios.get(`http://localhost:8080/products?categoryCode=${this.selectedCategory}`).then((res) => {
         this.itemsObjects = res.data.content
-        console.log(res.data.content)
       }).catch((error) => {
         console.log(error);
       })
@@ -278,9 +277,8 @@ export default {
     },
     // 입출고 마감 확인
     checkStockClosed () {
-      this.$axios.get(`http://localhost:8080/live-stock/check/${this.startDate}`).then((res) => {
+      this.$axios.get(`http://localhost:8080/inventory/end/check/${this.startDate}`).then((res) => {
         this.stockClosedBool = res.data
-        console.log(this.stockClosedBool)
         if(res.data === true) {
           this.closeType = "마감 해제"
         } else if (res.data === false) {

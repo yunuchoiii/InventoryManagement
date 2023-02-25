@@ -248,14 +248,14 @@
                     ref="menu"
                     v-model="menu"
                     :close-on-content-click="false"
-                    :return-value.sync="inStock_info.inStockDate"
+                    :return-value.sync="inStock_info.inBoundDate"
                     transition="scale-transition"
                     offset-y
                     min-width="auto"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="inStock_info.inStockDate"
+                        v-model="inStock_info.inBoundDate"
                         dense
                         readonly
                         outlined
@@ -265,7 +265,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="inStock_info.inStockDate"
+                      v-model="inStock_info.inBoundDate"
                       no-title
                       scrollable
                     >
@@ -280,7 +280,7 @@
                       <v-btn
                         text
                         color="primary"
-                        @click="$refs.menu.save(inStock_info.inStockDate)"
+                        @click="$refs.menu.save(inStock_info.inBoundDate)"
                       >
                         확인
                       </v-btn>
@@ -425,14 +425,14 @@
                     ref="menu"
                     v-model="menu"
                     :close-on-content-click="false"
-                    :return-value.sync="outStock_info.outStockDate"
+                    :return-value.sync="outStock_info.outBoundDate"
                     transition="scale-transition"
                     offset-y
                     min-width="auto"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-text-field
-                        v-model="outStock_info.outStockDate"
+                        v-model="outStock_info.outBoundDate"
                         dense
                         readonly
                         outlined
@@ -442,7 +442,7 @@
                       ></v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="outStock_info.outStockDate"
+                      v-model="outStock_info.outBoundDate"
                       no-title
                       scrollable
                     >
@@ -457,7 +457,7 @@
                       <v-btn
                         text
                         color="primary"
-                        @click="$refs.menu.save(outStock_info.outStockDate)"
+                        @click="$refs.menu.save(outStock_info.outBoundDate)"
                       >
                         확인
                       </v-btn>
@@ -620,14 +620,14 @@ export default {
       itemsObjects: [],
       inStock_info: {
         id: this.itemInfo.id,
-        inStockDate: this.itemInfo.inStockDate,
+        inBoundDate: this.itemInfo.inBoundDate,
         productId: this.itemInfo.productId,
         quantity: this.itemInfo.quantity,
         memo: this.itemInfo.memo
       },
       outStock_info: {
         id: this.itemInfo.id,
-        outStockDate: this.itemInfo.outStockDate,
+        outBoundDate: this.itemInfo.outBoundDate,
         productId: this.itemInfo.productId,
         quantity: this.itemInfo.quantity,
         customer: this.itemInfo.customer,
@@ -690,14 +690,14 @@ export default {
     checkStockClosed () {
       let date = ""
       if (this.register_name === '입고') {
-        date = this.inStock_info.inStockDate
+        date = this.inStock_info.inBoundDate
       } else if (this.register_name === '출고') {
-        date = this.outStock_info.outStockDate
+        date = this.outStock_info.outBoundDate
       }
       const splitedDate = date.split("-")
       date = splitedDate[0] + "-" + splitedDate[1] + "-01"
 
-      this.$axios.get(`http://localhost:8080/live-stock/check/${date}`).then((res) => {
+      this.$axios.get(`http://localhost:8080/inventory/end/check/${date}`).then((res) => {
         this.stockClosedBool = res.data
       }).catch((error) => {
         console.log(error);
@@ -759,8 +759,8 @@ export default {
       this.deleteConfirm = false
       const url = 
         this.register_name === '상품' ? `http://localhost:8080/products/${this.product_info.id}` 
-        :this.register_name === '입고' ? `http://localhost:8080/in-stock/${this.inStock_info.id}`
-        :`http://localhost:8080/out-stock/${this.outStock_info.id}`
+        :this.register_name === '입고' ? `http://localhost:8080/inbound/${this.inStock_info.id}`
+        :`http://localhost:8080/outbound/${this.outStock_info.id}`
       this.$axios.put(url, 
         this.register_name === '상품' ? this.product_info
         :this.register_name === '입고' ? this.inStock_info
@@ -796,8 +796,8 @@ export default {
 
       this.deleteConfirm = false
       const url = 
-        this.register_name === '입고' ? `http://localhost:8080/in-stock/${this.inStock_info.id}`
-        :`http://localhost:8080/out-stock/${this.outStock_info.id}`
+        this.register_name === '입고' ? `http://localhost:8080/inbound/${this.inStock_info.id}`
+        :`http://localhost:8080/outbound/${this.outStock_info.id}`
       this.$axios.delete(url).then((res) => {
         this.alertType = {
           msg: `해당 항목이 삭제되었습니다.`,

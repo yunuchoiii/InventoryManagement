@@ -1,6 +1,6 @@
 <template>
   <body style="height: 100%;">
-    <div class="navBar">
+    <div class="navBar" v-if="$route.name !== 'Tutorial'">
       <div style="text-align: center">
         <a href="/"><img src="@/assets/logo.png" alt="" width="70%"></a>
         <a href="/">

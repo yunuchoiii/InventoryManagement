@@ -10,6 +10,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/HomeView.vue')
   },
   {
+    path: '/tutorial',
+    name: 'Tutorial',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/TutorialView.vue')
+  },
+  {
     path: '/status/inventory',
     name: 'InventoryStatus',
     component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/InventoryStatusView.vue')

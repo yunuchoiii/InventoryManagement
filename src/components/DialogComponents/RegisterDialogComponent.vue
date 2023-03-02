@@ -150,12 +150,13 @@
                 <v-col
                   cols="12"
                 >
-                  <v-text-field
-                    dense
-                    outlined
+                <v-textarea
                     label="비고"
+                    outlined
+                    rows="3"
+                    dense
                     v-model="product_info.memo"
-                  ></v-text-field>
+                  ></v-textarea>
                 </v-col>
               </v-row>
             </v-container>
@@ -295,12 +296,14 @@
                 <v-col
                   cols="12"
                 >
-                  <v-text-field
-                    dense
-                    outlined
-                    label='비고'
-                    v-model="inStock_info.memo"
-                  ></v-text-field>
+                <v-textarea
+                  label="비고"
+                  auto-grow
+                  outlined
+                  rows="3"
+                  dense
+                  v-model="inStock_info.memo"
+                ></v-textarea>
                 </v-col>
               </v-row>
             </v-container>
@@ -474,12 +477,13 @@
                 <v-col
                   cols="12"
                 >
-                  <v-text-field
-                    dense
+                  <v-textarea
+                    label="비고"
                     outlined
-                    label='비고'
+                    rows="3"
+                    dense
                     v-model="outStock_info.memo"
-                  ></v-text-field>
+                  ></v-textarea>
                 </v-col>
               </v-row>
             </v-container>
@@ -524,8 +528,8 @@ export default {
         background : "dark",
         color : "#254359"
       },
-      alertHeight: this.register_name === '입고' ? window.innerHeight/2 - 271 + 'px' 
-        : window.innerHeight/2 - 304 + 'px',
+      alertHeight: this.register_name === '입고' ? window.innerHeight/2 - 28 + 'px' 
+        : window.innerHeight/2 - 320 + 'px',
       categories: [],
       selectedCategory: "",
       itemsObjects: [],
@@ -657,5 +661,8 @@ export default {
 }
 .col-sm-1, .col-1 {
     padding: 10px 0px 10px 20px !important;
+}
+textarea {
+  resize: none;
 }
 </style>

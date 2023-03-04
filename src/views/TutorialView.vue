@@ -20,13 +20,13 @@
           </div>
         </div>
         <div class="fw-700 w-40" style="letter-spacing: -0.1rem; padding-left: 50px;">
-          <p class="fade-in-2s" style="font-size: 3.2rem;">안녕하세요.</p>
-          <div class="fade-in-3s" style="font-size: 2.5rem;margin-top: 30px;">
+          <p class="fade-in-2s" style="font-size: 3.5rem;">안녕하세요.</p>
+          <div class="fade-in-3s" style="font-size: 3rem;margin-top: 30px;">
             <span class="orange-gradient">원샷솔브코리아<br></span>
             <span>재고관리시스템 입니다.</span>
           </div>
           <div class="flex-align-center" style="margin-top: 80px;">
-            <span class="fade-in-4s" style="font-size: 3rem; margin-right: 20px;">시작하기</span>
+            <span class="fade-in-4s" style="font-size: 3.5rem; margin-right: 20px;">시작하기</span>
             <v-btn
               text
               icon
@@ -94,7 +94,17 @@
             </ul>
           </div>
           <div class="flex-align-center" style="margin-top: 60px;">
-            <span class="font-mont tut-next red-gradient">NEXT</span>
+            <v-btn
+              text
+              icon
+              color="#bc3640"
+              width="60px"
+              height="60px"
+              @click="toPrevPage()"
+              class="box-shadow"
+            >
+              <v-icon size="60px">mdi-chevron-left</v-icon>
+            </v-btn>
             <v-btn
               text
               icon
@@ -102,7 +112,7 @@
               width="60px"
               height="60px"
               @click="toNextPage()"
-              class="box-shadow"
+              class="box-shadow ml-20"
             >
               <v-icon size="60px">mdi-chevron-right</v-icon>
             </v-btn>
@@ -115,7 +125,7 @@
     <div v-if="page_3_show" id="page_3">
       <div class="section flex-center">
         <div class="tut-left-box w-60 tx-center flex-center flex-column">
-          <div style="height: 486px; width: 646px; position: relative;">
+          <div style="height: 500px; width: 85%; position: relative;">
             <div class="tut-screen-sm box-shadow swing-in-top-fwd-1s" style="top: 0%; left: 0%;">
               <div class="fw-700 tut-screen-sm-title font-gray">
                 월간 재고 현황
@@ -198,7 +208,17 @@
             </ul>
           </div>
           <div class="flex-align-center" style="margin-top: 35px;">
-            <span class="font-mont tut-next orange-gradient">NEXT</span>
+            <v-btn
+              text
+              icon
+              color="#ff631a"
+              width="60px"
+              height="60px"
+              @click="toPrevPage()"
+              class="box-shadow"
+            >
+              <v-icon size="60px">mdi-chevron-left</v-icon>
+            </v-btn>
             <v-btn
               text
               icon
@@ -206,7 +226,7 @@
               width="60px"
               height="60px"
               @click="toNextPage()"
-              class="box-shadow"
+              class="box-shadow ml-20"
             >
               <v-icon size="60px">mdi-chevron-right</v-icon>
             </v-btn>
@@ -236,7 +256,7 @@
             </div>
             <div class="tut-dialog box-shadow scale-in-center-2s flex-center-between flex-column">
               <div>
-                <span class="font-blue fw-700" style="font-size: 1.5rem;">입고 내역 등록</span>
+                <span class="font-blue fw-700" style="font-size: 1.5rem;">입출고 내역</span>
               </div>
               <div class="flex-center flex-center-evenly tut-dialog-box size-100">
                 <div v-for="i in 6" :key="i" class="tut-dialog-blank box-shadow"></div>
@@ -265,7 +285,17 @@
             </ul>
           </div>
           <div class="flex-align-center" style="margin-top: 35px;">
-            <span class="font-mont tut-next blue-gradient">NEXT</span>
+            <v-btn
+              text
+              icon
+              color="#3d7197"
+              width="60px"
+              height="60px"
+              @click="toPrevPage()"
+              class="box-shadow"
+            >
+              <v-icon size="60px">mdi-chevron-left</v-icon>
+            </v-btn>
             <v-btn
               text
               icon
@@ -273,7 +303,7 @@
               width="60px"
               height="60px"
               @click="toNextPage()"
-              class="box-shadow"
+              class="box-shadow ml-20"
             >
               <v-icon size="60px">mdi-chevron-right</v-icon>
             </v-btn>
@@ -282,11 +312,74 @@
       </div>
     </div>
 
-    <!-- Page 5 재고 시작월 등록-->
+    <!-- Page 5 거의끝-->
     <div v-if="page_5_show" id="page_5">
       <div class="section flex-center">
         <div class="slide-in-blurred-top-1s font-mont">
           <span class="tut-title blue-gradient">거의 다 끝났습니다!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 6 재고 시작월 등록-->
+    <div v-if="page_6_show" id="page_6">
+      <div class="main-section flex-center fade-in-1s">
+        <div class="bgImgFrame bg-pan-left w-60" style="background-image: linear-gradient(45deg, #1a3a5e, #0eb0d6, #c1e9f2);">
+          <div class="bgImg">
+            <img class="kenburns-top" src="@/assets/tutorial_bg_1.png" width="500px">
+          </div>
+        </div>
+        <div class="fade-in-1s ml-50">
+          <span class="tut-title blue-gradient">언제부터 재고 기록을<br>시작하시나요?</span>
+          <div style="margin-top: 50px; font-size: 1.7rem;">
+            <v-app>
+              <v-select
+                label="연도"
+                solo
+                flat
+                style="width: 120px; height: 52px; border-radius: 10px; margin-right: 15px;"
+                class="box-shadow"
+                :items="[2020, 2021, 2022, 2023]"
+                v-model="year"
+              ></v-select>
+              <span>년 </span>
+              <v-select
+                label="월"
+                solo
+                flat
+                style="width: 80px; height: 52px; border-radius: 10px; margin: 0px 15px 0px 30px;"
+                class="box-shadow"
+                :items="[1,2,3,4,5,6,7,8,9,10,11,12]"
+                v-model="month"
+              ></v-select>
+              <span>월 부터</span>
+            </v-app>
+            <p style="margin-top: 10px"><b>재고관리 시스템</b>을 시작합니다.</p>
+          </div>
+          <div class="flex-align-center" style="margin-top: 80px;">
+            <span class="fade-in-2s fw-700 blue-gradient" style="font-size: 2.5rem; margin-right: 20px;">시작하기</span>
+            <v-btn
+              text
+              icon
+              color="#1d7498"
+              width="70px"
+              height="70px"
+              style="margin-top:5px; margin-left: 10px;"
+              @click="setFirstEnd()"
+              class="slide-in-left-3s box-shadow"
+            >
+              <v-icon size="60px">mdi-chevron-right</v-icon>
+            </v-btn>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 7 재고 시작월 등록-->
+    <div v-if="page_7_show" id="page_7">
+      <div class="section flex-center">
+        <div class="slide-in-blurred-top-1s font-mont">
+          <span class="tut-title blue-gradient">시작합니다.</span>
         </div>
       </div>
     </div>
@@ -308,6 +401,10 @@ export default {
       page_3_show: false,
       page_4_show: false,
       page_5_show: false,
+      page_6_show: false,
+      page_7_show: false,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1
     }
   },
   setup () {},
@@ -354,12 +451,23 @@ export default {
         setTimeout(()=>{
           this.page_4_show = false
         }, 500)
-      } else if (this.current_page=== 5) {
-        this.page_6_show = true
-        document.getElementById("page_5").classList.add("slide-out-left");
         setTimeout(()=>{
-          this.page_5_show = false
+          this.page_6_show = true
+          document.getElementById("page_5").classList.add("slide-out-left");
+          setTimeout(()=>{
+            this.page_5_show = false
+            this.current_page++
+          }, 500)
+        }, 3000)
+      } else if (this.current_page=== 6) {
+        this.page_7_show = true
+        document.getElementById("page_6").classList.add("slide-out-left");
+        setTimeout(()=>{
+          this.page_6_show = false
         }, 500)
+        setTimeout(()=>{
+          window.location.href="/"
+        }, 3000)
       }
 
       setTimeout(()=>{
@@ -411,12 +519,32 @@ export default {
         setTimeout(()=>{
           this.page_6_show = false
         }, 500)
+      } else if (this.current_page=== 7) {
+        this.page_6_show = true
+        document.getElementById("page_7").classList.add("slide-out-right");
+        setTimeout(()=>{
+          this.page_7_show = false
+        }, 500)
       }
 
       setTimeout(()=>{
         this.current_page--
       }, 500)
-    }
+    },
+    // 최초 마감월 설정
+    setFirstEnd () {
+      const date = this.month < 10 ? 
+        this.year + '-0'+this.month + '-01' : 
+        this.year + '-'+this.month + '-01'
+      console.log(date)
+      const url = `http://localhost:8080/inventory/end-first/${date}`;
+      this.$axios.post(url
+      ).then((res) => {
+        this.toNextPage()
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
   }
 }
 </script>
@@ -427,6 +555,23 @@ body {
 li {
   list-style: none;
   height: 40px;
+}
+.v-application--wrap {
+  min-height: auto;
+  max-width: fit-content;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+.v-menu__content {
+  border-radius: 10px;
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.12);
+}
+.v-label {
+  font-size: 1.8rem;
+}
+.v-input {
+  font-size: 20px;
 }
 .fa-search {
   color:#ef882e
@@ -459,14 +604,13 @@ li {
 .section {
   height: 100vh; 
   width: 100vw;
-  padding: 90px;
+  padding: 50px;
 }
 .bgImgFrame {
   width: 510px; 
   height: 510px; 
   padding: 15px; 
   border-radius: 500px; 
-  margin-left: 70px; 
   background-image: linear-gradient(45deg, #322420, #ef882e, #ffecd0);
   background-size: 600% 100%;
 }

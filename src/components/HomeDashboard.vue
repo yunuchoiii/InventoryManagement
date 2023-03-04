@@ -13,7 +13,7 @@
           <hr class="dashed-line">
         </div>
         <div class="flex" data-aos="zoom-in">
-          <a href="/status/inventory" class="box-shadow menu-card btn-shadow mr-2per homebox">
+          <a href="/status/inventory" class="menu-card mr-2per homebox">
             <div class="flex-center">
               <img src="@/assets/inventory_status_icon.png" alt="현 재고 현황" width="50px" height="50px">
             </div>
@@ -22,7 +22,7 @@
               <span class="menu-card-title2"><br>현재 재고 확인 및 조회</span>
             </div>
           </a>
-          <a href="/status/monthly" class="box-shadow menu-card btn-shadow mr-2per homebox">
+          <a href="/status/monthly" class="menu-card mr-2per homebox">
             <div class="flex-center">
               <img src="@/assets/month_status_icon.png" alt="월간 재고 현황" width="50px" height="50px">
             </div>
@@ -31,7 +31,7 @@
               <span class="menu-card-title2"><br>월별 재고 확인 및 조회</span>
             </div>
           </a>
-          <a href="/status/inbound" class="box-shadow menu-card btn-shadow mr-2per homebox" style="padding-left: 20px">
+          <a href="/status/inbound" class="menu-card mr-2per homebox" style="padding-left: 20px">
             <div class="flex-center">
               <img src="@/assets/input_icon.png" alt="입고 현황" width="60px" height="60px">
             </div>
@@ -40,7 +40,7 @@
               <span class="menu-card-title2"><br>월별 입고량 확인 및 조회</span>
             </div>
           </a>
-          <a href="/status/outbound" class="box-shadow menu-card btn-shadow homebox" style="padding-left: 20px">
+          <a href="/status/outbound" class="menu-card homebox" style="padding-left: 20px">
             <div class="flex-center">
               <img src="@/assets/output_icon.png" alt="출고 현황" width="60px" height="60px">
             </div>
@@ -59,7 +59,7 @@
           <hr class="dashed-line">
         </div>
         <div class="flex" data-aos="zoom-in">
-          <a href="/list/inbound" class="box-shadow menu-card btn-shadow mr-2per homebox">
+          <a href="/list/inbound" class="menu-card mr-2per homebox">
             <div class="flex-center">
               <img src="@/assets/input_list_icon.png" alt="입고 리스트" width="50px" height="50px">
             </div>
@@ -68,7 +68,7 @@
               <span class="menu-card-title2"><br>입고 기록 조회 및 등록</span>
             </div>
           </a>
-          <a href="/list/outbound" class="box-shadow menu-card btn-shadow mr-2per homebox">
+          <a href="/list/outbound" class="menu-card mr-2per homebox">
             <div class="flex-center">
               <img src="@/assets/output_list_icon.png" alt="출고 리스트" width="50px" height="50px">
             </div>
@@ -77,7 +77,7 @@
               <span class="menu-card-title2"><br>출고 기록 조회 및 등록</span>
             </div>
           </a>
-          <a href="/list/product" class="box-shadow menu-card btn-shadow mr-2per homebox">
+          <a href="/list/product" class="menu-card mr-2per homebox">
             <div class="flex-center">
               <img src="@/assets/item_list_icon.png" alt="상품 리스트" width="60px" height="60px">
             </div>
@@ -266,7 +266,7 @@ export default {
   created () {
     AOS.init()
     this.getMonthsList()
-    // this.getTutorial()
+    this.getTutorial()
   },
   mounted () {},
   unmounted () {},
@@ -275,7 +275,9 @@ export default {
     getTutorial () {
       this.$axios.get(`http://localhost:8080/inventory/check/isnew`).then((res) => {
         this.tutorial = res.data
-        console.log(this.tutorial)
+        if (this.tutorial) {
+          window.location.href="/tutorial"
+        }
       }).catch((error) => {
         console.log(error);
       })

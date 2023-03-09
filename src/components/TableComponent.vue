@@ -52,6 +52,15 @@
               <td class="memo">{{ item.memo }}</td>
             </tr>
           </tbody>
+          <tbody v-if="title == '월간 입고 현황' || title == '월간 출고 현황'">
+            <tr v-for="(item, index) in datas" :key="index">
+              <td>{{ item.categoryName }}</td>
+              <td>{{ item.productName }}</td>
+              <td>{{ item.productCode }}</td>
+              <td>{{ item.monthlyQuantityList }}</td>
+              <td class="memo">{{ item.memo }}</td>
+            </tr>
+          </tbody>
           <!-- 더 보기 버튼 -->
           <tr>
             <td colspan='20'>

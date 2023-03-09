@@ -611,7 +611,7 @@ export default {
         color : "#254359"
       },
       alertHeight: this.register_name === '입고' ? window.innerHeight/2 - 286 + 'px' 
-        : window.innerHeight/2 - 320 + 'px',
+        : window.innerHeight/2 - 325 + 'px',
       confirm: false,
       editConfirm: false,
       deleteConfirm: false,
@@ -700,7 +700,7 @@ export default {
       const splitedDate = date.split("-")
       date = splitedDate[0] + "-" + splitedDate[1] + "-01"
 
-      this.$axios.get(`http://localhost:8080/inventory/end/check/${date}`).then((res) => {
+      this.$axios.get(`http://localhost:8080/closing/inventory/check/${date}`).then((res) => {
         this.stockClosedBool = res.data
       }).catch((error) => {
         console.log(error);

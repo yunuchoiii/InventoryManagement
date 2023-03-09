@@ -136,7 +136,7 @@ export default {
 
       const month = this.month < 10 ? "0"+this.month : this.month
       const date = this.year + "-" + month + "-01"
-      this.$axios.post(`http://localhost:8080/inventory/end/${date}`).then((res) => {
+      this.$axios.post(`http://localhost:8080/closing/inventory/${date}`).then((res) => {
         this.alertType = {
           msg: `${this.year}년 ${this.month}월 재고 마감이 완료되었습니다.`,
           type : "success",
@@ -161,7 +161,7 @@ export default {
 
       const month = this.month < 10 ? "0"+this.month : this.month
       const date = this.year + "-" + month + "-01"
-      this.$axios.delete(`http://localhost:8080/inventory/end/${date}`).then((res) => {
+      this.$axios.delete(`http://localhost:8080/closing/inventory/${date}`).then((res) => {
         this.alertType = {
           msg: `${this.year}년 ${this.month}월 재고 마감이 해제되었습니다.`,
           type : "success",

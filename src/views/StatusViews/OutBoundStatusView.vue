@@ -11,6 +11,7 @@
     :datas="datas"
     :filterData="filterData"
     :componentKey="componentKey"/>
+    {{ datas }}
   </body>
 </template>
 <script>
@@ -27,7 +28,7 @@ export default {
       title: '월간 출고 현황',
       clicked: false,
       headers: ['구분', '품목', '품목코드',],
-      datas: ['세제', 'EV-1',	123048,	6, -19, 20, 13, 54, 14, 6, -19, 20, 13, 54, 14],
+      datas: [],
       filterData: {},
       componentKey: 0
     }
@@ -36,6 +37,7 @@ export default {
   setup () {},
   created () {
     this.getMonthsList()
+    this.getDataList()
   },
   mounted () {},
   unmounted () {},
@@ -48,7 +50,7 @@ export default {
     },
     //일년치 월 리스트 구하기
     getMonthsList () {
-      let month = new Date(new Date().setMonth(new Date().getMonth() + 2)).getMonth() == 0 ? 12 : new Date(new Date().setMonth(new Date().getMonth() + 2)).getMonth()
+      let month = new Date(new Date().setMonth(new Date().getMonth() + 1)).getMonth() == 0 ? 12 : new Date(new Date().setMonth(new Date().getMonth() + 1)).getMonth()
       this.headers.push(month + '월')
       for (var i=0; i < 11; i++) {
         if(month + 1 == 13) {
@@ -59,6 +61,15 @@ export default {
           this.headers.push(month + '월')
         }
       }
+    },
+    getDataList () {
+      const url = `http://localhost:8080/monthly/outbound`
+      this.$axios.get(url).then((res) => {
+        this.datas = res.data
+        console.log(this.datas)
+      }).catch((error) => {
+        console.log(error);
+      })
     }
   }
 }

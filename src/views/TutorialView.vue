@@ -1,25 +1,27 @@
 <template>
   <body class="flex-center">
     <!-- <div v-if="this.current_page!=1" class="fade-in-1s" style="z-index: 100;"> -->
-    <div class="fade-in-1s" style="z-index: 100;">
+    <!-- <div class="fade-in-1s" style="z-index: 100;">
       <a @click="toPrevPage()">
         <img src="https://cdn-icons-png.flaticon.com/512/709/709586.png" class="arrow-left-img">
       </a>
       <a @click="toNextPage()">
         <img src="https://cdn-icons-png.flaticon.com/512/709/709586.png" class="arrow-right-img">
       </a>
-    </div>
+    </div> -->
 
     <!-- Page 1 메인페이지-->
     <div v-if="page_1_show" id="page_1">
-      <div class="main-page-div main-page-bg"></div>
+      <!-- <div class="main-page-div main-page-bg"></div> -->
       <div class="main-section flex-center fade-in-1s">
-        <div class="bgImgFrame bg-pan-left w-60">
-          <div class="bgImg">
-            <img class="kenburns-top" src="@/assets/tutorial_bg_2.png" width="500px">
+        <div class="flex-right pr-50">
+          <div class="bgImgFrame bg-pan-left">
+            <div class="bgImg">
+              <img class="kenburns-top" src="@/assets/tutorial_bg_2.png" width="500px">
+            </div>
           </div>
         </div>
-        <div class="fw-700 w-40" style="letter-spacing: -0.1rem; padding-left: 50px;">
+        <div class="fw-700" style="letter-spacing: -0.1rem;">
           <p class="fade-in-2s" style="font-size: 3.5rem;">안녕하세요.</p>
           <div class="fade-in-3s" style="font-size: 3rem;margin-top: 30px;">
             <span class="orange-gradient">원샷솔브코리아<br></span>
@@ -47,7 +49,7 @@
     <!-- Page 2 홈 대시보드-->
     <div v-if="page_2_show" id="page_2">
       <div class="section flex-center">
-        <div class="tut-left-box w-60 tx-center fade-in-1s flex-center">
+        <div class="tut-left-box tx-center fade-in-1s flex-right pr-50">
           <div class="tut-screen-lg">
             <div style="padding:30px 30px 0px 30px" class="flex-center-between">
               <div v-for="i in 4" :key="i" class="box-shadow flex-center tut-screen-lg-menu">
@@ -83,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="w-40 fade-in-3s">
+        <div class="fade-in-3s w-500">
           <div class="font-mont tut-title red-gradient">
             <span>HOME DASHBOARD</span>
           </div>
@@ -97,7 +99,7 @@
             <v-btn
               text
               icon
-              color="#bc3640"
+              color="#fd4b5a"
               width="60px"
               height="60px"
               @click="toPrevPage()"
@@ -108,7 +110,7 @@
             <v-btn
               text
               icon
-              color="#bc3640"
+              color="#fd4b5a"
               width="60px"
               height="60px"
               @click="toNextPage()"
@@ -124,8 +126,8 @@
     <!-- Page 3 현황-->
     <div v-if="page_3_show" id="page_3">
       <div class="section flex-center">
-        <div class="tut-left-box w-60 tx-center flex-center flex-column">
-          <div style="height: 500px; width: 85%; position: relative;">
+        <div class="tut-left-box tx-center flex-center flex-column pr-50">
+          <div style="height: 488px; width: 650px; position: relative;">
             <div class="tut-screen-sm box-shadow swing-in-top-fwd-1s" style="top: 0%; left: 0%;">
               <div class="fw-700 tut-screen-sm-title font-gray">
                 월간 재고 현황
@@ -196,7 +198,7 @@
             </div>
           </div>
         </div>
-        <div class="w-40 fade-in-2s">
+        <div class="fade-in-2s w-500">
           <div class="font-mont tut-title orange-gradient">
             <span>INVENTORY STATUS</span>
           </div>
@@ -211,7 +213,7 @@
             <v-btn
               text
               icon
-              color="#ff631a"
+              color="#f79928"
               width="60px"
               height="60px"
               @click="toPrevPage()"
@@ -222,7 +224,7 @@
             <v-btn
               text
               icon
-              color="#ff631a"
+              color="#f79928"
               width="60px"
               height="60px"
               @click="toNextPage()"
@@ -238,7 +240,7 @@
     <!-- Page 4 목록-->
     <div v-if="page_4_show" id="page_4">
       <div class="section flex-center">
-        <div class="tut-left-box w-60 tx-center fade-in-1s flex-center flex-column">
+        <div class="tut-left-box tx-center fade-in-1s flex-center flex-column pr-50">
           <div class="tut-screen-lg flex-center" style="overflow: hidden;">
             <div id="grayfilter" class="grayfilter size-100"></div>
             <div id="tut-table" class="flex-center flex-column size-100" style="padding: 30px;">
@@ -273,9 +275,9 @@
             </div>
           </div>
         </div>
-        <div class="w-40 fade-in-3s">
+        <div class="fade-in-3s w-500">
           <div class="font-mont tut-title blue-gradient">
-            <span>INVENTORY LIST</span>
+            <span>INVENTORY<br>LISTS</span>
           </div>
           <div class="tut-contents">
             <ul>
@@ -288,7 +290,7 @@
             <v-btn
               text
               icon
-              color="#3d7197"
+              color="#3c7096"
               width="60px"
               height="60px"
               @click="toPrevPage()"
@@ -324,13 +326,16 @@
     <!-- Page 6 재고 시작월 등록-->
     <div v-if="page_6_show" id="page_6">
       <div class="main-section flex-center fade-in-1s">
-        <div class="bgImgFrame bg-pan-left w-60" style="background-image: linear-gradient(45deg, #1a3a5e, #0eb0d6, #c1e9f2);">
-          <div class="bgImg">
-            <img class="kenburns-top" src="@/assets/tutorial_bg_1.png" width="500px">
+        <div class="flex-right pr-50">
+          <div class="bgImgFrame bg-pan-left" style="background-image: linear-gradient(45deg, #1a3a5e, #0eb0d6, #c1e9f2);">
+            <div class="bgImg">
+              <img class="kenburns-top" src="@/assets/tutorial_bg_1.png" width="500px">
+            </div>
           </div>
         </div>
-        <div class="fade-in-1s ml-50">
-          <span class="tut-title blue-gradient">언제부터 재고 기록을<br>시작하시나요?</span>
+        <div class="fade-in-1s">
+          <span class="tut-title blue-gradient">언제부터 재고 기록을<br></span>
+          <span class="tut-title blue-gradient">시작하시나요?</span>
           <div style="margin-top: 50px; font-size: 1.7rem;">
             <v-app>
               <v-select
@@ -356,7 +361,7 @@
             </v-app>
             <p style="margin-top: 10px"><b>재고관리 시스템</b>을 시작합니다.</p>
           </div>
-          <div class="flex-align-center" style="margin-top: 80px;">
+          <div class="flex-align-center" style="margin-top: 50px;">
             <span class="fade-in-2s fw-700 blue-gradient" style="font-size: 2.5rem; margin-right: 20px;">시작하기</span>
             <v-btn
               text
@@ -375,7 +380,7 @@
       </div>
     </div>
 
-    <!-- Page 7 재고 시작월 등록-->
+    <!-- Page 7 시작합니다-->
     <div v-if="page_7_show" id="page_7">
       <div class="section flex-center">
         <div class="slide-in-blurred-top-1s font-mont">
@@ -537,7 +542,7 @@ export default {
         this.year + '-0'+this.month + '-01' : 
         this.year + '-'+this.month + '-01'
       console.log(date)
-      const url = `http://localhost:8080/inventory/end-first/${date}`;
+      const url = `http://localhost:8080/closing-first/inventory/${date}`;
       this.$axios.post(url
       ).then((res) => {
         this.toNextPage()
@@ -585,171 +590,4 @@ li {
   background-position: center;
   filter: blur(100px);
 } */
-.size-100 {
-  width: 100%;
-  height: 100%;
-}
-.main-page-div {
-  width: 150%;
-  height: 150%;
-
-  position: absolute;
-  top: -25%;
-  left: -25%;
-}
-.main-section {
-  height: 100vh; 
-  width: 100vw;
-}
-.section {
-  height: 100vh; 
-  width: 100vw;
-  padding: 50px;
-}
-.bgImgFrame {
-  width: 510px; 
-  height: 510px; 
-  padding: 15px; 
-  border-radius: 500px; 
-  background-image: linear-gradient(45deg, #322420, #ef882e, #ffecd0);
-  background-size: 600% 100%;
-}
-.bgImg {
-  height:480px; 
-  width: 480px;
-  border-radius: 300px;
-  overflow: hidden;
-}
-.arrow-right-img {
-  width: 50px;
-  position: fixed;
-  right: 30px;
-  cursor : pointer;
-  z-index: 1;
-}
-.arrow-left-img {
-  width: 50px;
-  position: fixed;
-  left: 30px;
-  transform: scaleX(-1);
-  cursor : pointer;
-  z-index: 1;
-}
-.tut-title {
-  font-weight:700; 
-  font-size: 3.3rem; 
-  margin-bottom: 30px;
-  letter-spacing: -0.1rem;
-}
-.tut-contents {
-  font-weight:700; 
-  font-size: 1.4rem; 
-  color: #494949;
-  white-space: nowrap;
-}
-.tut-chart-img {
-  border-radius: 10px;
-  overflow: hidden;
-  width: 400px;
-}
-.tut-next {
-  font-size:2.7rem; 
-  letter-spacing: -0.1rem;
-  margin-right: 30px;
-}
-.tut-screen-lg {
-  width: 700px; 
-  height: 488px; 
-  border: 3px solid #cdcdcd; 
-  border-radius: 30px;
-  background-color: #f3f3f3;
-  position: relative;
-}
-.tut-screen-lg-menu {
-  width: 22%; 
-  height: 70px; 
-  border-radius: 15px;
-  background-color: white;
-}
-.tut-screen-lg-menu div {
-  width: 25%;
-  height: 50%;
-  background-color: #d2d2d4;
-  border-radius: 10px;
-  margin-right: 10px;
-}
-.tut-screen-lg-menu img {
-  width:50%;
-  height:50%;
-}
-.tut-screen-lg-chart {
-  width: 48%; 
-  height: 150px; 
-  border-radius: 15px;
-  background-color: white;
-  margin-bottom: 25px;
-}
-.tut-screen-sm {
-  width: 70%;
-  height: 70%;
-  border-radius: 30px;
-  border: 3px solid #ffffff; 
-  background-color: #f3f3f3;
-  position: absolute;
-  padding: 10px 20px;
-}
-.tut-screen-sm-title{
-  font-size: 1.2rem; 
-  text-align: left;
-}
-#tut-table-row {
-  transition: background-color 0.5s ease;
-  transition: width 0.5s ease;
-  transition: height 0.5s ease;
-}
-.tut-table-row {
-  width: 100%; 
-  height: 35px; 
-  background-color: white; 
-  border-radius: 10px;
-  padding: 0px 10px
-}
-.tut-table-line {
-  width: 100%; 
-  height: 3px; 
-  background-color: #707070;
-}
-.tut-dialog {
-  width: 500px; 
-  height: 400px; 
-  border-radius: 30px; 
-  position: absolute; 
-  top: 40px; 
-  background-color: white;
-  padding: 20px 40px;
-}
-.tut-dialog-box {
-  flex-wrap: wrap; 
-  border: 1px solid #3d7197; 
-  border-radius: 20px; 
-  margin: 20px; 
-  padding: 11px 0px;
-  background-color: #e0f0f6;
-}
-.tut-dialog-blank {
-  width: 43%; 
-  height: 40px; 
-  border-radius: 10px;
-  background-color: white;
-}
-.grayfilter {
-  background-color: transparent; 
-  position: absolute;
-  transition: background-color 0.5s ease;
-}
-.tut-divider {
-  width: 95%;
-  height: 2px;
-  background-color: #f3f3f3;
-}
 </style>

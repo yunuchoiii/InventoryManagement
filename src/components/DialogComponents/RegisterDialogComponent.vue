@@ -528,8 +528,8 @@ export default {
         background : "dark",
         color : "#254359"
       },
-      alertHeight: this.register_name === '입고' ? window.innerHeight/2 - 28 + 'px' 
-        : window.innerHeight/2 - 320 + 'px',
+      alertHeight: this.register_name === '입고' ? window.innerHeight/2 - 286 + 'px' 
+        : window.innerHeight/2 - 325 + 'px',
       categories: [],
       selectedCategory: "",
       itemsObjects: [],

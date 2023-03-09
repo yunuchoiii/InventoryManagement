@@ -223,9 +223,11 @@ export default {
       this.selectedMonth = localFilterData.month
       this.changedMonth = localFilterData.month
     } else {
-      this.selectedYear = new Date().getFullYear()
-      this.selectedMonth = new Date().getMonth() + 1
-      this.changedMonth = new Date().getMonth() + 1   
+      if (this.register_name != null) {
+        this.selectedYear = new Date().getFullYear()
+        this.selectedMonth = new Date().getMonth() + 1
+        this.changedMonth = new Date().getMonth() + 1           
+      }
     }
     this.selectMonth()
     this.getCategories()
@@ -277,7 +279,7 @@ export default {
     },
     // 입출고 마감 확인
     checkStockClosed () {
-      this.$axios.get(`http://localhost:8080/inventory/end/check/${this.startDate}`).then((res) => {
+      this.$axios.get(`http://localhost:8080/closing/inventory/check/${this.startDate}`).then((res) => {
         this.stockClosedBool = res.data
         if(res.data === true) {
           this.closeType = "마감 해제"

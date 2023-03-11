@@ -54,10 +54,10 @@
           </tbody>
           <tbody v-if="title == '월간 입고 현황' || title == '월간 출고 현황'">
             <tr v-for="(item, index) in datas" :key="index">
-              <td>{{ item.categoryName }}</td>
+              <td>{{ getCategoryName(item.categoryName) }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
-              <td>{{ item.monthlyQuantityList }}</td>
+              <td v-for="data in monthData[index]" :key="data">{{ data }}</td>
               <td class="memo">{{ item.memo }}</td>
             </tr>
           </tbody>
@@ -112,6 +112,9 @@ export default {
       type: Array,
       required: true
     },
+    monthData: {
+      type: Array,
+    },
     filterData: {
       type: Object
     },
@@ -154,6 +157,22 @@ export default {
     emitPaging () {
       this.paging ++
       this.$emit("paging", this.paging)
+    },
+    getCategoryName(categoryCode) {
+      switch (categoryCode) {
+        case '00':
+          return '세제';
+        case '01':
+          return '방향제';
+        case '02':
+          return '광택제';
+        case '03':
+          return '말통';
+        case '04':
+          return '박스';
+        default:
+          return '';
+      }
     }
   }
 }

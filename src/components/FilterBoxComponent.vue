@@ -304,7 +304,9 @@ export default {
         endDate: this.endDate
       }
       this.$emit("filterData", this.filterData)
-      this.checkStockClosed()
+      if (this.register_name === '입고' || this.register_name === '출고' || this.register_name === '상품') {
+        this.checkStockClosed()
+      }
       this.changedMonth = this.selectedMonth
     },
     // 10 이하면 앞에 0 붙이는 이벤트

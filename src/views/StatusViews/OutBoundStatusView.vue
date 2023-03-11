@@ -9,9 +9,9 @@
     :title="title"
     :headers="headers"
     :datas="datas"
+    :monthData="monthData"
     :filterData="filterData"
     :componentKey="componentKey"/>
-    {{ datas }}
   </body>
 </template>
 <script>
@@ -29,8 +29,10 @@ export default {
       clicked: false,
       headers: ['구분', '품목', '품목코드',],
       datas: [],
+      monthData: [],
       filterData: {},
-      componentKey: 0
+      componentKey: 0,
+      monthLabel: []
     }
   },
   watch: {},
@@ -38,6 +40,7 @@ export default {
   created () {
     this.getMonthsList()
     this.getDataList()
+    this.getLastYearMonths()
   },
   mounted () {},
   unmounted () {},
@@ -66,10 +69,32 @@ export default {
       const url = `http://localhost:8080/monthly/outbound`
       this.$axios.get(url).then((res) => {
         this.datas = res.data
-        console.log(this.datas)
+        // 월별 데이터 배열로 만들기
+        for(let i=0; i<res.data.length; i++) {
+          let monthlyDataList = res.data[i]['monthlyQuantityList']
+          let dataArr = [];
+          for(let a=0; a<this.monthLabel.length; a++) {
+            const month = monthlyDataList.find(d => d.month === this.monthLabel[a]);
+            if (month) {
+              dataArr.push(month.quantity)
+            } else {
+              dataArr.push("-")
+            }
+          }
+          this.monthData.push(dataArr)
+        }
       }).catch((error) => {
         console.log(error);
       })
+    },
+    getLastYearMonths () {
+      const lastYearMonths = [];
+        const today = new Date();
+        for (let i = 11; i >= 0; i--) {
+          const lastYearMonth = new Date(today.getFullYear(), today.getMonth() - i);
+          lastYearMonths.push(lastYearMonth.getFullYear() * 100 + lastYearMonth.getMonth());
+        }
+      this.monthLabel = lastYearMonths;
     }
   }
 }

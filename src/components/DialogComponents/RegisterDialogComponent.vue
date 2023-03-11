@@ -528,8 +528,8 @@ export default {
         background : "dark",
         color : "#254359"
       },
-      alertHeight: this.register_name === '입고' ? window.innerHeight/2 - 286 + 'px' 
-        : window.innerHeight/2 - 325 + 'px',
+      dialogHeight: null,
+      alertHeight: null,
       categories: [],
       selectedCategory: "",
       itemsObjects: [],
@@ -563,6 +563,20 @@ export default {
       menu2: false,
       unit: ['L', 'mL', 'kg', 'g'],
       status: ['판매 예정', '판매 중', '판매 중단']
+    }
+  },
+  watch : {
+    dialog (value) {
+      if (value) {
+        setTimeout(()=>{
+            const dialogContent = document.querySelectorAll(".v-dialog.v-dialog--active.v-dialog--persistent")[0];
+            this.dialogHeight = dialogContent.clientHeight;
+            console.log(this.dialogHeight)
+        }, 100)
+      }
+    },
+    dialogHeight (value) {
+      this.alertHeight = (window.innerHeight - value)/2 - 65 + 'px'
     }
   },
   setup () {},

@@ -538,10 +538,10 @@ export default {
     },
     // 최초 마감월 설정
     setFirstEnd () {
+      const lastDay = new Date(this.year, this.month, 0).getDate();
       const date = this.month < 10 ? 
-        this.year + '-0'+this.month + '-01' : 
-        this.year + '-'+this.month + '-01'
-      console.log(date)
+        this.year + '-0' + this.month + '-' + lastDay : 
+        this.year + '-' + this.month + '-' + lastDay
       const url = `http://localhost:8080/closing-first/inventory/${date}`;
       this.$axios.post(url
       ).then((res) => {

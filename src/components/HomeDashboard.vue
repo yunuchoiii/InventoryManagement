@@ -273,6 +273,7 @@ export default {
   methods: {
     //서비스 시작 여부 확인
     getTutorial () {
+      //TODO: 최초 여부 url 확인
       this.$axios.get(`http://localhost:8080/inventory/check/isnew`).then((res) => {
         this.tutorial = res.data
         if (this.tutorial) {

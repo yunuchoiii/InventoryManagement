@@ -610,8 +610,8 @@ export default {
         background : "dark",
         color : "#254359"
       },
-      alertHeight: this.register_name === '입고' ? window.innerHeight/2 - 286 + 'px' 
-        : window.innerHeight/2 - 325 + 'px',
+      dialogHeight: null,
+      alertHeight: null,
       confirm: false,
       editConfirm: false,
       deleteConfirm: false,
@@ -660,6 +660,9 @@ export default {
   watch : {
     selectedProduct () {
       this.getStockId()
+    },
+    dialogHeight (value) {
+      this.alertHeight = (window.innerHeight - value)/2 - 65 + 'px'
     }
   },
   setup () {},
@@ -669,6 +672,10 @@ export default {
     if (this.register_name === '입고' ||this.register_name === '출고') {
       this.checkStockClosed()
     }
+    setTimeout(()=>{
+        const dialogContent = document.querySelectorAll(".v-dialog.v-dialog--active.v-dialog--persistent")[0];
+        this.dialogHeight = dialogContent.clientHeight;
+    }, 100)
   },
   mounted () {},
   unmounted () {},
@@ -698,7 +705,8 @@ export default {
         date = this.outStock_info.outBoundDate
       }
       const splitedDate = date.split("-")
-      date = splitedDate[0] + "-" + splitedDate[1] + "-01"
+      const lastDay = new Date(splitedDate[0], splitedDate[1], 0).getDate();
+      date = splitedDate[0] + "-" + splitedDate[1] + "-" + lastDay;
 
       this.$axios.get(`http://localhost:8080/closing/inventory/check/${date}`).then((res) => {
         this.stockClosedBool = res.data

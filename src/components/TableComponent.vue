@@ -53,7 +53,7 @@
           </tbody>
           <tbody v-if="title == '월간 입고 현황' || title == '월간 출고 현황'">
             <tr v-for="(item, index) in datas" :key="index">
-              <td>{{ getCategoryName(item.categoryName) }}</td>
+              <td>{{ item.categoryName }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
               <td v-for="data in monthData[index]" :key="data">{{ data }}</td>

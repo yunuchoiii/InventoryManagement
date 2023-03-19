@@ -77,7 +77,6 @@ export default {
       const url = `http://localhost:8080/monthly/inventory?${this.querys.join('&')}`
       this.$axios.get(url).then((res) => {
         this.datas = res.data
-        console.log(this.datas)
         // 월별 데이터 배열로 만들기
         for(let i=0; i<res.data.length; i++) {
           let monthlyDataList = res.data[i].monthlyQuantityList

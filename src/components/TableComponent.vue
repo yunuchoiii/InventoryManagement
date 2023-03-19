@@ -3,8 +3,7 @@
     <div class="box-shadow" style="border-radius: 10px; overflow: hidden;">
       <v-simple-table
       fixed-header
-      :height="this.tableHeight"
-      :key="this.componentKey">
+      :height="this.tableHeight">
         <template v-slot:default>
           <thead>
             <tr>
@@ -130,9 +129,6 @@ export default {
     },
     edit_dialog: {
       type: Boolean
-    },
-    componentKey: {
-      type: Number
     },
     isEmpty : {
       type: Boolean,

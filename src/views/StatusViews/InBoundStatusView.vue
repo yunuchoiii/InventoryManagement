@@ -2,7 +2,6 @@
   <body class="body-padding">
     <FilterBoxComponent
     @filterData="filterEvent"
-    @componentKey="componentKeyEvent"
     :month_show="false"
     :title="title"/>
     <TableComponent
@@ -10,8 +9,7 @@
     :headers="headers"
     :datas="datas"
     :monthData="monthData"
-    :filterData="filterData"
-    :componentKey="componentKey"/>
+    :filterData="filterData"/>
   </body>
 </template>
 <script>
@@ -32,7 +30,6 @@ export default {
       monthData: [],
       filterData: {},
       querys: [],
-      componentKey: 0,
       monthLabel: []
     }
   },
@@ -53,14 +50,13 @@ export default {
         const endDate = data.year + '-12-01';
         this.querys.push(`startDate=${startDate}`);
         this.querys.push(`endDate=${endDate}`);
+        this.headers = ['구분', '품목', '품목코드', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+        this.getLastYearMonths(data.year)
       }
       if (data.categoryCode != "") {
         this.querys.push(`categoryCode=${data.categoryCode}`);
       }
       this.getDataList()
-    },
-    componentKeyEvent (data) {
-      this.componentKey = data
     },
     //일년치 월 리스트 구하기
     getMonthsList () {
@@ -77,6 +73,7 @@ export default {
       }
     },
     getDataList (url) {
+      this.monthData = [];
       url = `http://localhost:8080/monthly/inbound?${this.querys.join('&')}`
       this.$axios.get(url).then((res) => {
         this.datas = res.data
@@ -86,7 +83,7 @@ export default {
           let monthlyDataList = res.data[i]['monthlyQuantityList']
           let dataArr = [];
           for(let a=0; a<this.monthLabel.length; a++) {
-            const month = monthlyDataList.find(d => d.month === this.monthLabel[a]);
+            const month = monthlyDataList.find(d => d.month == this.monthLabel[a]);
             if (month) {
               dataArr.push(month.quantity)
             } else {
@@ -99,14 +96,28 @@ export default {
         console.log(error);
       })
     },
-    getLastYearMonths () {
-      const lastYearMonths = [];
-        const today = new Date();
-        for (let i = 11; i >= 0; i--) {
-          const lastYearMonth = new Date(today.getFullYear(), today.getMonth() - i);
-          lastYearMonths.push(lastYearMonth.getFullYear() * 100 + lastYearMonth.getMonth());
-        }
-      this.monthLabel = lastYearMonths;
+    // 지난 1년 연월 구하기
+    getLastYearMonths (year) {
+      if (year == null) {
+        const lastYearMonths = [];
+          const today = new Date();
+          for (let i = 11; i >= 0; i--) {
+            const lastYearMonth = new Date(today.getFullYear(), today.getMonth() - i);
+            if (lastYearMonth.getMonth() === 0) {
+              lastYearMonths.push((lastYearMonth.getFullYear()-1) * 100 + 12);
+            } else {
+              lastYearMonths.push(lastYearMonth.getFullYear() * 100 + lastYearMonth.getMonth());
+            }
+          }
+        this.monthLabel = lastYearMonths;        
+      } else {
+        const lastYearMonths = [];
+          for (let i = 1; i <= 12; i++) {
+            const date = i<10 ? `${year}0${i}` : `${year}${i}`
+            lastYearMonths.push(date);
+          }
+        this.monthLabel = lastYearMonths;   
+      }
     }
   }
 }

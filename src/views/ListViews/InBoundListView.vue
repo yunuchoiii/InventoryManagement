@@ -45,6 +45,7 @@ export default {
       },
       querys: [],
       isEmpty: false,
+      checkedMonths: [],
       unclosedMonths: []
     }
   },
@@ -100,26 +101,6 @@ export default {
       }).catch((error) => {
         console.log(error);
       })
-    },
-    checkStockClosed (date) {
-      this.$axios.get(`http://localhost:8080/closing/inventory/check/${date}`).then((res) => {
-        console.log(res.data);
-      }).catch((error) => {
-        console.log(error);
-      })
-    },
-    // 입출고 마감 확인
-    checkClosedMonths () {
-      let year = new Date().getFullYear();
-      let month = new Date().getMonth();
-      let lastDay = new Date(year, month, 0).getDate();
-      let date = month < 10 ? 
-        year + '-' + `0${month}` + '-' + lastDay : 
-        year + '-' + month + '-' + lastDay;
-
-      //TODO: 월별 체크
-      let monthCheck = this.checkClosedMonths(date)
-      // console.log(monthCheck)
     },
   }
 }

@@ -31,6 +31,7 @@ export default {
       datas: [],
       monthData: [],
       filterData: {},
+      querys: [],
       componentKey: 0,
       monthLabel: []
     }
@@ -39,15 +40,24 @@ export default {
   setup () {},
   created () {
     this.getMonthsList()
-    this.getDataList()
     this.getLastYearMonths()
   },
   mounted () {},
   unmounted () {},
   methods: {
     filterEvent (data) {
-      this.filterData = data
-      console.log(this.filterData)
+      this.filterData = data;
+      this.querys = [];
+      if (data.year != "") {
+        const startDate = data.year + '-01-01';
+        const endDate = data.year + '-12-01';
+        this.querys.push(`startDate=${startDate}`);
+        this.querys.push(`endDate=${endDate}`);
+      }
+      if (data.categoryCode != "") {
+        this.querys.push(`categoryCode=${data.categoryCode}`);
+      }
+      this.getDataList()
     },
     componentKeyEvent (data) {
       this.componentKey = data
@@ -66,10 +76,11 @@ export default {
         }
       }
     },
-    getDataList () {
-      const url = `http://localhost:8080/monthly/inbound`
+    getDataList (url) {
+      url = `http://localhost:8080/monthly/inbound?${this.querys.join('&')}`
       this.$axios.get(url).then((res) => {
         this.datas = res.data
+        console.log(res.data)
         // 월별 데이터 배열로 만들기
         for(let i=0; i<res.data.length; i++) {
           let monthlyDataList = res.data[i]['monthlyQuantityList']

@@ -58,11 +58,18 @@
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
               <td v-for="data in monthData[index]" :key="data">{{ data }}</td>
-              <td class="memo">{{ item.memo }}</td>
+            </tr>
+          </tbody>
+          <tbody v-if="title == '월간 재고 현황'">
+            <tr v-for="(item, index) in datas" :key="index">
+              <td>{{ item.categoryName }}</td>
+              <td>{{ item.productName }}</td>
+              <td>{{ item.productCode }}</td>
+              <td v-for="data in monthData[index]" :key="data">{{ data }}</td>
             </tr>
           </tbody>
           <!-- 더 보기 버튼 -->
-          <tr>
+          <tr v-if="register_name == '입고' || register_name == '출고'">
             <td colspan='20'>
               <v-btn
                 v-if="!isEmpty"

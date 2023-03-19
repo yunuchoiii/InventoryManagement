@@ -48,7 +48,7 @@ export default {
       },
       pageable : {
         page: 0,
-        size: 50,
+        size: 1000,
         "sort": [
           "string"
         ]
@@ -85,12 +85,7 @@ export default {
           size:this.pageable.size
         },
       }).then((res) => {
-        res.data.content.forEach(element => {
-          this.datas.push(element)
-        })
-        if (res.data.content.length < 50) {
-          this.isEmpty = true
-        }
+        this.datas = res.data.content
       }).catch((error) => {
         console.log(error);
       })

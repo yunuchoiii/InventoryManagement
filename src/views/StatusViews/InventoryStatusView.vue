@@ -9,7 +9,8 @@
     :title="title"
     :headers="headers"
     :datas="datas"
-    :filterData="filterData"/>
+    :filterData="filterData"
+    :render="render"/>
   </body>
 </template>
 <script>
@@ -23,24 +24,21 @@ export default {
   data () {
     return {
       title: '현 재고 현황',
-      headers: ['구분', '품목', '품목코드', '전월 입고', '전월 출고', '전월 재고', '이달 입고', '이달 출고', '이달 재고'],
+      headers: ['순번', '구분', '품목', '품목코드', '전월 입고', '전월 출고', '전월 재고', '이달 입고', '이달 출고', '이달 재고'],
       datas: [],
-      dataSet: [this.lastInBound, this.lastOutBound, this.lastInventory, this.thisInBound, this.thisOutBound, this.thisInventory],
+      render: false,
       filterData: {},
       lastMonth: '',
+      lastMonthStart: '',
+      lastMonthEnd: '',
       thisMonth: '',
-      lastInBound: 0,
-      lastOutBound: 0,
-      lastInventory: 0,
-      thisInBound: 0,
-      thisOutBound: 0,
-      thisInventory: 0,
     }
   },
   watch: {},
   setup () {},
   created () {
     this.getMonths();
+    this.getDataSet();
   },
   mounted () {},
   unmounted () {},
@@ -59,21 +57,120 @@ export default {
         prevYear = currentYear - 1;
       }
       this.thisMonth = `${currentYear}${currentMonth < 10 ? '0' : ''}${currentMonth}`;
-      this.lastMonth = `${prevYear}${prevMonth < 10 ? '0' : ''}${prevMonth}`;
-      this.getDataSet();
+      this.lastMonth = `${prevYear}-${prevMonth < 10 ? '0' : ''}${prevMonth}`;
+      this.lastMonthStart = `${prevYear}-${prevMonth < 10 ? '0' : ''}${prevMonth}-01`;
+      this.lastMonthEnd = `${prevYear}-${prevMonth < 10 ? '0' : ''}${prevMonth}-${new Date(prevYear, prevMonth, 0).getDate()}`;
     },
-    getDataSet() {
-      this.getLastInventory();
+    async getDataSet() {
+      try {
+        await this.getLiveInventory();
+        await this.getlastInventory();
+        await this.getLiveInbound();
+        await this.getLiveOutbound();
+        await this.getLastInbound();
+        await this.getLastOutbound();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // 이달 재고
+    getLiveInventory () {
+      const url = `http://localhost:8080/live/inventory`
+      this.$axios.get(url).then((res) => {
+        res.data.forEach((data)=>{
+          this.datas.push(
+            {
+              categoryName: data.categoryName,
+              productName: data.productName,
+              productCode: data.productCode,
+              quantity: [0, 0, 0, 0, 0, data.quantity]
+            }
+          )
+        })
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
+    // 이달 입고
+    getLiveInbound () {
+      const url = `http://localhost:8080/live/inbound`
+      this.$axios.get(url).then((res) => {
+        res.data.forEach((data)=>{
+          for(let i=0; i<this.datas.length; i++) {
+            if(this.datas[i].productCode === data.productCode) {
+              this.datas[i].quantity[3] = data.quantity;
+            }
+          }
+        })
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
+    // 이달 출고
+    getLiveOutbound () {
+      const url = `http://localhost:8080/live/outbound`
+      this.$axios.get(url).then((res) => {
+        res.data.forEach((data)=>{
+          for(let i=0; i<this.datas.length; i++) {
+            if(this.datas[i].productCode === data.productCode) {
+              this.datas[i].quantity[4] = data.quantity*(-1);
+            }
+          }
+        })
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
+    // 전월 재고
+    getlastInventory () {
+      const url = `http://localhost:8080/monthly/inventory?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}`
+      this.$axios.get(url).then((res) => {
+        res.data.forEach((data) => {
+          const index = this.datas.findIndex((d) => d.productCode === data.productCode);
+          if (index !== -1) {
+            this.datas[index].quantity[2] = data.monthlyQuantityList[0].quantity;
+          } else {
+            this.datas.push({
+              categoryName: data.categoryName,
+              productName: data.productName,
+              productCode: data.productCode,
+              quantity: [0, 0, data.monthlyQuantityList[0].quantity, 0, 0, 0]
+            });
+          }
+        });
+      }).catch((error) => {
+        console.log(error);
+      })
     },
     // 전월 입고
-    getLastInventory (url) {
-      url = `http://localhost:8080/monthly/inventory`
+    getLastInbound () {
+      const url = `http://localhost:8080/monthly/inbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}`
       this.$axios.get(url).then((res) => {
-        console.log(res.data)
-        for (let i=0; i<res.data.length; i++) {
-          const data = res.data[i]
-          console.log(data.monthlyQuantityList)
-        } 
+        res.data.forEach((data)=>{
+          for(let i=0; i<this.datas.length; i++) {
+            if(this.datas[i].productCode === data.productCode) {
+              this.datas[i].quantity[0] = data.monthlyQuantityList[0].quantity;
+            }
+          }
+        })
+      }).catch((error) => {
+        console.log(error);
+      })
+    },
+    // 전월 입고
+    async getLastOutbound () {
+      const url = `http://localhost:8080/monthly/outbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}`
+      this.$axios.get(url).then((res) => {
+        res.data.forEach((data)=>{
+          for(let i=0; i<this.datas.length; i++) {
+            if(this.datas[i].productCode === data.productCode) {
+              this.datas[i].quantity[1] = data.monthlyQuantityList[0].quantity;
+            }
+          }
+        })
+        setTimeout(()=>{
+          this.render = true
+        }, 100)
       }).catch((error) => {
         console.log(error);
       })

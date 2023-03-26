@@ -25,7 +25,7 @@ export default {
     return {
       title: '월간 입고 현황',
       clicked: false,
-      headers: ['구분', '품목', '품목코드',],
+      headers: ['순번', '구분', '품목', '품목코드',],
       datas: [],
       monthData: [],
       filterData: {},
@@ -50,7 +50,7 @@ export default {
         const endDate = data.year + '-12-01';
         this.querys.push(`startDate=${startDate}`);
         this.querys.push(`endDate=${endDate}`);
-        this.headers = ['구분', '품목', '품목코드', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+        this.headers = ['순번', '구분', '품목', '품목코드', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
         this.getLastYearMonths(data.year)
       }
       if (data.categoryCode != "") {
@@ -60,7 +60,8 @@ export default {
     },
     //일년치 월 리스트 구하기
     getMonthsList () {
-      let month = new Date(new Date().setMonth(new Date().getMonth() + 1)).getMonth() == 0 ? 12 : new Date(new Date().setMonth(new Date().getMonth() + 1)).getMonth()
+      let month = new Date(new Date().setMonth(new Date().getMonth() + 1)).getMonth() == 0 ?
+        12 : new Date(new Date().setMonth(new Date().getMonth() + 1)).getMonth()
       this.headers.push(month + '월')
       for (var i=0; i < 11; i++) {
         if(month + 1 == 13) {

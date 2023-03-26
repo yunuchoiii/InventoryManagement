@@ -51,16 +51,28 @@
               <td class="memo">{{ item.memo }}</td>
             </tr>
           </tbody>
-          <tbody v-if="title == '월간 입고 현황' || title == '월간 출고 현황'">
+          <tbody v-if="title == '현 재고 현황' && render === true">
             <tr v-for="(item, index) in datas" :key="index">
+              <td>{{ index+1 }}</td>
+              <td>{{ item.categoryName }}</td>
+              <td>{{ item.productName }}</td>
+              <td>{{ item.productCode }}</td>
+              <!-- <td v-for="data in item.quantity" :key="data">{{ data }}</td> -->
+              <td v-for="data in item.quantity" :key="data">{{ data }}</td>
+            </tr>
+          </tbody>
+          <tbody v-if="title == '월간 재고 현황'">
+            <tr v-for="(item, index) in datas" :key="index">
+              <td>{{ index+1 }}</td>
               <td>{{ item.categoryName }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
               <td v-for="data in monthData[index]" :key="data">{{ data }}</td>
             </tr>
           </tbody>
-          <tbody v-if="title == '월간 재고 현황'">
+          <tbody v-if="title == '월간 입고 현황' || title == '월간 출고 현황'">
             <tr v-for="(item, index) in datas" :key="index">
+              <td>{{ index+1 }}</td>
               <td>{{ item.categoryName }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
@@ -133,7 +145,10 @@ export default {
     isEmpty : {
       type: Boolean,
       default: false
-    }
+    },
+    render: {
+      type: Boolean
+    },
   },
   data () {
     return {

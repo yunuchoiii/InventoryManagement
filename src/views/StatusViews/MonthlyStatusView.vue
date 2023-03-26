@@ -25,7 +25,7 @@ export default {
     return {
       title: '월간 재고 현황',
       clicked: false,
-      headers: ['구분', '품목', '품목코드',],
+      headers: ['순번', '구분', '품목', '품목코드',],
       datas: [],
       monthData: [],
       filterData: {},
@@ -50,7 +50,7 @@ export default {
         const endDate = data.year + '-12-01';
         this.querys.push(`startDate=${startDate}`);
         this.querys.push(`endDate=${endDate}`);
-        this.headers = ['구분', '품목', '품목코드', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+        this.headers = ['순번', '구분', '품목', '품목코드', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
         this.getLastYearMonths(data.year)
       }
       if (data.categoryCode != "") {

@@ -25,7 +25,7 @@ export default {
     return {
       title: '월간 출고 현황',
       clicked: false,
-      headers: ['구분', '품목', '품목코드',],
+      headers: ['순번', '구분', '품목', '품목코드',],
       datas: [],
       monthData: [],
       filterData: {},

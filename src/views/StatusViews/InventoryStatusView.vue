@@ -28,6 +28,7 @@ export default {
       datas: [],
       render: false,
       filterData: {},
+      categoryQuery: '',
       lastMonth: '',
       lastMonthStart: '',
       lastMonthEnd: '',
@@ -38,13 +39,16 @@ export default {
   setup () {},
   created () {
     this.getMonths();
-    this.getDataSet();
   },
   mounted () {},
   unmounted () {},
   methods: {
     filterEvent (data) {
-      this.filterData = data
+      this.filterData = data;
+      if (data.categoryCode != "") {
+        this.categoryQuery = `categoryCode=${data.categoryCode}`;
+      }
+      this.getDataSet()
     },
     // 전월, 이달 연월 구하기
     getMonths () {
@@ -62,6 +66,8 @@ export default {
       this.lastMonthEnd = `${prevYear}-${prevMonth < 10 ? '0' : ''}${prevMonth}-${new Date(prevYear, prevMonth, 0).getDate()}`;
     },
     async getDataSet() {
+      this.render = false;
+      this.datas = [];
       try {
         await this.getLiveInventory();
         await this.getlastInventory();
@@ -75,7 +81,7 @@ export default {
     },
     // 이달 재고
     getLiveInventory () {
-      const url = `http://localhost:8080/live/inventory`
+      const url = `http://localhost:8080/live/inventory?${this.categoryQuery}`
       this.$axios.get(url).then((res) => {
         res.data.forEach((data)=>{
           this.datas.push(
@@ -93,7 +99,7 @@ export default {
     },
     // 이달 입고
     getLiveInbound () {
-      const url = `http://localhost:8080/live/inbound`
+      const url = `http://localhost:8080/live/inbound?${this.categoryQuery}`
       this.$axios.get(url).then((res) => {
         res.data.forEach((data)=>{
           for(let i=0; i<this.datas.length; i++) {
@@ -108,7 +114,7 @@ export default {
     },
     // 이달 출고
     getLiveOutbound () {
-      const url = `http://localhost:8080/live/outbound`
+      const url = `http://localhost:8080/live/outbound?${this.categoryQuery}`
       this.$axios.get(url).then((res) => {
         res.data.forEach((data)=>{
           for(let i=0; i<this.datas.length; i++) {
@@ -123,7 +129,7 @@ export default {
     },
     // 전월 재고
     getlastInventory () {
-      const url = `http://localhost:8080/monthly/inventory?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}`
+      const url = `http://localhost:8080/monthly/inventory?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
       this.$axios.get(url).then((res) => {
         res.data.forEach((data) => {
           const index = this.datas.findIndex((d) => d.productCode === data.productCode);
@@ -144,7 +150,7 @@ export default {
     },
     // 전월 입고
     getLastInbound () {
-      const url = `http://localhost:8080/monthly/inbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}`
+      const url = `http://localhost:8080/monthly/inbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
       this.$axios.get(url).then((res) => {
         res.data.forEach((data)=>{
           for(let i=0; i<this.datas.length; i++) {
@@ -158,8 +164,8 @@ export default {
       })
     },
     // 전월 입고
-    async getLastOutbound () {
-      const url = `http://localhost:8080/monthly/outbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}`
+    getLastOutbound () {
+      const url = `http://localhost:8080/monthly/outbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
       this.$axios.get(url).then((res) => {
         res.data.forEach((data)=>{
           for(let i=0; i<this.datas.length; i++) {
@@ -170,7 +176,7 @@ export default {
         })
         setTimeout(()=>{
           this.render = true
-        }, 100)
+        }, 120)
       }).catch((error) => {
         console.log(error);
       })

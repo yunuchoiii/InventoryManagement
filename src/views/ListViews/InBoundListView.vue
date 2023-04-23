@@ -21,17 +21,29 @@
     <div class="flex-center stockCloseAlertBox slide-in-blurred-bottom">
       <v-alert
         v-model="alertClose"
+        ref="alertClose"
         close-text="Close Alert"
         color="#c41230"
         class="stockCloseAlert box-shadow"
         style="background-color: white !important; "
         outlined
         dense
-        dismissible
       >
-      <span @click="handleAlert()">
+        <span @click="handleAlert()">
           {{new Date().getMonth() === 0 ? 12 : new Date().getMonth()}}월 입출고 등록을 마감해주세요
         </span>
+        <v-btn
+          fab
+          dark
+          x-small
+          color="#c41230"
+          elevation="0"
+          @click="closeAlert()"
+        >
+          <v-icon dark>
+            mdi-close
+          </v-icon>
+        </v-btn>
       </v-alert>
     </div>
     <StockClosingDialogComponent
@@ -119,6 +131,9 @@ export default {
     CloseDialogEvent(data){
       this.stockClosingDialog = data
     },
+    closeAlert() {
+      this.$refs['alertClose'].$el.classList.add("slide-out-bottom")
+    },
     pagingEvent () {
       this.pageable.page ++
       this.getDataList()
@@ -149,5 +164,14 @@ export default {
 @import '@/styles/styles.css';
 td {
   text-align: center;
+}
+.v-alert__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.v-btn--fab.v-size--x-small {
+  height: 28px;
+  width: 28px;
 }
 </style>

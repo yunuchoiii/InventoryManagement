@@ -612,8 +612,9 @@ a:hover { color: black; text-decoration: none;}
   background-color: #f3f3f3;
 }
 .stockCloseAlertBox {
-  position: relative;
-  bottom: 60px;
+  position: fixed;
+  bottom: 25px;
+  width: calc(100% - 239px);
 }
 .stockCloseAlert {
   border-radius: 30px !important;

@@ -9,10 +9,7 @@
     :month_show="true"
     :year_show="true"
     :close_show="true"
-    :date_range="false"
-    :handleMonth="handleMonth"
-    :closedYear="closedYear"
-    :closedMonth="closedMonth"/>
+    :date_range="false"/>
     <TableComponent
     @paging="pagingEvent"
     :title="title"
@@ -23,29 +20,39 @@
     :isEmpty="isEmpty"/>
     <div class="flex-center stockCloseAlertBox slide-in-blurred-bottom">
       <v-alert
-      v-model="alertClose"
-      close-text="Close Alert"
-      color="#c41230"
-      class="stockCloseAlert"
-      style="background-color: white !important; "
-      outlined
-      dense
-      dismissible
-      @click="handleAlert()"
+        v-model="alertClose"
+        close-text="Close Alert"
+        color="#c41230"
+        class="stockCloseAlert box-shadow"
+        style="background-color: white !important; "
+        outlined
+        dense
+        dismissible
       >
-        {{filterData.month-1 === 0 ? 12 : filterData.month-1}}월 입출고 등록을 마감해주세요
+      <span @click="handleAlert()">
+          {{new Date().getMonth() === 0 ? 12 : new Date().getMonth()}}월 입출고 등록을 마감해주세요
+        </span>
       </v-alert>
     </div>
+    <StockClosingDialogComponent
+      v-if="stockClosingDialog === true"
+      @CloseDialog="CloseDialogEvent()"
+      :year="this.closedYear"
+      :month="this.closedMonth"
+      :type="this.closeType"
+      :filterData="this.filterData"
+    />
   </body>
 </template>
 <script>
 /* eslint-disable */
+import StockClosingDialogComponent from '@/components/DialogComponents/StockClosingDialogComponent.vue'
 import FilterBoxComponent from '@/components/FilterBoxComponent.vue'
 import TableComponent from '@/components/TableComponent.vue'
 
 export default {
   name: 'InBoundList',
-  components: {FilterBoxComponent, TableComponent},
+  components: { FilterBoxComponent, TableComponent, StockClosingDialogComponent },
   props: {},
   data () {
     return {
@@ -66,9 +73,10 @@ export default {
       isEmpty: false,
       checkedMonths: [],
       alertClose: true,
-      handleMonth: false,
       closedYear: null,
-      closedMonth: null
+      closedMonth: null,
+      closeType: "마감",
+      stockClosingDialog: false,
     }
   },
   watch: {},
@@ -104,7 +112,12 @@ export default {
       this.alertClose = !data
     },
     handleAlert() {
-
+      this.closedMonth = new Date().getMonth() === 0 ? 12 : new Date().getMonth()
+      this.closedYear = new Date().getMonth() === 0 ? new Date().getFullYear()-1 : new Date().getFullYear()
+      this.stockClosingDialog = true
+    },
+    CloseDialogEvent(data){
+      this.stockClosingDialog = data
     },
     pagingEvent () {
       this.pageable.page ++

@@ -619,6 +619,7 @@ a:hover { color: black; text-decoration: none;}
   border-radius: 30px !important;
   padding-right: 8px !important;
   width: 300px;
+  cursor: pointer;
 }
 
 /* Animations */

@@ -307,12 +307,13 @@ export default {
       if (this.register_name) {
         this.checkStockClosed()
 
-        const year = this.selectedYear
-        const month = (this.selectedMonth - 1) < 10 
-              ? "0" + (this.selectedMonth - 1) 
-              : (this.selectedMonth - 1) === 0 
+        // 현재일 기준 지난달 마감 여부 확인
+        const year = new Date().getFullYear()
+        const month = (new Date().getMonth()) < 10 
+              ? "0" + (new Date().getMonth()) 
+              : (new Date().getMonth()) === 0 
                   ? '12' 
-                  : (this.selectedMonth - 1);
+                  : (new Date().getMonth());
         const lastDay = new Date(year, month, 0).getDate()
         this.lastEndDate = year + "-" + month + "-" + lastDay
         this.checkStockClosed(this.lastEndDate);

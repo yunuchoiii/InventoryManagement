@@ -684,7 +684,7 @@ export default {
     // 카테고리 목록 가져오기
     getCategories () {
       const arr = [];
-      const url = 'http://localhost:8080/categories';
+      const url = `${process.env.VUE_APP_API}/categories`;
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
@@ -708,7 +708,7 @@ export default {
       const lastDay = new Date(splitedDate[0], splitedDate[1], 0).getDate();
       date = splitedDate[0] + "-" + splitedDate[1] + "-" + lastDay;
 
-      this.$axios.get(`http://localhost:8080/closing/inventory/check/${date}`).then((res) => {
+      this.$axios.get(`${process.env.VUE_APP_API}/closing/inventory/check/${date}`).then((res) => {
         this.stockClosedBool = res.data
       }).catch((error) => {
         console.log(error);
@@ -722,7 +722,7 @@ export default {
         : this.selectedCategory=="광택제" ? "02" 
         : this.selectedCategory=="말통" ? "03" 
         : "04"
-      this.$axios.get(`http://localhost:8080/products?categoryCode=${categoryCode}`).then((res) => {
+      this.$axios.get(`${process.env.VUE_APP_API}/products?categoryCode=${categoryCode}`).then((res) => {
         this.itemsObjects = res.data.content
         res.data.content.forEach(function(number) {
           arr.push(number.productName)
@@ -769,9 +769,9 @@ export default {
       this.editConfirm = false
       this.deleteConfirm = false
       const url = 
-        this.register_name === '상품' ? `http://localhost:8080/products/${this.product_info.id}` 
-        :this.register_name === '입고' ? `http://localhost:8080/inbound/${this.inStock_info.id}`
-        :`http://localhost:8080/outbound/${this.outStock_info.id}`
+        this.register_name === '상품' ? `${process.env.VUE_APP_API}/products/${this.product_info.id}` 
+        :this.register_name === '입고' ? `${process.env.VUE_APP_API}/inbound/${this.inStock_info.id}`
+        :`${process.env.VUE_APP_API}/outbound/${this.outStock_info.id}`
       this.$axios.put(url, 
         this.register_name === '상품' ? this.product_info
         :this.register_name === '입고' ? this.inStock_info
@@ -807,8 +807,8 @@ export default {
 
       this.deleteConfirm = false
       const url = 
-        this.register_name === '입고' ? `http://localhost:8080/inbound/${this.inStock_info.id}`
-        :`http://localhost:8080/outbound/${this.outStock_info.id}`
+        this.register_name === '입고' ? `${process.env.VUE_APP_API}/inbound/${this.inStock_info.id}`
+        :`${process.env.VUE_APP_API}/outbound/${this.outStock_info.id}`
       this.$axios.delete(url).then((res) => {
         this.alertType = {
           msg: `해당 항목이 삭제되었습니다.`,

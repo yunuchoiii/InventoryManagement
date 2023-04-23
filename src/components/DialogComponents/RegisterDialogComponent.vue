@@ -589,7 +589,7 @@ export default {
     // 카테고리 목록 가져오기
     getCategories () {
       const arr = [];
-      const url = 'http://localhost:8080/categories';
+      const url = `${process.env.VUE_APP_API}/categories`;
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
@@ -609,7 +609,7 @@ export default {
         : this.selectedCategory=="광택제" ? "02" 
         : this.selectedCategory=="말통" ? "03" 
         : "04"
-      this.$axios.get(`http://localhost:8080/products?categoryCode=${categoryCode}`).then((res) => {
+      this.$axios.get(`${process.env.VUE_APP_API}/products?categoryCode=${categoryCode}`).then((res) => {
         this.itemsObjects = res.data.content
         res.data.content.forEach(function(number) {
           arr.push(number.productName)
@@ -626,9 +626,9 @@ export default {
     },
     Register () {
       const url = 
-        this.register_name == "상품" ? "http://localhost:8080/products"
-        : this.register_name == "입고" ? "http://localhost:8080/inbound" 
-        : "http://localhost:8080/outbound";
+        this.register_name == "상품" ? `${process.env.VUE_APP_API}/products`
+        : this.register_name == "입고" ? `${process.env.VUE_APP_API}/inbound"`
+        : `${process.env.VUE_APP_API}/outbound`;
       this.$axios.post(url, 
         this.register_name == "상품" ? this.product_info 
         : this.register_name == "입고" ? this.inStock_info 

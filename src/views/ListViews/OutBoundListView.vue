@@ -2,6 +2,7 @@
   <body class="body-padding">
     <FilterBoxComponent
     @filterData="filterEvent"
+    @isLastStockClosed="closedEvent"
     :register="true"
     :register_name="register_name"
     :title="title"
@@ -17,6 +18,20 @@
     :filterData="filterData"
     :register_name="register_name"
     :isEmpty="isEmpty"/>
+    <div class="flex-center stockCloseAlertBox slide-in-blurred-bottom">
+      <v-alert
+      v-model="alertClose"
+      close-text="Close Alert"
+      color="#c41230"
+      class="stockCloseAlert"
+      style="background-color: white !important; "
+      outlined
+      dense
+      dismissible
+      >
+      {{filterData.month-1 === 0 ? 12 : filterData.month-1}}월 입출고 등록을 마감해주세요
+      </v-alert>
+    </div>
   </body>
 </template>
 <script>
@@ -47,7 +62,8 @@ export default {
         ]
       },
       querys: [],
-      isEmpty: false
+      isEmpty: false,
+      alertClose: true,
     }
   },
   watch: {},
@@ -79,12 +95,15 @@ export default {
       }
       this.getDataList()
     },
+    closedEvent (data) {
+      this.alertClose = !data
+    },
     pagingEvent () {
       this.pageable.page ++
       this.getDataList()
     },
     getDataList () {
-      const url = `http://localhost:8080/outbound?${this.querys.join('&')}`
+      const url = `${process.env.VUE_APP_API}/outbound?${this.querys.join('&')}`
       this.$axios.get(url, {
         params: {
           page:this.pageable.page,

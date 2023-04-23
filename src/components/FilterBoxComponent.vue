@@ -27,14 +27,14 @@
       </div>
 
       <!-- 입출고, 상품 등록 팝업 -->
-      <div v-if="register && !stockClosedBool" data-aos="fade-left">
+      <div v-if="register && !isLiveStockClosed" data-aos="fade-left">
         <RegisterDialog
         :register_name="register_name"/>
       </div>
     </div>
 
     <div class="filter-head">
-      <div v-if="close_show && stockClosedBool" style="margin-right: 1rem; border-radius: 8px; overflow: hidden;">
+      <div v-if="close_show && isLiveStockClosed" style="margin-right: 1rem; border-radius: 8px; overflow: hidden;">
         <v-btn
           elevation="0"
           height="40px"
@@ -45,7 +45,7 @@
           <span class="navBtnText">{{changedMonth}}월 마감 해제</span>
         </v-btn>
       </div>
-      <div v-if="close_show && !stockClosedBool" style="margin-right: 1rem; border-radius: 8px; overflow: hidden;">
+      <div v-if="close_show && !isLiveStockClosed" style="margin-right: 1rem; border-radius: 8px; overflow: hidden;">
         <v-btn
           elevation="0"
           height="40px"
@@ -59,13 +59,13 @@
 
       <!-- 재고 마감 모달창 -->
       <StockClosingDialog
-       v-if="stockClosingDialog === true"
-       @CloseDialog="CloseDialogEvent()"
-       :year="this.selectedYear"
-       :month="this.selectedMonth"
-       :type="this.closeType"
-       :filterData="filterData"/>
-
+        v-if="stockClosingDialog === true"
+        @CloseDialog="CloseDialogEvent()"
+        :year="this.selectedYear"
+        :month="this.selectedMonth"
+        :type="this.closeType"
+        :filterData="filterData"
+      />
       <div class="head-box box-shadow" style="flex: 1">
         <div style="display: flex; align-items: center; justify-content: flex-end; height: 5vh;">
           <v-btn
@@ -185,7 +185,7 @@ export default {
     tooltip_msg: {
       type: String,
       default: ""
-    }
+    },
   },
   data () {
     return {
@@ -195,6 +195,7 @@ export default {
       months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       startDate: "",
       endDate: "",
+      lastEndDate: "",
       selectedCategory: "",
       categories: [],
       selectedItem: "",
@@ -209,12 +210,17 @@ export default {
       },
       changedMonth: "",
       filterData: {},
-      stockClosedBool: null,
+      isLiveStockClosed: null,
+      isLastStockClosed: null,
       stockClosingDialog: false,
       closeType:"",
     }
   },
-  watch: {},
+  watch: {
+    isLastStockClosed () {
+      this.submitClosed()
+    }
+  },
   setup () {},
   created () {
     if (localStorage.getItem("filterData") != null) {
@@ -241,7 +247,7 @@ export default {
   methods: {
     // 카테고리 목록 가져오기
     getCategories () {
-      const url = "http://localhost:8080/categories";
+      const url = `${process.env.VUE_APP_API}/categories`;
       this.$axios.get(url, {
         params: {},
       }).then((res) => {
@@ -252,7 +258,7 @@ export default {
     },
     // 카테고리별 품목 리스트 구하기
     getProductsByCategory () {
-      this.$axios.get(`http://localhost:8080/products?categoryCode=${this.selectedCategory}`).then((res) => {
+      this.$axios.get(`${process.env.VUE_APP_API}/products?categoryCode=${this.selectedCategory}`).then((res) => {
         this.itemsObjects = res.data.content
       }).catch((error) => {
         console.log(error);
@@ -278,13 +284,17 @@ export default {
       this.stockClosingDialog = true
     },
     // 입출고 마감 확인
-    checkStockClosed () {
-      this.$axios.get(`http://localhost:8080/closing/inventory/check/${this.endDate}`).then((res) => {
-        this.stockClosedBool = res.data
-        if(res.data === true) {
-          this.closeType = "마감 해제"
-        } else if (res.data === false) {
-          this.closeType = "마감"
+    checkStockClosed (date) {
+      this.$axios.get(`${process.env.VUE_APP_API}/closing/inventory/check/${date||this.endDate}`).then((res) => {
+        if (date) {
+          this.isLastStockClosed = res.data;
+        } else {
+          this.isLiveStockClosed = res.data;
+          if(res.data === true) {
+            this.closeType = "마감 해제"
+          } else if (res.data === false) {
+            this.closeType = "마감"
+          }  
         }
       }).catch((error) => {
         console.log(error);
@@ -293,21 +303,40 @@ export default {
     CloseDialogEvent(data){
       this.stockClosingDialog = data
     },
+    checkClosedHandler () {
+      if (this.register_name) {
+        this.checkStockClosed()
+
+        const year = this.selectedYear
+        const month = (this.selectedMonth - 1) < 10 
+              ? "0" + (this.selectedMonth - 1) 
+              : (this.selectedMonth - 1) === 0 
+                  ? '12' 
+                  : (this.selectedMonth - 1);
+        const lastDay = new Date(year, month, 0).getDate()
+        this.lastEndDate = year + "-" + month + "-" + lastDay
+        this.checkStockClosed(this.lastEndDate);
+      } 
+    },
     // 조회버튼 클릭
-    submitFilter () {
+    submitFilter (year, month) {
+      this. checkClosedHandler()
+
+      this.changedMonth = this.selectedMonth
+      
       this.filterData = {
-        year: this.selectedYear,
-        month: this.selectedMonth,
+        year: year || this.selectedYear,
+        month: month || this.selectedMonth,
         categoryCode: this.selectedCategory,
         productId: this.selectedItem,
         startDate: this.startDate,
-        endDate: this.endDate
+        endDate: this.endDate,
       }
       this.$emit("filterData", this.filterData)
-      if (this.register_name === '입고' || this.register_name === '출고' || this.register_name === '상품') {
-        this.checkStockClosed()
-      }
-      this.changedMonth = this.selectedMonth
+    },
+    // 전월 마감 여부 확인 및 전송
+    submitClosed () {
+      this.$emit("isLastStockClosed", this.isLastStockClosed)
     },
     // 10 이하면 앞에 0 붙이는 이벤트
     modifyDate () {

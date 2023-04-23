@@ -2,13 +2,17 @@
   <body class="body-padding">
     <FilterBoxComponent
     @filterData="filterEvent"
+    @isLastStockClosed="closedEvent"
     :register="true"
     :register_name="register_name"
     :title="title"
     :month_show="true"
     :year_show="true"
     :close_show="true"
-    :date_range="false"/>
+    :date_range="false"
+    :handleMonth="handleMonth"
+    :closedYear="closedYear"
+    :closedMonth="closedMonth"/>
     <TableComponent
     @paging="pagingEvent"
     :title="title"
@@ -17,6 +21,21 @@
     :filterData="filterData"
     :register_name="register_name"
     :isEmpty="isEmpty"/>
+    <div class="flex-center stockCloseAlertBox slide-in-blurred-bottom">
+      <v-alert
+      v-model="alertClose"
+      close-text="Close Alert"
+      color="#c41230"
+      class="stockCloseAlert"
+      style="background-color: white !important; "
+      outlined
+      dense
+      dismissible
+      @click="handleAlert()"
+      >
+        {{filterData.month-1 === 0 ? 12 : filterData.month-1}}월 입출고 등록을 마감해주세요
+      </v-alert>
+    </div>
   </body>
 </template>
 <script>
@@ -46,14 +65,15 @@ export default {
       querys: [],
       isEmpty: false,
       checkedMonths: [],
-      unclosedMonths: []
+      alertClose: true,
+      handleMonth: false,
+      closedYear: null,
+      closedMonth: null
     }
   },
   watch: {},
   setup () {},
-  created () {
-    // this.checkClosedMonths()
-  },
+  created () {},
   mounted () {},
   unmounted () {},
   methods: {
@@ -80,12 +100,18 @@ export default {
       }
       this.getDataList()
     },
+    closedEvent (data) {
+      this.alertClose = !data
+    },
+    handleAlert() {
+
+    },
     pagingEvent () {
       this.pageable.page ++
       this.getDataList()
     },
     getDataList () {
-      const url = `http://localhost:8080/inbound?${this.querys.join('&')}`
+      const url = `${process.env.VUE_APP_API}/inbound?${this.querys.join('&')}`
       this.$axios.get(url, {
         params: {
           page:this.pageable.page,

@@ -77,8 +77,8 @@ export default {
     },
     getDataList () {
       const url = this.filterData.categoryCode != "" 
-        ? `http://localhost:8080/products?categoryCode=${this.filterData.categoryCode}` 
-        : `http://localhost:8080/products`
+        ? `${process.env.VUE_APP_API}/products?categoryCode=${this.filterData.categoryCode}` 
+        : `${process.env.VUE_APP_API}/products`
       this.$axios.get(url, {
         params: {
           page:this.pageable.page,

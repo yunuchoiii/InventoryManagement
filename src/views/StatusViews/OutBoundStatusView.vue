@@ -50,7 +50,7 @@ export default {
         const endDate = data.year + '-12-01';
         this.querys.push(`startDate=${startDate}`);
         this.querys.push(`endDate=${endDate}`);
-        this.headers = ['구분', '품목', '품목코드', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+        this.headers = ['순번', '구분', '품목', '품목코드', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
         this.getLastYearMonths(data.year)
       }
       if (data.categoryCode != "") {
@@ -74,7 +74,7 @@ export default {
     },
     getDataList () {
       this.monthData = [];
-      const url = `http://localhost:8080/monthly/outbound?${this.querys.join('&')}`
+      const url = `${process.env.VUE_APP_API}/monthly/outbound?${this.querys.join('&')}`
       this.$axios.get(url).then((res) => {
         this.datas = res.data
         // 월별 데이터 배열로 만들기

@@ -74,7 +74,7 @@ export default {
     },
     getDataList () {
       this.monthData = [];
-      const url = `http://localhost:8080/monthly/inventory?${this.querys.join('&')}`
+      const url = `${process.env.VUE_APP_API}/monthly/inventory?${this.querys.join('&')}`
       this.$axios.get(url).then((res) => {
         this.datas = res.data
         // 월별 데이터 배열로 만들기

@@ -542,7 +542,7 @@ export default {
       const date = this.month < 10 ? 
         this.year + '-0' + this.month + '-' + lastDay : 
         this.year + '-' + this.month + '-' + lastDay
-      const url = `http://localhost:8080/closing-first/inventory/${date}`;
+      const url = `${process.env.VUE_APP_API}/closing-first/inventory/${date}`;
       this.$axios.post(url
       ).then((res) => {
         this.toNextPage()

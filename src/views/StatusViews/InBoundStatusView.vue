@@ -75,7 +75,7 @@ export default {
     },
     getDataList (url) {
       this.monthData = [];
-      url = `http://localhost:8080/monthly/inbound?${this.querys.join('&')}`
+      url = `${process.env.VUE_APP_API}/monthly/inbound?${this.querys.join('&')}`
       this.$axios.get(url).then((res) => {
         this.datas = res.data
         console.log(res.data)

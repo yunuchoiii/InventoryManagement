@@ -136,7 +136,7 @@ export default {
       const lastDay = new Date(this.year, this.month, 0).getDate();
       const month = this.month < 10 ? "0"+this.month : this.month
       const date = this.year + "-" + month + "-" + lastDay
-      this.$axios.post(`http://localhost:8080/closing/inventory/${date}`).then((res) => {
+      this.$axios.post(`${process.env.VUE_APP_API}/closing/inventory/${date}`).then((res) => {
         this.alertType = {
           msg: `${this.year}년 ${this.month}월 재고 마감이 완료되었습니다.`,
           type : "success",
@@ -162,7 +162,7 @@ export default {
       const lastDay = new Date(this.year, this.month, 0).getDate();
       const month = this.month < 10 ? "0"+this.month : this.month
       const date = this.year + "-" + month + "-" + lastDay
-      this.$axios.delete(`http://localhost:8080/closing/inventory/${date}`).then((res) => {
+      this.$axios.delete(`${process.env.VUE_APP_API}/closing/inventory/${date}`).then((res) => {
         this.alertType = {
           msg: `${this.year}년 ${this.month}월 재고 마감이 해제되었습니다.`,
           type : "success",

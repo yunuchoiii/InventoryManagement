@@ -662,7 +662,7 @@ export default {
       this.getStockId()
     },
     dialogHeight (value) {
-      this.alertHeight = (window.innerHeight - value)/2 - 65 + 'px'
+      this.alertHeight = (window.innerHeight - value)/2 - 70 + 'px'
     }
   },
   setup () {},

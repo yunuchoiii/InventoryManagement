@@ -10,7 +10,8 @@
     :headers="headers"
     :datas="datas"
     :filterData="filterData"
-    :render="render"/>
+    :render="render"
+    :isLoading="isLoading"/>
   </body>
 </template>
 <script>
@@ -26,7 +27,9 @@ export default {
       title: '현 재고 현황',
       headers: ['순번', '구분', '품목', '품목코드', '전월 입고', '전월 출고', '전월 재고', '이달 입고', '이달 출고', '이달 재고'],
       datas: [],
+      isDataSet: 0,
       render: false,
+      isLoading: true,
       filterData: {},
       categoryQuery: '',
       lastMonth: '',
@@ -35,7 +38,14 @@ export default {
       thisMonth: '',
     }
   },
-  watch: {},
+  watch: {
+    isDataSet() {
+      if (this.isDataSet == 6) {
+        this.isLoading = false;
+        this.render = true;
+      }
+    }
+  },
   setup () {},
   created () {
     this.getMonths();
@@ -66,11 +76,10 @@ export default {
       this.lastMonthEnd = `${prevYear}-${prevMonth < 10 ? '0' : ''}${prevMonth}-${new Date(prevYear, prevMonth, 0).getDate()}`;
     },
     async getDataSet() {
-      this.render = false;
       this.datas = [];
       try {
         await this.getLiveInventory();
-        await this.getlastInventory();
+        await this.getLastInventory();
         await this.getLiveInbound();
         await this.getLiveOutbound();
         await this.getLastInbound();
@@ -89,10 +98,11 @@ export default {
               categoryName: data.categoryName,
               productName: data.productName,
               productCode: data.productCode,
-              quantity: [0, 0, 0, 0, 0, data.quantity]
+              quantity: ['-', '-', '-', '-', '-', data.quantity]
             }
           )
         })
+        this.isDataSet++
       }).catch((error) => {
         console.log(error);
       })
@@ -108,6 +118,7 @@ export default {
             }
           }
         })
+        this.isDataSet++
       }).catch((error) => {
         console.log(error);
       })
@@ -123,12 +134,13 @@ export default {
             }
           }
         })
+        this.isDataSet++
       }).catch((error) => {
         console.log(error);
       })
     },
     // 전월 재고
-    getlastInventory () {
+    getLastInventory () {
       const url = `${process.env.VUE_APP_API}/monthly/inventory?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
       this.$axios.get(url).then((res) => {
         res.data.forEach((data) => {
@@ -140,10 +152,11 @@ export default {
               categoryName: data.categoryName,
               productName: data.productName,
               productCode: data.productCode,
-              quantity: [0, 0, data.monthlyQuantityList[0].quantity, 0, 0, 0]
+              quantity: ['-', '-', data.monthlyQuantityList[0].quantity, '-', '-', '-']
             });
           }
         });
+        this.isDataSet++
       }).catch((error) => {
         console.log(error);
       })
@@ -159,11 +172,12 @@ export default {
             }
           }
         })
+        this.isDataSet++
       }).catch((error) => {
         console.log(error);
       })
     },
-    // 전월 입고
+    // 전월 출고
     getLastOutbound () {
       const url = `${process.env.VUE_APP_API}/monthly/outbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
       this.$axios.get(url).then((res) => {
@@ -174,9 +188,7 @@ export default {
             }
           }
         })
-        setTimeout(()=>{
-          this.render = true
-        }, 120)
+        this.isDataSet++
       }).catch((error) => {
         console.log(error);
       })

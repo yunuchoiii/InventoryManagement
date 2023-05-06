@@ -58,4 +58,8 @@ export default {
 
 <style>
 @import "@/styles/styles.css";
+.v-btn:not(.v-btn--round).v-size--default {
+  height: auto;
+  padding: 10px 18px 13px;
+}
 </style>

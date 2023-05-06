@@ -576,7 +576,7 @@ export default {
       }
     },
     dialogHeight (value) {
-      this.alertHeight = (window.innerHeight - value)/2 - 65 + 'px'
+      this.alertHeight = (window.innerHeight - value)/2 - 70 + 'px'
     }
   },
   setup () {},
@@ -627,7 +627,7 @@ export default {
     Register () {
       const url = 
         this.register_name == "상품" ? `${process.env.VUE_APP_API}/products`
-        : this.register_name == "입고" ? `${process.env.VUE_APP_API}/inbound"`
+        : this.register_name == "입고" ? `${process.env.VUE_APP_API}/inbound`
         : `${process.env.VUE_APP_API}/outbound`;
       this.$axios.post(url, 
         this.register_name == "상품" ? this.product_info 

@@ -2,9 +2,16 @@
   <v-app>
     <div class="box-shadow" style="border-radius: 10px; overflow: hidden;">
       <v-simple-table
-      fixed-header
-      :height="this.tableHeight">
+        fixed-header
+        :height="this.tableHeight"
+      >
         <template v-slot:default>
+          <tr v-if="isLoading">
+            <td colspan="10">
+              <LoaderComponent/>
+            </td>
+          </tr>
+
           <thead>
             <tr>
               <th
@@ -111,10 +118,11 @@
 <script>
 /* eslint-disable */
 import EditDialogComponentVue from '@/components/DialogComponents/EditDialogComponent.vue'
+import LoaderComponent from './LoaderComponent.vue'
 
 export default {
   name: 'InventoryStatus',
-  components: {EditDialogComponentVue},
+  components: {EditDialogComponentVue, LoaderComponent},
   props: {
     title : {
       type: String
@@ -149,6 +157,10 @@ export default {
     render: {
       type: Boolean
     },
+    isLoading: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {

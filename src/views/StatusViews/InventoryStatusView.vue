@@ -77,6 +77,9 @@ export default {
     },
     async getDataSet() {
       this.datas = [];
+      this.render = false;
+      this.isLoading = true;
+      this.isDataSet = 0;
       try {
         await this.getLiveInventory();
         await this.getLastInventory();
@@ -89,10 +92,11 @@ export default {
       }
     },
     // 이달 재고
-    getLiveInventory () {
-      const url = `${process.env.VUE_APP_API}/live/inventory?${this.categoryQuery}`
-      this.$axios.get(url).then((res) => {
-        res.data.forEach((data)=>{
+    async getLiveInventory () {
+      try {
+        const url = `${process.env.VUE_APP_API}/live/inventory?${this.categoryQuery}`
+        const res = await this.$axios.get(url)
+        await res.data.forEach((data)=>{
           this.datas.push(
             {
               categoryName: data.categoryName,
@@ -103,15 +107,17 @@ export default {
           )
         })
         this.isDataSet++
-      }).catch((error) => {
+      } catch (error) {
         console.log(error);
-      })
+      }
     },
+
     // 이달 입고
-    getLiveInbound () {
-      const url = `${process.env.VUE_APP_API}/live/inbound?${this.categoryQuery}`
-      this.$axios.get(url).then((res) => {
-        res.data.forEach((data)=>{
+    async getLiveInbound () {
+      try {
+        const url = `${process.env.VUE_APP_API}/live/inbound?${this.categoryQuery}`
+        const res = await this.$axios.get(url)
+        await res.data.forEach((data)=>{
           for(let i=0; i<this.datas.length; i++) {
             if(this.datas[i].productCode === data.productCode) {
               this.datas[i].quantity[3] = data.quantity;
@@ -119,15 +125,17 @@ export default {
           }
         })
         this.isDataSet++
-      }).catch((error) => {
+      } catch (error) {
         console.log(error);
-      })
+      }
     },
+
     // 이달 출고
-    getLiveOutbound () {
-      const url = `${process.env.VUE_APP_API}/live/outbound?${this.categoryQuery}`
-      this.$axios.get(url).then((res) => {
-        res.data.forEach((data)=>{
+    async getLiveOutbound () {
+      try {
+        const url = `${process.env.VUE_APP_API}/live/outbound?${this.categoryQuery}`
+        const res = await this.$axios.get(url)
+        await res.data.forEach((data)=>{
           for(let i=0; i<this.datas.length; i++) {
             if(this.datas[i].productCode === data.productCode) {
               this.datas[i].quantity[4] = data.quantity*(-1);
@@ -135,15 +143,17 @@ export default {
           }
         })
         this.isDataSet++
-      }).catch((error) => {
+      } catch (error) {
         console.log(error);
-      })
+      }
     },
+
     // 전월 재고
-    getLastInventory () {
-      const url = `${process.env.VUE_APP_API}/monthly/inventory?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
-      this.$axios.get(url).then((res) => {
-        res.data.forEach((data) => {
+    async getLastInventory () {
+      try {
+        const url = `${process.env.VUE_APP_API}/monthly/inventory?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
+        const res = await this.$axios.get(url)
+        await res.data.forEach((data) => {
           const index = this.datas.findIndex((d) => d.productCode === data.productCode);
           if (index !== -1) {
             this.datas[index].quantity[2] = data.monthlyQuantityList[0].quantity;
@@ -157,15 +167,17 @@ export default {
           }
         });
         this.isDataSet++
-      }).catch((error) => {
+      } catch (error) {
         console.log(error);
-      })
+      }
     },
+
     // 전월 입고
-    getLastInbound () {
-      const url = `${process.env.VUE_APP_API}/monthly/inbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
-      this.$axios.get(url).then((res) => {
-        res.data.forEach((data)=>{
+    async getLastInbound () {
+      try {
+        const url = `${process.env.VUE_APP_API}/monthly/inbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
+        const res = await this.$axios.get(url)
+        await res.data.forEach((data)=>{
           for(let i=0; i<this.datas.length; i++) {
             if(this.datas[i].productCode === data.productCode) {
               this.datas[i].quantity[0] = data.monthlyQuantityList[0].quantity;
@@ -173,15 +185,16 @@ export default {
           }
         })
         this.isDataSet++
-      }).catch((error) => {
+      } catch (error) {
         console.log(error);
-      })
+      }
     },
     // 전월 출고
-    getLastOutbound () {
-      const url = `${process.env.VUE_APP_API}/monthly/outbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
-      this.$axios.get(url).then((res) => {
-        res.data.forEach((data)=>{
+    async getLastOutbound () {
+      try {
+        const url = `${process.env.VUE_APP_API}/monthly/outbound?startDate=${this.lastMonthStart}&endDate=${this.lastMonthEnd}&${this.categoryQuery}`
+        const res = await this.$axios.get(url)
+        await res.data.forEach((data)=>{
           for(let i=0; i<this.datas.length; i++) {
             if(this.datas[i].productCode === data.productCode) {
               this.datas[i].quantity[1] = data.monthlyQuantityList[0].quantity;
@@ -189,9 +202,9 @@ export default {
           }
         })
         this.isDataSet++
-      }).catch((error) => {
+      } catch(error) {
         console.log(error);
-      })
+      }
     },
   }
 }

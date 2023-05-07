@@ -78,7 +78,6 @@ export default {
       url = `${process.env.VUE_APP_API}/monthly/inbound?${this.querys.join('&')}`
       this.$axios.get(url).then((res) => {
         this.datas = res.data
-        console.log(res.data)
         // 월별 데이터 배열로 만들기
         for(let i=0; i<res.data.length; i++) {
           let monthlyDataList = res.data[i]['monthlyQuantityList']

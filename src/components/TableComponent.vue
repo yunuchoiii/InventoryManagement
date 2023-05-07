@@ -65,7 +65,7 @@
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
               <!-- <td v-for="data in item.quantity" :key="data">{{ data }}</td> -->
-              <td v-for="data in item.quantity" :key="data">{{ data }}</td>
+              <td v-for="(data, i) in item.quantity" :key="i">{{ data }}</td>
             </tr>
           </tbody>
           <tbody v-if="title == '월간 재고 현황'">
@@ -74,7 +74,7 @@
               <td>{{ item.categoryName }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
-              <td v-for="data in monthData[index]" :key="data">{{ data }}</td>
+              <td v-for="(data, i) in monthData[index]" :key="i">{{ data }}</td>
             </tr>
           </tbody>
           <tbody v-if="title == '월간 입고 현황' || title == '월간 출고 현황'">
@@ -83,7 +83,7 @@
               <td>{{ item.categoryName }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.productCode }}</td>
-              <td v-for="data in monthData[index]" :key="data">{{ data }}</td>
+              <td v-for="(data, i) in monthData[index]" :key="i">{{ data }}</td>
             </tr>
           </tbody>
           <!-- 더 보기 버튼 -->

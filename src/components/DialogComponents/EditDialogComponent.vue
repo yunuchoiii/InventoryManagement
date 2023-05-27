@@ -14,6 +14,7 @@
           :type=alertType.type
           alertType.background
           :style="{top: alertHeight}"
+          style="padding: 16px 7px 16px 16px;"
           class="slide-in-blurred-top dialog-alert"
         >
           <v-row align="center">
@@ -23,15 +24,15 @@
             <v-col v-if="editConfirm" class="shrink">
               <v-btn
                 light
-                elevation="0"
-                style="border-radius: 10px"
+                elevation="3"
+                style="border-radius: 16px;"
                 @click="editItem()">수정</v-btn>
             </v-col>
             <v-col v-if="deleteConfirm" class="shrink">
               <v-btn
                 light
-                elevation="0"
-                style="border-radius: 10px"
+                elevation="3"
+                style="border-radius: 16px"
                 @click="deleteItem()">삭제</v-btn>
             </v-col>
           </v-row>

@@ -1,5 +1,5 @@
 <template>
-  <body class="body-padding">
+  <body>
     <FilterBoxComponent
     @filterData="filterEvent"
     :title="title"

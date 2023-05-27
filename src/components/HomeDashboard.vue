@@ -12,7 +12,7 @@
           <div class="menu-divider-title">현황</div>
           <hr class="dashed-line">
         </div>
-        <div class="flex" data-aos="zoom-in">
+        <div class="d-flex" data-aos="zoom-in" style="flex-wrap: wrap;">
           <a href="/status/inventory" class="menu-card mr-2per homebox">
             <div class="flex-center">
               <img src="@/assets/inventory_status_icon.png" alt="현 재고 현황" width="50px" height="50px">
@@ -31,7 +31,7 @@
               <span class="menu-card-title2"><br>월별 재고 확인 및 조회</span>
             </div>
           </a>
-          <a href="/status/inbound" class="menu-card mr-2per homebox" style="padding-left: 20px">
+          <a href="/status/inbound" class="menu-card mr-2per homebox" style="padding-left: 10px">
             <div class="flex-center">
               <img src="@/assets/input_icon.png" alt="입고 현황" width="60px" height="60px">
             </div>
@@ -40,7 +40,7 @@
               <span class="menu-card-title2"><br>월별 입고량 확인 및 조회</span>
             </div>
           </a>
-          <a href="/status/outbound" class="menu-card homebox" style="padding-left: 20px">
+          <a href="/status/outbound" class="menu-card homebox" style="padding-left: 10px">
             <div class="flex-center">
               <img src="@/assets/output_icon.png" alt="출고 현황" width="60px" height="60px">
             </div>
@@ -58,7 +58,7 @@
           <div class="menu-divider-title">리스트</div>
           <hr class="dashed-line">
         </div>
-        <div class="flex" data-aos="zoom-in">
+        <div class="d-flex" data-aos="zoom-in" style="flex-wrap: wrap;">
           <a href="/list/inbound" class="menu-card mr-2per homebox">
             <div class="flex-center">
               <img src="@/assets/input_list_icon.png" alt="입고 리스트" width="50px" height="50px">
@@ -92,12 +92,12 @@
 
       <!-- 각종 통계 모음 -->
       <div data-aos="fade-up">
-        <div class="box-shadow homebox mb-22px">
+        <div class="box-shadow homebox mb-25px">
           <div class="fw-700 homebox-titlebox homebox-title1">
             <span>{{this.today_year + '년 ' + this.today_month + '월 ' + this.today_date + '일'}}</span>
           </div>
-          <div class="flex">
-            <div class="flex numbox numbox-divider">
+          <div class="d-flex">
+            <div class="d-flex numbox numbox-divider">
               <div class="flex-center numbox-txtbox">
                 <p class="numbox-today1">오늘 재고</p>
                 <p class="numbox-today2">240</p>
@@ -107,7 +107,7 @@
                 <p class="numbox-yesterday2">235</p>
               </div>
             </div>
-            <div class="flex numbox numbox-divider">
+            <div class="d-flex numbox numbox-divider">
               <div class="flex-center numbox-txtbox">
                 <p class="numbox-today1">오늘 입고</p>
                 <p class="numbox-today2">3</p>
@@ -117,7 +117,7 @@
                 <p class="numbox-yesterday2">6</p>
               </div>
             </div>
-            <div class="flex numbox">
+            <div class="d-flex numbox">
               <div class="flex-center numbox-txtbox">
                 <p class="numbox-today1">오늘 출고</p>
                 <p class="numbox-today2">18</p>
@@ -131,7 +131,7 @@
         </div>
       </div>
       <div data-aos="fade-up">
-        <div class="flex-between mb-22px">
+        <div class="flex-between mb-25px">
           <a href="/list/product" class="box-shadow homebox homebox-w2">
             <div class="homebox-titlebox homebox-title1">재고 카테고리 비율</div>
             <div class="">
@@ -175,7 +175,7 @@
         </div>
       </div>
       <div data-aos="fade-up">
-        <div class="flex-between mb-22px">
+        <div class="flex-between mb-25px">
           <a href="/status/inbound" class="box-shadow homebox homebox-w2">
             <div class="homebox-titlebox">
               <span class="homebox-title1">월별 입고 현황</span>
@@ -183,8 +183,10 @@
             </div>
             <div style="height: 35vh">
               <InBoundBarChart
-              :labels="this.monthsList"
-              :data="this.inBoundChart.data"/>
+                v-if="this.graphRender"
+                :labels="this.inBoundChart.labels"
+                :data="this.inBoundChart.data"
+              />
             </div>
           </a>
           <a href="/list/outbound" class="box-shadow homebox homebox-w2">
@@ -194,23 +196,27 @@
             </div>
             <div style="height: 35vh">
               <OutBoundBarChart
-              :labels="this.monthsList"
-              :data="this.outBoundChart.data"/>
+                v-if="this.graphRender"
+                :labels="this.outBoundChart.labels"
+                :data="this.outBoundChart.data"
+              />
             </div>
           </a>
         </div>
       </div>
       <div data-aos="fade-up">
         <a href="/status/monthly">
-          <div class="box-shadow homebox mb-22px">
+          <div class="box-shadow homebox mb-25px">
             <div class="homebox-titlebox">
               <span class="homebox-title1">연간 재고 현황</span>
               <span class="homebox-title2">최근 1년</span>
             </div>
             <div style="height: 35vh;">
               <AnnualLineChart
-              :labels="this.monthsList"
-              :data="this.annualChart.data"/>
+                v-if="this.graphRender"
+                :labels="this.annualChart.labels"
+                :data="this.annualChart.data"
+              />
             </div>
           </div>
         </a>
@@ -244,29 +250,31 @@ export default {
       last_month: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).getMonth()+1,
       monthsList: [],
       inBoundChart: {
-        labels: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        data: [40, 20, 12, 43, 25, 64, 74, 24, 10,24,13,53],
+        labels: [],
+        data: [],
       },
       outBoundChart: {
-        labels: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        data: [13,22,45,24,36,14,12,52,32,13,35,72],
+        labels: [],
+        data: [],
       },
       annualChart: {
-        labels: [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        data: [13,22,45,24,36,14,12,52,32,13,35,72],
+        labels: [],
+        data: [],
       },
       itemChart: {
         labels: ['세제', '방향제', '말통', '광택제', '박스'],
         data: [13,22,45,24,36],
         colors: ['#c41230', '#fb7b00', '#F2BB05', '#47A8BD', '#254359']
       },
+      graphRender: false
     }
   },
   setup () {},
   created () {
     AOS.init()
-    this.getMonthsList()
+    // this.getMonthsList()
     this.getTutorial()
+    this.getYearSummary()
   },
   mounted () {},
   unmounted () {},
@@ -295,6 +303,30 @@ export default {
           month = month + 1
           this.monthsList.push(month + '월')
         }
+      }
+    },
+    // 최근 12개월간 입고,출고,재고 내역 조회
+    async getYearSummary() {
+      try {
+        const res = await this.$axios.get(`${process.env.VUE_APP_API}/dashboard/summary/year`);
+        const dataSet = res.data;
+
+        const updateChart = (list, chart) => {
+          for (const element of list) {
+            const month = String(element.month).slice(-2) + "월";
+            chart.labels.push(month);
+            chart.data.push(element.quantity);
+          }
+        };
+
+        updateChart(dataSet.inBoundList.sort((a, b) => a.month - b.month), this.inBoundChart);
+        updateChart(dataSet.outBoundList.sort((a, b) => a.month - b.month), this.outBoundChart);
+        updateChart(dataSet.inventoryList.sort((a, b) => a.month - b.month), this.annualChart);
+
+        this.graphRender = true
+
+      } catch (error) {
+        console.log(error);
       }
     }
   }

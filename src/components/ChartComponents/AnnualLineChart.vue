@@ -53,7 +53,7 @@ export default {
               const gradient = canvas.createLinearGradient(0,0,0,250);
 
               gradient.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
-              gradient.addColorStop(1, 'rgba(155, 102, 255, 0.5)');
+              gradient.addColorStop(1, 'rgba(155, 102, 255, 0.6)');
 
               return gradient;
             },
@@ -79,7 +79,7 @@ export default {
             padding: 6,
             formatter: Math.round,
           },
-        }
+        },
       }
     }
   }

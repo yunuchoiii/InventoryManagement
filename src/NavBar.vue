@@ -9,40 +9,40 @@
           <img id="logo" src="@/assets/logo.png" alt="" class="nav-logo">
         </a>
         <a href="/">
-          <p class="navText">재고 <br class="break"/>관리 <br class="break"/>시스템</p>
+          <p class="navText long">재고 관리 시스템</p>
         </a>
       </div>
       <div class="navDivider"></div>
       <div class="w-100" style="display: inline-grid;">
         <v-btn text tile class="navBtn" href="/status/inventory">
-          <img src="https://cdn-icons-png.flaticon.com/512/2312/2312686.png" alt="" class="nav-icon">
+          <img src="@/assets/nav-1.png" alt="" class="nav-icon">
           <div>현 재고 현황</div>
         </v-btn>
         <v-btn text tile class="navBtn" href="/status/monthly">
-          <img src="https://cdn-icons-png.flaticon.com/512/4227/4227865.png" alt="" class="nav-icon">
+          <img src="@/assets/nav-2.png" alt="" class="nav-icon">
           <div>월간 재고 현황</div>
         </v-btn>
         <v-btn text tile class="navBtn" href="/status/inbound">
-          <img src="https://cdn-icons-png.flaticon.com/512/8901/8901382.png" alt="" class="nav-icon">
+          <img src="@/assets/nav-3.png" alt="" class="nav-icon">
           <div>월간 입고 현황</div>
         </v-btn>
         <v-btn text tile class="navBtn" href="/status/outbound">
-          <img src="https://cdn-icons-png.flaticon.com/512/8901/8901383.png" alt="" class="nav-icon">
+          <img src="@/assets/nav-4.png" alt="" class="nav-icon">
           <div>월간 출고 현황</div>
         </v-btn>
       </div>
       <div class="navDivider"></div>
       <div class="w-100" style="display: inline-grid;">
         <v-btn text tile class="navBtn" href="/list/inbound">
-          <img src="https://cdn-icons-png.flaticon.com/512/7794/7794603.png" alt="" class="nav-icon">
+          <img src="@/assets/nav-5.png" alt="" class="nav-icon">
           <div>입고 내역</div>
         </v-btn>
         <v-btn text tile class="navBtn" href="/list/outbound">
-          <img src="https://cdn-icons-png.flaticon.com/512/7794/7794607.png" alt="" class="nav-icon">
+          <img src="@/assets/nav-6.png" alt="" class="nav-icon">
           <div>출고 내역</div>
         </v-btn>
         <v-btn text tile class="navBtn" href="/list/product">
-          <img src="https://cdn-icons-png.flaticon.com/512/8572/8572537.png" alt="" class="nav-icon">
+          <img src="@/assets/nav-7.png" alt="" class="nav-icon">
           <div>상품 목록</div>
         </v-btn>
       </div>
@@ -75,7 +75,6 @@ export default {
     beforeDestroy () {
       localStorage.removeItem('isOpened');
     },
-    ...mapActions(['toggleNav']),
     checkPathname () {
       const pathname = window.location.pathname;
       const btnElements = document.querySelectorAll('.navBtn');
@@ -89,6 +88,7 @@ export default {
     },
     checkNavClosed () {
       const navBar = document.getElementById("navBar");
+      const navText = document.querySelector(".navText");
       const bodyPadding = document.querySelector(".body-padding");
       
       const isOpened = localStorage.getItem('isOpened') === 'false' ? false : true;
@@ -99,35 +99,41 @@ export default {
         navBar.classList.remove('closed')
       }
 
+      if (isOpened) {
+        navText.classList.add("long");
+        navText.classList.remove("short", "font-mont");
+        navText.innerHTML = '재고 관리 시스템'
+      } else {
+        navText.classList.add("short", "font-mont");
+        navText.classList.remove("long");
+        navText.innerHTML = 'Inventory<br/>Service'
+      }
+
       bodyPadding.style.marginLeft = isOpened ? "200px" : "62px";
       bodyPadding.style.width = isOpened ? "calc(100% - 200px)" : "100%";
     },
     toggleMenu() {
-      this.toggleNav();
-
       const navBar = document.getElementById("navBar");
-      const bodyPadding = document.querySelectorAll(".body-padding");
-      const navBtnText = document.querySelectorAll('.navBtn div');
-      const navFooter = document.querySelector('.nav-footer');
+      const navText = document.querySelector(".navText");
+      const bodyPadding = document.querySelector(".body-padding");
 
       const isOpened = navBar.classList.contains("closed");
 
       // 메뉴 열기/닫기에 따른 스타일 변경
       navBar.classList.toggle("closed");
 
-      bodyPadding.forEach(body => {
-        body.style.marginLeft = isOpened ? "200px" : "62px";
-        body.style.width = isOpened ? "calc(100% - 200px)" : "100%";
-      });
+      if (isOpened) {
+        navText.classList.add("long");
+        navText.classList.remove("short", "font-mont");
+        navText.innerHTML = '재고 관리 시스템'
+      } else {
+        navText.classList.add("short", "font-mont");
+        navText.classList.remove("long");
+        navText.innerHTML = 'Inventory<br/>Service'
+      }
 
-      navBtnText.forEach(text => {
-        // text.classList.toggle("hidden", !isOpened);
-        // text.classList.toggle("slide-in-right", isOpened);
-        // text.classList.toggle("slide-out-right", !isOpened);
-      });
-
-      // navFooter.classList.toggle("slide-in-right", isOpened);
-      // navFooter.classList.toggle("slide-out-right", !isOpened);
+      bodyPadding.style.marginLeft = isOpened ? "200px" : "62px";
+      bodyPadding.style.width = isOpened ? "calc(100% - 200px)" : "100%";
 
       localStorage.setItem('isOpened', isOpened);
     }
@@ -161,11 +167,5 @@ export default {
 }
 #navBar .theme--light.v-btn:hover::before {
   opacity: 0;
-}
-.break {
-  display: none;
-}
-.closed .break {
-  display: block;
 }
 </style>

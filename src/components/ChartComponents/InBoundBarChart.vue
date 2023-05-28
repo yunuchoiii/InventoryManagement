@@ -39,6 +39,11 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: 25
+          }
+        },
         plugins: {
           legend: false,
           datalabels: {

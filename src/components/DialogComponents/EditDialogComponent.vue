@@ -14,7 +14,7 @@
           :type=alertType.type
           alertType.background
           :style="{top: alertHeight}"
-          style="padding: 16px 7px 16px 16px;"
+          style="padding: 16px 11px 16px 16px;"
           class="slide-in-blurred-top dialog-alert"
         >
           <v-row align="center">
@@ -24,15 +24,15 @@
             <v-col v-if="editConfirm" class="shrink">
               <v-btn
                 light
-                elevation="3"
-                style="border-radius: 16px;"
+                elevation="1"
+                style="border-radius: 11px;"
                 @click="editItem()">수정</v-btn>
             </v-col>
             <v-col v-if="deleteConfirm" class="shrink">
               <v-btn
                 light
-                elevation="3"
-                style="border-radius: 16px"
+                elevation="1"
+                style="border-radius: 11px"
                 @click="deleteItem()">삭제</v-btn>
             </v-col>
           </v-row>
@@ -778,6 +778,7 @@ export default {
         :this.register_name === '입고' ? this.inStock_info
         :this.outStock_info
       ).then((res) => {
+        console.log(res)
         this.alertType = {
           msg: `${this.register_name} 수정이 완료되었습니다.`,
           type : "success",

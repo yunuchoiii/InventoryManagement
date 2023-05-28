@@ -1,3 +1,5 @@
+@import url('https://webfontworld.github.io/Montserrat/Montserrat.css');
+
 body {
   font-family:Pretendard, -apple-system, 'Noto Sans KR', BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
   background-color: #f5f5f5;
@@ -120,6 +122,9 @@ a:hover { color: black; text-decoration: none;}
 .ml-50 {
   margin-left: 50px;
 }
+.p-0 {
+  padding: 0 !important;
+}
 .pr-30 {
   padding-right: 30px;
 }
@@ -226,8 +231,8 @@ a:hover { color: black; text-decoration: none;}
   transition: all 0.5s ease;
 }
 .closed .nav-logo {
-  margin-top: 20px;
-  width: 75%;
+  margin-top: 25px;
+  width: 45px;
 }
 .closed .menu-btn {
   left: 16px;
@@ -271,10 +276,26 @@ a:hover { color: black; text-decoration: none;}
   line-height: 1rem;
 }
 .navText {
-  font-size: 15px !important;
-  margin-top: 20px;
+  font-size: 15px;
+  line-height: 1;
+  white-space: nowrap;
+  margin-top: 25px;
   margin-bottom: 10px;
   color: white;
+  transition: all 0.5s ease;
+}
+.closed .navText.long {
+  display: none;
+  font-size: 0rem;
+}
+.navText.short {
+  display: none;
+}
+.closed .navText.short {
+  display: block;
+  transform: rotate(-90deg);
+  text-align: left;
+  margin-top: 41px;
 }
 .navDivider {
   width: 85%;
@@ -388,8 +409,7 @@ a:hover { color: black; text-decoration: none;}
   padding: 20px 2vw;
 }
 .homebox-titlebox {
-  height: 50px;
-  padding: 0px 10px;
+  padding: 0px 10px 15px;
   display: flex;
   justify-content: space-between;
 }

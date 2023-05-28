@@ -1,7 +1,7 @@
 <template>
   <body style="padding-bottom: 2vh">
     <v-app>
-      <div style="font-size: 2.3rem; font-weight: 700; padding-top: 25px;">
+      <div style="font-size: 2.3rem; font-weight: 700; padding-top: 15px;">
         <span style="color: #c41230">원샷솔브코리아 </span>
         <span>재고 관리 시스템</span>
       </div>
@@ -100,31 +100,31 @@
             <div class="d-flex numbox numbox-divider">
               <div class="flex-center numbox-txtbox">
                 <p class="numbox-today1">오늘 재고</p>
-                <p class="numbox-today2">240</p>
+                <p class="numbox-today2">{{today_inventory}}</p>
               </div>
               <div class="flex-center numbox-txtbox">
                 <p class="numbox-yesterday1">어제 재고</p>
-                <p class="numbox-yesterday2">235</p>
+                <p class="numbox-yesterday2">{{yesterday_inventory}}</p>
               </div>
             </div>
             <div class="d-flex numbox numbox-divider">
               <div class="flex-center numbox-txtbox">
                 <p class="numbox-today1">오늘 입고</p>
-                <p class="numbox-today2">3</p>
+                <p class="numbox-today2">{{today_inbound}}</p>
               </div>
               <div class="flex-center numbox-txtbox">
                 <p class="numbox-yesterday1">어제 입고</p>
-                <p class="numbox-yesterday2">6</p>
+                <p class="numbox-yesterday2">{{yesterday_inbound}}</p>
               </div>
             </div>
             <div class="d-flex numbox">
               <div class="flex-center numbox-txtbox">
                 <p class="numbox-today1">오늘 출고</p>
-                <p class="numbox-today2">18</p>
+                <p class="numbox-today2">{{today_outbound}}</p>
               </div>
               <div class="flex-center numbox-txtbox">
                 <p class="numbox-yesterday1">어제 출고</p>
-                <p class="numbox-yesterday2">21</p>
+                <p class="numbox-yesterday2">{{yesterday_outbound}}</p>
               </div>
             </div>
           </div>
@@ -177,7 +177,7 @@
       <div data-aos="fade-up">
         <div class="flex-between mb-25px">
           <a href="/status/inbound" class="box-shadow homebox homebox-w2">
-            <div class="homebox-titlebox">
+            <div class="homebox-titlebox p-0">
               <span class="homebox-title1">월별 입고 현황</span>
               <span class="homebox-title2">최근 1년</span>
             </div>
@@ -190,7 +190,7 @@
             </div>
           </a>
           <a href="/list/outbound" class="box-shadow homebox homebox-w2">
-            <div class="homebox-titlebox">
+            <div class="homebox-titlebox p-0">
               <span class="homebox-title1">월별 출고 현황</span>
               <span class="homebox-title2">최근 1년</span>
             </div>
@@ -207,7 +207,7 @@
       <div data-aos="fade-up">
         <a href="/status/monthly">
           <div class="box-shadow homebox mb-25px">
-            <div class="homebox-titlebox">
+            <div class="homebox-titlebox p-0">
               <span class="homebox-title1">연간 재고 현황</span>
               <span class="homebox-title2">최근 1년</span>
             </div>
@@ -249,6 +249,12 @@ export default {
       last_year: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).getFullYear(),
       last_month: new Date(new Date().setFullYear(new Date().getFullYear() - 1)).getMonth()+1,
       monthsList: [],
+      today_inventory: 0,
+      today_inbound: 0,
+      today_outbound: 0,
+      yesterday_inventory: 0,
+      yesterday_inbound: 0,
+      yesterday_outbound: 0,
       inBoundChart: {
         labels: [],
         data: [],
@@ -274,14 +280,16 @@ export default {
     AOS.init()
     // this.getMonthsList()
     this.getTutorial()
+  },
+  mounted () {
+    this.getDaysSummary()
     this.getYearSummary()
   },
-  mounted () {},
   unmounted () {},
   methods: {
     //서비스 시작 여부 확인
     getTutorial () {
-      //TODO: 최초 여부 url 확인
+      //최초 여부 url 확인
       this.$axios.get(`${process.env.VUE_APP_API}/inventory/check/isnew`).then((res) => {
         this.tutorial = res.data
         if (this.tutorial) {
@@ -305,6 +313,26 @@ export default {
         }
       }
     },
+    // 어제 오늘 입출고, 재고량
+    async getDaysSummary () {
+      try {
+        const res = await this.$axios.get(`${process.env.VUE_APP_API}/dashboard/summary/days`);
+        const dataSet = res.data;
+
+        const [yesterday, today] = dataSet.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        this.today_inventory = today.inventory;
+        this.today_inbound = today.inbound;
+        this.today_outbound = today.outbound*(-1);
+
+        this.yesterday_inventory = yesterday.inventory;
+        this.yesterday_inbound = yesterday.inbound;
+        this.yesterday_outbound = yesterday.outbound*(-1);
+
+      } catch (error) {
+        console.error()
+      }
+    },
     // 최근 12개월간 입고,출고,재고 내역 조회
     async getYearSummary() {
       try {
@@ -313,15 +341,15 @@ export default {
 
         const updateChart = (list, chart) => {
           for (const element of list) {
-            const month = String(element.month).slice(-2) + "월";
+            const month = String(element.days).slice(-2) + "월";
             chart.labels.push(month);
             chart.data.push(element.quantity);
           }
         };
 
-        updateChart(dataSet.inBoundList.sort((a, b) => a.month - b.month), this.inBoundChart);
-        updateChart(dataSet.outBoundList.sort((a, b) => a.month - b.month), this.outBoundChart);
-        updateChart(dataSet.inventoryList.sort((a, b) => a.month - b.month), this.annualChart);
+        updateChart(dataSet.inBoundList.sort((a, b) => a.days - b.days), this.inBoundChart);
+        updateChart(dataSet.outBoundList.sort((a, b) => a.days - b.days), this.outBoundChart);
+        updateChart(dataSet.inventoryList.sort((a, b) => a.days - b.days), this.annualChart);
 
         this.graphRender = true
 

@@ -561,6 +561,10 @@ li {
   list-style: none;
   height: 40px;
 }
+.body-padding {
+  width: 100% !important;
+  margin-left: 0 !important;
+}
 .v-application--wrap {
   min-height: auto;
   max-width: fit-content;

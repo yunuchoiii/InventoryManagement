@@ -9,7 +9,8 @@
     :headers="headers"
     :datas="datas"
     :monthData="monthData"
-    :filterData="filterData"/>
+    :filterData="filterData"
+    :isLoading="isLoading"/>
   </body>
 </template>
 <script>
@@ -30,7 +31,8 @@ export default {
       monthData: [],
       filterData: {},
       querys: [],
-      monthLabel: []
+      monthLabel: [],
+      isLoading: true,
     }
   },
   watch: {},
@@ -92,6 +94,7 @@ export default {
           }
           this.monthData.push(dataArr)
         }
+        this.isLoading = false;
       }).catch((error) => {
         console.log(error);
       })

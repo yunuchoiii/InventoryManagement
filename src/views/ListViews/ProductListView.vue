@@ -16,7 +16,8 @@
     :datas="datas"
     :filterData="filterData"
     :register_name="register_name"
-    :isEmpty="isEmpty"/>
+    :isEmpty="isEmpty"
+    :isLoading="isLoading"/>
     <div>
       <input type="text">
     </div>
@@ -55,7 +56,8 @@ export default {
       },
       tooltip_msg: "",
       tableData: [],
-      isEmpty: false
+      isEmpty: false,
+      isLoading: true,
     }
   },
   watch: {},
@@ -86,6 +88,7 @@ export default {
         },
       }).then((res) => {
         this.datas = res.data.content
+        this.isLoading = false
       }).catch((error) => {
         console.log(error);
       })

@@ -59,15 +59,15 @@
             </div>
             <div style="padding: 30px 30px 0px 30px; flex-wrap: wrap; " class="flex-center-between">
               <div class="box-shadow flex-center tut-screen-lg-chart font-blue fw-700">
-                <div class="w-30 flex-column flex-center slide-in-blurred-bottom-2s">
+                <div class="w-30 flex-column flex-between flex-center slide-in-blurred-bottom-2s">
                   <span style="margin-bottom: 10px;">Best</span>
                   <img src="https://cdn-icons-png.flaticon.com/512/8465/8465733.png" alt="" width="50%">
                 </div>
-                <div class="w-30 flex-column slide-in-blurred-bottom-2s">
+                <div class="w-30 flex-column flex-between slide-in-blurred-bottom-2s">
                   <span style="margin-bottom: 13px;">Today</span>
                   <span style="font-size: 1.8rem; color: #f8972a;">300</span>
                 </div>
-                <div class="w-30 flex-column flex-center slide-in-blurred-bottom-2s">
+                <div class="w-30 flex-column flex-between flex-center slide-in-blurred-bottom-2s">
                   <span style="margin-bottom: 10px;">Sales</span>
                   <img src="https://cdn-icons-png.flaticon.com/512/1420/1420341.png" alt="" width="50%">
                 </div>
@@ -126,13 +126,13 @@
     <!-- Page 3 현황-->
     <div v-if="page_3_show" id="page_3">
       <div class="section flex-center">
-        <div class="tut-left-box tx-center flex-center flex-column pr-50">
+        <div class="tut-left-box tx-center flex-center flex-column flex-between pr-50">
           <div style="height: 488px; width: 650px; position: relative;">
             <div class="tut-screen-sm box-shadow swing-in-top-fwd-1s" style="top: 0%; left: 0%;">
               <div class="fw-700 tut-screen-sm-title font-gray">
                 월간 재고 현황
               </div>
-              <div class="flex-center-between flex-column" style="padding: 10px 0px;">
+              <div class="flex-center-between flex-column flex-between" style="padding: 10px 0px;">
                 <div class="tut-table-row box-shadow flex-center-between">
                   <span class="fa fa-refresh"></span>
                   <div class="flex-center-between">
@@ -141,7 +141,7 @@
                   </div>
                 </div>
               </div>
-              <div class="br-10 box-shadow size-100 bg-white flex-center-evenly flex-column" style="height:70%">
+              <div class="br-10 box-shadow size-100 bg-white flex-center-evenly flex-column flex-between" style="height:70%">
                 <div v-for="i in 7" :key="i" class="tut-divider"></div>
               </div>
             </div>
@@ -149,7 +149,7 @@
               <div class="fw-700 tut-screen-sm-title font-gray">
                 월간 입고 현황
               </div>
-              <div class="flex-center-between flex-column" style="padding: 10px 0px;">
+              <div class="flex-center-between flex-column flex-between" style="padding: 10px 0px;">
                 <div class="tut-table-row box-shadow flex-center-between">
                   <span class="fa fa-refresh"></span>
                   <div class="flex-center-between">
@@ -158,7 +158,7 @@
                   </div>
                 </div>
               </div>
-              <div class="br-10 box-shadow size-100 bg-white flex-center-evenly flex-column" style="height:70%">
+              <div class="br-10 box-shadow size-100 bg-white flex-center-evenly flex-column flex-between" style="height:70%">
                 <div v-for="i in 7" :key="i" class="tut-divider"></div>
               </div>
             </div>
@@ -166,7 +166,7 @@
               <div class="fw-700 tut-screen-sm-title font-gray">
                 월간 출고 현황
               </div>
-              <div class="flex-center-between flex-column" style="padding: 10px 0px;">
+              <div class="flex-center-between flex-column flex-between" style="padding: 10px 0px;">
                 <div class="tut-table-row box-shadow flex-center-between">
                   <span class="fa fa-refresh"></span>
                   <div class="flex-center-between">
@@ -175,7 +175,7 @@
                   </div>
                 </div>
               </div>
-              <div class="br-10 box-shadow size-100 bg-white flex-center-evenly flex-column" style="height:70%">
+              <div class="br-10 box-shadow size-100 bg-white flex-center-evenly flex-column flex-between" style="height:70%">
                 <div v-for="i in 7" :key="i" class="tut-divider"></div>
               </div>
             </div>
@@ -183,7 +183,7 @@
               <div class="fw-700 tut-screen-sm-title font-gray">
                 현 재고 현황
               </div>
-              <div class="flex-center-between flex-column" style="padding: 10px 0px;">
+              <div class="flex-center-between flex-column flex-between" style="padding: 10px 0px;">
                 <div class="tut-table-row box-shadow flex-center-between">
                   <span class="fa fa-refresh"></span>
                   <div class="flex-center-between">
@@ -192,7 +192,7 @@
                   </div>
                 </div>
               </div>
-              <div class="br-10 box-shadow size-100 bg-white flex-center-evenly flex-column" style="height:70%">
+              <div class="br-10 box-shadow size-100 bg-white flex-center-evenly flex-column flex-between" style="height:70%">
                 <div v-for="i in 7" :key="i" class="tut-divider"></div>
               </div>
             </div>
@@ -240,10 +240,10 @@
     <!-- Page 4 목록-->
     <div v-if="page_4_show" id="page_4">
       <div class="section flex-center">
-        <div class="tut-left-box tx-center fade-in-1s flex-center flex-column pr-50">
+        <div class="tut-left-box tx-center fade-in-1s flex-center flex-column flex-between pr-50">
           <div class="tut-screen-lg flex-center" style="overflow: hidden;">
             <div id="grayfilter" class="grayfilter size-100"></div>
-            <div id="tut-table" class="flex-center flex-column size-100" style="padding: 30px;">
+            <div id="tut-table" class="flex-center flex-column flex-between size-100" style="padding: 30px;">
               <div class="tut-table-row box-shadow"></div>
               <div class="tut-table-line"></div>
               <div class="tut-table-row box-shadow"></div>
@@ -256,7 +256,7 @@
               <div class="tut-table-row box-shadow"></div>
               <div class="tut-table-row box-shadow"></div>
             </div>
-            <div class="tut-dialog box-shadow scale-in-center-2s flex-center-between flex-column">
+            <div class="tut-dialog box-shadow scale-in-center-2s flex-center-between flex-column flex-between">
               <div>
                 <span class="font-blue fw-700" style="font-size: 1.5rem;">입출고 내역</span>
               </div>

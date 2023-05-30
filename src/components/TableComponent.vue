@@ -7,7 +7,7 @@
       >
         <template v-slot:default>
           <tr v-if="isLoading">
-            <td colspan="10">
+            <td colspan="20">
               <LoaderComponent/>
             </td>
           </tr>
@@ -159,7 +159,7 @@ export default {
     },
     isLoading: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   data () {

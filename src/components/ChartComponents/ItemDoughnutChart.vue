@@ -55,7 +55,7 @@ export default {
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            display: true,
+            display: false,
             position: 'left'
           },
           datalabels: {

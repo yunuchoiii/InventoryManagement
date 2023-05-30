@@ -91,41 +91,39 @@
       <div class="home-divider"></div>
 
       <!-- 각종 통계 모음 -->
-      <div data-aos="fade-up">
-        <div class="box-shadow homebox mb-25px">
-          <div class="fw-700 homebox-titlebox homebox-title1">
-            <span>{{this.today_year + '년 ' + this.today_month + '월 ' + this.today_date + '일'}}</span>
+      <div class="box-shadow homebox mb-25px">
+        <div class="fw-700 homebox-titlebox homebox-title1">
+          <span>{{this.today_year + '년 ' + this.today_month + '월 ' + this.today_date + '일'}}</span>
+        </div>
+        <div class="d-flex">
+          <div class="d-flex numbox numbox-divider">
+            <div class="flex-center numbox-txtbox">
+              <p class="numbox-today1">오늘 재고</p>
+              <p class="numbox-today2">{{today_inventory}}</p>
+            </div>
+            <div class="flex-center numbox-txtbox">
+              <p class="numbox-yesterday1">어제 재고</p>
+              <p class="numbox-yesterday2">{{yesterday_inventory}}</p>
+            </div>
           </div>
-          <div class="d-flex">
-            <div class="d-flex numbox numbox-divider">
-              <div class="flex-center numbox-txtbox">
-                <p class="numbox-today1">오늘 재고</p>
-                <p class="numbox-today2">{{today_inventory}}</p>
-              </div>
-              <div class="flex-center numbox-txtbox">
-                <p class="numbox-yesterday1">어제 재고</p>
-                <p class="numbox-yesterday2">{{yesterday_inventory}}</p>
-              </div>
+          <div class="d-flex numbox numbox-divider">
+            <div class="flex-center numbox-txtbox">
+              <p class="numbox-today1">오늘 입고</p>
+              <p class="numbox-today2">{{today_inbound}}</p>
             </div>
-            <div class="d-flex numbox numbox-divider">
-              <div class="flex-center numbox-txtbox">
-                <p class="numbox-today1">오늘 입고</p>
-                <p class="numbox-today2">{{today_inbound}}</p>
-              </div>
-              <div class="flex-center numbox-txtbox">
-                <p class="numbox-yesterday1">어제 입고</p>
-                <p class="numbox-yesterday2">{{yesterday_inbound}}</p>
-              </div>
+            <div class="flex-center numbox-txtbox">
+              <p class="numbox-yesterday1">어제 입고</p>
+              <p class="numbox-yesterday2">{{yesterday_inbound}}</p>
             </div>
-            <div class="d-flex numbox">
-              <div class="flex-center numbox-txtbox">
-                <p class="numbox-today1">오늘 출고</p>
-                <p class="numbox-today2">{{today_outbound}}</p>
-              </div>
-              <div class="flex-center numbox-txtbox">
-                <p class="numbox-yesterday1">어제 출고</p>
-                <p class="numbox-yesterday2">{{yesterday_outbound}}</p>
-              </div>
+          </div>
+          <div class="d-flex numbox">
+            <div class="flex-center numbox-txtbox">
+              <p class="numbox-today1">오늘 출고</p>
+              <p class="numbox-today2">{{today_outbound}}</p>
+            </div>
+            <div class="flex-center numbox-txtbox">
+              <p class="numbox-yesterday1">어제 출고</p>
+              <p class="numbox-yesterday2">{{yesterday_outbound}}</p>
             </div>
           </div>
         </div>
@@ -134,16 +132,33 @@
         <div class="flex-between mb-25px">
           <a href="/list/product" class="box-shadow homebox homebox-w2">
             <div class="homebox-titlebox homebox-title1">재고 카테고리 비율</div>
-            <div class="">
-              <div style="height: 35vh; padding-bottom: 15px;">
+            <div class="w-100 d-flex">
+              <div class="w-30 flex-center">
+                <div class="flex-between flex-column" style="height: 195px; margin-top: 3px;">
+                  <div class="circle" style="background-color: #c41230"></div>
+                  <div class="circle" style="background-color: #fa7b00"></div>
+                  <div class="circle" style="background-color: #f1bb07"></div>
+                  <div class="circle" style="background-color: #439cb0"></div>
+                  <div class="circle" style="background-color: #244257"></div>
+                </div>
+                <div class="flex-between flex-column" style="height: 200px;">
+                  <div>세제</div>
+                  <div>방향제</div>
+                  <div>말통</div>
+                  <div>광택제</div>
+                  <div>박스</div>
+                </div>
+              </div>
+              <div class="w-70" style="height: 35vh; margin-bottom: 15px;">
                 <ItemDoughnutChart
                 :labels="this.itemChart.labels"
                 :data="this.itemChart.data"
                 :colors="this.itemChart.colors"/>
+                <span></span>
               </div>
             </div>
           </a>
-          <div class="homebox-w2 flex-column">
+          <div class="homebox-w2 flex-column flex-between">
             <div class="box-shadow homebox homebox-h3 flex-center-between">
               <div class="homebox-title3 flex-center">
                 <img src="https://cdn-icons-png.flaticon.com/512/1670/1670341.png" alt="" class="home-icon">
@@ -368,6 +383,13 @@ body {background-color: #f3f3f3;}
   width: 50px;
   height: 50px;
   margin-right: 20px;
+  filter: invert(21%) sepia(45%) saturate(634%) hue-rotate(162deg) brightness(92%) contrast(87%);
+}
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  margin-right: 10px;
 }
 .fs-22 {
   font-size: 2.2rem;

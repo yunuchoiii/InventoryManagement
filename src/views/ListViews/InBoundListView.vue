@@ -17,8 +17,9 @@
     :datas="datas"
     :filterData="filterData"
     :register_name="register_name"
-    :isEmpty="isEmpty"/>
-    <div class="flex-center stockCloseAlertBox slide-in-blurred-bottom">
+    :isEmpty="isEmpty"
+    :isLoading="isLoading"/>
+    <div class="flex-center stockCloseAlertBox">
       <v-alert
         v-model="alertClose"
         ref="alertClose"
@@ -84,11 +85,12 @@ export default {
       querys: [],
       isEmpty: false,
       checkedMonths: [],
-      alertClose: true,
+      alertClose: false,
       closedYear: null,
       closedMonth: null,
       closeType: "마감",
       stockClosingDialog: false,
+      isLoading: true,
     }
   },
   watch: {},
@@ -121,7 +123,8 @@ export default {
       this.getDataList()
     },
     closedEvent (data) {
-      this.alertClose = !data
+      this.alertClose = !data;
+      this.$refs['alertClose'].$el.classList.add("slide-in-blurred-bottom");
     },
     handleAlert() {
       this.closedMonth = new Date().getMonth() === 0 ? 12 : new Date().getMonth()
@@ -152,6 +155,7 @@ export default {
         if (res.data.content.length < 50) {
           this.isEmpty = true
         }
+        this.isLoading = false
       }).catch((error) => {
         console.log(error);
       })

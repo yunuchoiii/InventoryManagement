@@ -21,19 +21,28 @@
             <v-col class="grow">
               {{ alertType.msg }}
             </v-col>
+            <mini-loader-component
+              v-if="inRequest"
+              style="width: 36px; margin-top: 5px; margin-right: 23px; padding: 0"/>
             <v-col v-if="editConfirm" class="shrink">
               <v-btn
+              v-if="!inRequest"
                 light
-                elevation="1"
+                elevation="0"
                 style="border-radius: 11px;"
-                @click="editItem()">수정</v-btn>
+                @click="editItem()">
+                수정
+              </v-btn>
             </v-col>
             <v-col v-if="deleteConfirm" class="shrink">
               <v-btn
+              v-if="!inRequest"
                 light
-                elevation="1"
+                elevation="0"
                 style="border-radius: 11px"
-                @click="deleteItem()">삭제</v-btn>
+                @click="deleteItem()">
+                삭제
+              </v-btn>
             </v-col>
           </v-row>
         </v-alert>
@@ -585,10 +594,11 @@
 </template>
 
 <script>
+import MiniLoaderComponent from '../MiniLoaderComponent.vue'
 /* eslint-disable */
 export default {
   name: 'EditDialog',
-  components: {},
+  components: {MiniLoaderComponent},
   props: {
     register_name: {
       type: String,
@@ -655,7 +665,8 @@ export default {
       modal: false,
       menu2: false,
       unit: ['L', 'mL', 'kg', 'g'],
-      status: ['판매 예정', '판매 중', '판매 중단']
+      status: ['판매 예정', '판매 중', '판매 중단'],
+      inRequest: false,
     }
   },
   watch : {
@@ -766,6 +777,7 @@ export default {
     // 수정 api
     editItem () {
       localStorage.setItem("filterData", JSON.stringify(this.filterData))
+      this.inRequest = true
 
       this.editConfirm = false
       this.deleteConfirm = false
@@ -786,6 +798,7 @@ export default {
           color : "green"
         }
         this.alert = true
+        this.inRequest = false
         setTimeout(() => {
           this.emitClose()
           window.location.reload()
@@ -800,12 +813,14 @@ export default {
           background : "dark",
           color : "#c41230"
         },
-        this.alert=true
+        this.alert = true
+        this.inRequest = false
       })
     },
     // 삭제 api
     deleteItem () {
       localStorage.setItem("filterData", JSON.stringify(this.filterData))
+      this.inRequest = true
 
       this.deleteConfirm = false
       const url = 
@@ -819,6 +834,7 @@ export default {
           color : "green"
         }
         this.alert = true
+        this.inRequest = false
         setTimeout(() => {
           this.emitClose()
           window.location.reload()
@@ -831,7 +847,8 @@ export default {
           background : "dark",
           color : "#c41230"
         },
-        this.alert=true
+        this.alert = true
+        this.inRequest = false
       })
     },
   }

@@ -78,6 +78,7 @@ export default {
       this.getDataList()
     },
     getDataList () {
+      this.isLoading = true;
       const url = this.filterData.categoryCode != "" 
         ? `${process.env.VUE_APP_API}/products?categoryCode=${this.filterData.categoryCode}` 
         : `${process.env.VUE_APP_API}/products`

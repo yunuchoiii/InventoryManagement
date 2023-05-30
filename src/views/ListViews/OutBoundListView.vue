@@ -144,6 +144,7 @@ export default {
       this.getDataList()
     },
     getDataList () {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}/outbound?${this.querys.join('&')}`
       this.$axios.get(url, {
         params: {

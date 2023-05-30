@@ -77,6 +77,7 @@ export default {
     },
     getDataList (url) {
       this.monthData = [];
+      this.isLoading = true;
       url = `${process.env.VUE_APP_API}/monthly/inbound?${this.querys.join('&')}`
       this.$axios.get(url).then((res) => {
         this.datas = res.data

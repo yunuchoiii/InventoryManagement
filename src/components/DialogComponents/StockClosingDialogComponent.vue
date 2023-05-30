@@ -65,7 +65,8 @@
             rounded
             dark
             @click="closeStock()">
-              <span style="font-size: 1.2rem">마감</span>
+              <mini-loader-component v-if="inRequest"/>
+              <span v-else style="font-size: 1.2rem">마감</span>
             </v-btn>
             <v-btn
             v-else
@@ -75,7 +76,8 @@
             rounded
             dark
             @click="CancelCloseStock()">
-              <span style="font-size: 1.2rem">마감 해제</span>
+              <mini-loader-component v-if="inRequest"/>
+              <span v-else style="font-size: 1.2rem">마감 해제</span>
             </v-btn>
           </div>
         </v-card>
@@ -86,10 +88,11 @@
 </template>
 
 <script>
+import MiniLoaderComponent from '../MiniLoaderComponent.vue'
 /* eslint-disable */
 export default {
   name: 'StockClosingDialog',
-  components: {},
+  components: {MiniLoaderComponent},
   props: {
     year: {
       type: Number
@@ -115,7 +118,8 @@ export default {
         background : "dark",
         color : "#254359"
       },
-      alertHeight: window.innerHeight/2 - 234 + 'px' 
+      alertHeight: window.innerHeight/2 - 234 + 'px',
+      inRequest: false
     }
   },
   setup () {},
@@ -133,6 +137,8 @@ export default {
     // 마감 등록
     closeStock () {
       localStorage.setItem("filterData", JSON.stringify(this.filterData))
+      this.inRequest = true;
+
       const lastDay = new Date(this.year, this.month, 0).getDate();
       const month = this.month < 10 ? "0"+this.month : this.month
       const date = this.year + "-" + month + "-" + lastDay
@@ -153,11 +159,13 @@ export default {
         this.alertType.color="#c41230"
         this.alertType.msg=error.response.data.message
         this.alert=true
+        this.inRequest=false
       })
     },
     // 마감 해제
     CancelCloseStock () {
       localStorage.setItem("filterData", JSON.stringify(this.filterData))
+      this.inRequest = true
       
       const lastDay = new Date(this.year, this.month, 0).getDate();
       const month = this.month < 10 ? "0"+this.month : this.month
@@ -179,6 +187,7 @@ export default {
         this.alertType.color="#c41230"
         this.alertType.msg=error.response.data.message
         this.alert=true
+        this.inRequest=false
       })
     }
   }

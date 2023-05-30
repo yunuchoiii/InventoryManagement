@@ -1,5 +1,5 @@
 <template>
-  <body style="padding-bottom: 2vh">
+  <body style="padding-bottom: 2vh; min-width: 900px;">
     <v-app>
       <div style="font-size: 2.3rem; font-weight: 700; padding-top: 15px;">
         <span style="color: #c41230">원샷솔브코리아 </span>
@@ -134,7 +134,7 @@
             <div class="homebox-titlebox homebox-title1">재고 카테고리 비율</div>
             <div class="w-100 d-flex">
               <div class="w-30 flex-center">
-                <div class="flex-between flex-column" style="height: 195px; margin-top: 3px;">
+                <div class="flex-between flex-column" style="height: 196px; margin-top: 3px;">
                   <div class="circle" style="background-color: #c41230"></div>
                   <div class="circle" style="background-color: #fa7b00"></div>
                   <div class="circle" style="background-color: #f1bb07"></div>

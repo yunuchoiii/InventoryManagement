@@ -170,7 +170,8 @@
             rounded
             dark
             @click="Register()">
-              <span style="font-size: 1.2rem">저장</span>
+              <mini-loader-component v-if="inRequest"/>
+              <span v-else style="font-size: 1.2rem">저장</span>
             </v-btn>
           </div>
         </v-card>
@@ -317,7 +318,8 @@
             rounded
             dark
             @click="Register()">
-              <span style="font-size: 1.2rem">저장</span>
+              <mini-loader-component v-if="inRequest"/>
+              <span v-else style="font-size: 1.2rem">저장</span>
             </v-btn>
           </div>
         </v-card>
@@ -497,7 +499,8 @@
             rounded
             dark
             @click="Register()">
-              <span style="font-size: 1.2rem">저장</span>
+              <mini-loader-component v-if="inRequest"/>
+              <span v-else style="font-size: 1.2rem">저장</span>
             </v-btn>
           </div>
         </v-card>
@@ -508,10 +511,11 @@
 </template>
 
 <script>
+import MiniLoaderComponent from '../MiniLoaderComponent.vue'
 /* eslint-disable */
 export default {
   name: 'RegisterDialog',
-  components: {},
+  components: {MiniLoaderComponent},
   props: {
     register_name: {
       type: String,
@@ -562,7 +566,8 @@ export default {
       modal: false,
       menu2: false,
       unit: ['L', 'mL', 'kg', 'g'],
-      status: ['판매 예정', '판매 중', '판매 중단']
+      status: ['판매 예정', '판매 중', '판매 중단'],
+      inRequest: false
     }
   },
   watch : {
@@ -625,6 +630,7 @@ export default {
       this.outStock_info.productId = this.itemsObjects[idx].id
     },
     Register () {
+      this.inRequest = true
       const url = 
         this.register_name == "상품" ? `${process.env.VUE_APP_API}/products`
         : this.register_name == "입고" ? `${process.env.VUE_APP_API}/inbound`
@@ -640,7 +646,7 @@ export default {
           background : "light",
           color : "green"
         }
-        this.alert = true
+        this.alert = true;
         setTimeout(() => {
           this.dialog = false
           window.location.reload()
@@ -652,7 +658,8 @@ export default {
           this.register_name == "상품" ?'구분과 품목명은 필수 기재 항목입니다.'
           :this.register_name == "입고" ? '품목, 입고일, 수량은 필수 기재 항목입니다.' 
           :'품목, 출고일, 수량, 가격은 필수 기재 항목입니다.'
-        this.alert=true
+        this.alert=true;
+        this.inRequest=false;
       })
     },
   }

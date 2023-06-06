@@ -20,8 +20,12 @@ a:hover { color: black; text-decoration: none;}
   padding: 0px 25px;
   margin-left: 200px;
   height: 100vh;
-  width: 100%;
+  width: calc(100% - 200px);
   transition: all 0.5s ease;
+}
+.closed.body-padding {
+  width: calc(100% - 62px);
+  margin-left: 62px;
 }
 .font-white {
   color: white;
@@ -274,27 +278,38 @@ a:hover { color: black; text-decoration: none;}
   font-weight: 700; 
   line-height: 1rem;
 }
+.navTextBox {
+  height: 65px;
+}
+.closed .navTextBox {
+  height: 110px;
+}
 .navText {
   font-size: 15px;
   line-height: 1;
   white-space: nowrap;
-  margin-top: 25px;
-  margin-bottom: 10px;
   color: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
   transition: all 0.5s ease;
 }
 .closed .navText.long {
-  display: none;
-  font-size: 0rem;
+  opacity: 0;
 }
 .navText.short {
-  display: none;
+  opacity: 0
 }
 .closed .navText.short {
-  display: block;
+  opacity: 1;
   transform: rotate(-90deg);
   text-align: left;
-  margin-top: 41px;
+  position: relative;
+  top: 41px;
+  left: 0;
 }
 .navDivider {
   width: 85%;
@@ -402,6 +417,8 @@ a:hover { color: black; text-decoration: none;}
 }
 .homebox-w2 {
   width: 49%;
+  height: 46vh;
+  margin-bottom: 3vh;
 }
 .homebox-h3 {
   height: 29.5%;
@@ -415,6 +432,7 @@ a:hover { color: black; text-decoration: none;}
 .homebox-title1 {
   font-size: 1.5rem;
   font-weight: 700;
+  transition: font-size 0.5s ease;
 }
 .homebox-title2 {
   font-size: 1rem;
@@ -429,7 +447,7 @@ a:hover { color: black; text-decoration: none;}
   display: flex; 
   flex-direction: row; 
   align-items: center; 
-  margin-top: 25px;
+  margin-top: 2.3vh;
 }
 .menu-divider-title {
   padding: 0px 10px; 
@@ -440,7 +458,7 @@ a:hover { color: black; text-decoration: none;}
 .menu-card {
   width: 23.5%; 
   min-width: 250px;
-  margin-top: 18px;
+  margin-top: 2vh;
   height: 15vh;
   display: flex;
   align-items: center;
@@ -480,13 +498,18 @@ a:hover { color: black; text-decoration: none;}
 .numbox {
   width: 33.3%; 
   height: 120px;
+  justify-content: center;
+  align-items: center;
 }
 .numbox-divider {
-  border-right: 1px solid #f3f3f3;
+  border-right: 3px solid #f3f3f3;
 }
 .numbox-txtbox {
-  width:50%; 
+  width: 180px; 
   flex-direction: column;
+}
+.numbox-today1, .numbox-today2, .numbox-yesterday1, .numbox-yesterday2 {
+  transition: font-size 0.5s ease;
 }
 .numbox-today1 {
   font-size: 1.2rem; 
@@ -506,6 +529,35 @@ a:hover { color: black; text-decoration: none;}
   font-size: 2rem; 
   font-weight: 700; 
   color: #254359;
+}
+.numbox-icon {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+  border-radius: 100px;
+  background: linear-gradient(145deg, #f0f0f0, #f3f3f3);
+  box-shadow:  20px 20px 60px #d3d3d3,
+             -20px -20px 60px #ffffff;
+}
+.numbox-icon img {
+  width: 50%;
+  height: 50%;
+  filter: invert(74%) sepia(4%) saturate(54%) hue-rotate(314deg) brightness(84%) contrast(80%);
+}
+.expanded .homebox-title1 {
+  font-size: 2rem;
+}
+.expanded .numbox-today1 {
+  font-size: 1.5rem;
+}
+.expanded .numbox-today2 {
+  font-size: 3.3rem;
+}
+.expanded .numbox-yesterday1 {
+  font-size: 1.2rem; 
+}
+.expanded .numbox-yesterday2 {
+  font-size: 2.3rem;
 }
 .color-circle {
   width: 20px;
@@ -713,7 +765,11 @@ a:hover { color: black; text-decoration: none;}
 .stockCloseAlertBox {
   position: fixed;
   bottom: 25px;
-  width: calc(100% - 239px);
+  width: calc(100% - 250px);
+  transition: all 0.5s ease;
+}
+.closed .stockCloseAlertBox {
+  width: calc(100% - 112px);
 }
 .stockCloseAlert {
   border-radius: 30px !important;

@@ -91,45 +91,128 @@
       <div class="home-divider"></div>
 
       <!-- 각종 통계 모음 -->
-      <div class="box-shadow homebox mb-25px">
+      <div id="infobox" class="box-shadow homebox flex-column" style="margin-bottom: 3vh;">
         <div class="fw-700 homebox-titlebox homebox-title1">
           <span>{{this.today_year + '년 ' + this.today_month + '월 ' + this.today_date + '일'}}</span>
         </div>
-        <div class="d-flex">
-          <div class="d-flex numbox numbox-divider">
-            <div class="flex-center numbox-txtbox">
-              <p class="numbox-today1">오늘 재고</p>
-              <p class="numbox-today2">{{today_inventory}}</p>
+        <div v-if="isLoading">
+          <v-row>
+            <v-col cols="4">
+              <v-skeleton-loader
+                class="mx-auto"
+                max-width="300"
+                max-height="120"
+                type="article"
+              ></v-skeleton-loader>
+            </v-col>
+            <v-col cols="4">
+              <v-skeleton-loader
+                class="mx-auto"
+                max-width="300"
+                max-height="120"
+                type="article"
+              ></v-skeleton-loader>
+            </v-col>
+            <v-col cols="4">
+              <v-skeleton-loader
+                class="mx-auto"
+                max-width="300"
+                max-height="120"
+                type="article"
+              ></v-skeleton-loader>
+            </v-col>
+          </v-row>
+        </div>
+        <div v-else class="h-100 pos-rel">
+          <div class="d-flex contents h-100">
+            <div class="d-flex numbox numbox-divider">
+              <div class="numbox-icon flex-center">
+                <img src="@/assets/nav-1.png">
+              </div>
+              <div class="flex-center numbox-txtbox">
+                <p class="numbox-today1">오늘 재고</p>
+                <p class="numbox-today2">{{today_inventory}}</p>
+              </div>
+              <div class="flex-center numbox-txtbox">
+                <p class="numbox-yesterday1">어제 재고</p>
+                <p class="numbox-yesterday2">{{yesterday_inventory}}</p>
+              </div>
             </div>
-            <div class="flex-center numbox-txtbox">
-              <p class="numbox-yesterday1">어제 재고</p>
-              <p class="numbox-yesterday2">{{yesterday_inventory}}</p>
+            <div class="d-flex numbox numbox-divider">
+              <div class="numbox-icon flex-center">
+                <img src="@/assets/nav-3.png">
+              </div>
+              <div class="flex-center numbox-txtbox">
+                <p class="numbox-today1">오늘 입고</p>
+                <p class="numbox-today2">{{today_inbound}}</p>
+              </div>
+              <div class="flex-center numbox-txtbox">
+                <p class="numbox-yesterday1">어제 입고</p>
+                <p class="numbox-yesterday2">{{yesterday_inbound}}</p>
+              </div>
+            </div>
+            <div class="d-flex numbox">
+              <div class="numbox-icon flex-center">
+                <img src="@/assets/nav-4.png">
+              </div>
+              <div class="flex-center numbox-txtbox">
+                <p class="numbox-today1">오늘 출고</p>
+                <p class="numbox-today2">{{today_outbound}}</p>
+              </div>
+              <div class="flex-center numbox-txtbox">
+                <p class="numbox-yesterday1">어제 출고</p>
+                <p class="numbox-yesterday2">{{yesterday_outbound}}</p>
+              </div>
             </div>
           </div>
-          <div class="d-flex numbox numbox-divider">
-            <div class="flex-center numbox-txtbox">
-              <p class="numbox-today1">오늘 입고</p>
-              <p class="numbox-today2">{{today_inbound}}</p>
+          <div class="change-box w-100 flex-between">
+            <div class="change-unit tx-center">
+              <div class="flex-center" v-if="today_inventory != yesterday_inventory">
+                <div class="d-flex" :class="today_inventory > yesterday_inventory ? 'green-filter' : 'red-filter'">
+                  <img v-if="today_inventory > yesterday_inventory" src="@/assets/up-arrow.png" alt="">
+                  <img v-else src="@/assets/down-arrow.png" alt="">
+                </div>
+                <span class="change-text-1">
+                  {{ Math.abs(today_inventory - yesterday_inventory) }}
+                </span>
+                <span class="change-text-2">
+                  {{ yesterday_inventory != 0 ? `(${Math.round((today_inventory - yesterday_inventory) / yesterday_inventory * 100)}%)` : null }}
+                </span>
+              </div>
             </div>
-            <div class="flex-center numbox-txtbox">
-              <p class="numbox-yesterday1">어제 입고</p>
-              <p class="numbox-yesterday2">{{yesterday_inbound}}</p>
+            <div class="change-unit tx-center">
+              <div class="flex-center" v-if="today_inbound != yesterday_inbound">
+                <div class="d-flex" :class="today_inbound > yesterday_inbound ? 'green-filter' : 'red-filter'">
+                  <img v-if="today_inbound > yesterday_inbound" src="@/assets/up-arrow.png" alt="">
+                  <img v-else src="@/assets/down-arrow.png" alt="">
+                </div>
+                <span class="change-text-1">
+                  {{ Math.abs(today_inbound - yesterday_inbound) }}
+                </span>
+                <span class="change-text-2">
+                  {{ yesterday_inbound != 0 ? `(${Math.round((today_inbound - yesterday_inbound) / yesterday_inbound * 100)}%)` : null }}
+                </span>
+              </div>
             </div>
-          </div>
-          <div class="d-flex numbox">
-            <div class="flex-center numbox-txtbox">
-              <p class="numbox-today1">오늘 출고</p>
-              <p class="numbox-today2">{{today_outbound}}</p>
-            </div>
-            <div class="flex-center numbox-txtbox">
-              <p class="numbox-yesterday1">어제 출고</p>
-              <p class="numbox-yesterday2">{{yesterday_outbound}}</p>
+            <div class="change-unit tx-center">
+              <div class="flex-center" v-if="today_outbound != yesterday_outbound">
+                <div class="d-flex" :class="today_outbound > yesterday_outbound ? 'green-filter' : 'red-filter'">
+                  <img v-if="today_outbound > yesterday_outbound" src="@/assets/up-arrow.png" alt="">
+                  <img v-else src="@/assets/down-arrow.png" alt="">
+                </div>
+                <span class="change-text-1">
+                  {{ Math.abs(today_outbound - yesterday_outbound) }}
+                </span>
+                <span class="change-text-2">
+                  {{ yesterday_outbound != 0 ? `(${Math.round((today_outbound - yesterday_outbound) / yesterday_outbound * 100)}%)` : null }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div data-aos="fade-up">
-        <div class="flex-between mb-25px">
+        <div class="flex-between">
           <a href="/list/product" class="box-shadow homebox homebox-w2">
             <div class="homebox-titlebox homebox-title1">재고 카테고리 비율</div>
             <div class="w-100 d-flex">
@@ -149,12 +232,14 @@
                   <div>박스</div>
                 </div>
               </div>
-              <div class="w-70" style="height: 35vh; margin-bottom: 15px;">
+              <div class="w-70 pos-rel" style="height: 32vh; margin-bottom: 15px;">
                 <ItemDoughnutChart
                 :labels="this.itemChart.labels"
                 :data="this.itemChart.data"
                 :colors="this.itemChart.colors"/>
-                <span></span>
+                <span class="doughnut-label">
+                  총 1000개
+                </span>
               </div>
             </div>
           </a>
@@ -190,7 +275,7 @@
         </div>
       </div>
       <div data-aos="fade-up">
-        <div class="flex-between mb-25px">
+        <div class="flex-between">
           <a href="/status/inbound" class="box-shadow homebox homebox-w2">
             <div class="homebox-titlebox p-0">
               <span class="homebox-title1">월별 입고 현황</span>
@@ -219,9 +304,9 @@
           </a>
         </div>
       </div>
-      <div data-aos="fade-up">
+      <div data-aos="fade-up" style="margin-bottom: 2vh;">
         <a href="/status/monthly">
-          <div class="box-shadow homebox mb-25px">
+          <div class="box-shadow homebox">
             <div class="homebox-titlebox p-0">
               <span class="homebox-title1">연간 재고 현황</span>
               <span class="homebox-title2">최근 1년</span>
@@ -287,7 +372,14 @@ export default {
         data: [13,22,45,24,36],
         colors: ['#c41230', '#fb7b00', '#F2BB05', '#47A8BD', '#254359']
       },
-      graphRender: false
+      graphRender: false,
+      isLoading: false,
+      scrollY: window.scrollY
+    }
+  },
+  watch: {
+    scrollY () {
+      console.log(this.scrollY)
     }
   },
   setup () {},
@@ -299,6 +391,7 @@ export default {
   mounted () {
     this.getDaysSummary()
     this.getYearSummary()
+    window.addEventListener('scroll', this.handleScroll);
   },
   unmounted () {},
   methods: {
@@ -330,6 +423,7 @@ export default {
     },
     // 어제 오늘 입출고, 재고량
     async getDaysSummary () {
+      this.isLoading = true
       try {
         const res = await this.$axios.get(`${process.env.VUE_APP_API}/dashboard/summary/days`);
         const dataSet = res.data;
@@ -343,7 +437,7 @@ export default {
         this.yesterday_inventory = yesterday.inventory;
         this.yesterday_inbound = yesterday.inbound;
         this.yesterday_outbound = yesterday.outbound*(-1);
-
+        this.isLoading = false;
       } catch (error) {
         console.error()
       }
@@ -370,6 +464,14 @@ export default {
 
       } catch (error) {
         console.log(error);
+      }
+    },
+    handleScroll() {
+      var scrollPosition = window.scrollY;
+      if (scrollPosition > 65) {
+        document.getElementById('infobox').classList.add('expanded')
+      } else {
+        document.getElementById('infobox').classList.remove('expanded')
       }
     }
   }
@@ -400,5 +502,76 @@ body {background-color: #f3f3f3;}
 }
 .v-application a {
   color: black;
+}
+#infobox {
+  height: 28vh;
+  transition: all 0.5s ease;
+}
+#infobox.expanded {
+  height: 45vh;
+}
+#infobox .contents {
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+#infobox.expanded .contents {
+  padding-bottom: 15px;
+}
+.doughnut-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+}
+.change-box {
+  display: flex;
+  opacity: 0;
+  position: absolute;
+  bottom: 15px;
+  transition: all 0.5s ease
+}
+.expanded .change-box {
+  opacity: 1;
+}
+.change-unit {
+  width: 33.3%;
+}
+.change-unit img {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+.change-text-1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #3a3a3a;
+  margin-right: 5px;
+}
+.change-text-2 {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #5e5e5e
+}
+.red-filter {
+  filter: invert(37%) sepia(65%) saturate(2566%) hue-rotate(331deg) brightness(102%) contrast(96%);
+}
+.green-filter {
+  filter: invert(74%) sepia(56%) saturate(3376%) hue-rotate(115deg) brightness(90%) contrast(104%);
+}
+.numbox-icon {
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+  border-radius: 100px;
+  background: linear-gradient(145deg, #f0f0f0, #f3f3f3);
+  box-shadow:  20px 20px 60px #d3d3d3,
+             -20px -20px 60px #ffffff;
+}
+.numbox-icon img {
+  width: 50%;
+  height: 50%;
+  filter: invert(74%) sepia(4%) saturate(54%) hue-rotate(314deg) brightness(84%) contrast(80%);
 }
 </style>

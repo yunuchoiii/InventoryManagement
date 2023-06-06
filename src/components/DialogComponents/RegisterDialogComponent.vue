@@ -170,7 +170,7 @@
             rounded
             dark
             @click="Register()">
-              <mini-loader-component v-if="inRequest"/>
+              <mini-loader-component v-if="inRequest" style="padding: 10px;"/>
               <span v-else style="font-size: 1.2rem">저장</span>
             </v-btn>
           </div>
@@ -318,7 +318,7 @@
             rounded
             dark
             @click="Register()">
-              <mini-loader-component v-if="inRequest"/>
+              <mini-loader-component v-if="inRequest" style="padding: 10px;"/>
               <span v-else style="font-size: 1.2rem">저장</span>
             </v-btn>
           </div>
@@ -499,7 +499,7 @@
             rounded
             dark
             @click="Register()">
-              <mini-loader-component v-if="inRequest"/>
+              <mini-loader-component v-if="inRequest" style="padding: 10px;"/>
               <span v-else style="font-size: 1.2rem">저장</span>
             </v-btn>
           </div>

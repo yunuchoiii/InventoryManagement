@@ -23,7 +23,7 @@
             </v-col>
             <mini-loader-component
               v-if="inRequest"
-              style="width: 36px; margin-top: 5px; margin-right: 23px; padding: 0"/>
+              style="width: 36px; margin-top: 3px; margin-right: 24px; padding: 2px"/>
             <v-col v-if="editConfirm" class="shrink">
               <v-btn
               v-if="!inRequest"

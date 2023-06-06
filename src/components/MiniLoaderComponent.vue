@@ -22,7 +22,7 @@ export default {
 <style>
 svg {
  width: 3.25em;
- padding: 10px;
+ padding: 6px;
  transform-origin: center;
  animation: rotate4 2s linear infinite;
 }

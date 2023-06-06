@@ -8,9 +8,10 @@
         <a href="/" class="w-100 flex-center">
           <img id="logo" src="@/assets/logo.png" alt="" class="nav-logo">
         </a>
-        <a href="/">
+        <div class="pos-rel w-100 navTextBox">
           <p class="navText long">재고 관리 시스템</p>
-        </a>
+          <p class="navText short font-mont">Inventory<br/>Service</p>
+        </div>
       </div>
       <div class="navDivider"></div>
       <div class="w-100" style="display: inline-grid;">
@@ -88,49 +89,28 @@ export default {
     },
     checkNavClosed () {
       const navBar = document.getElementById("navBar");
-      const navText = document.querySelector(".navText");
       const bodyPadding = document.querySelector(".body-padding");
       
       const isOpened = localStorage.getItem('isOpened') === 'false' ? false : true;
 
       if (!isOpened) {
         navBar.classList.add('closed')
+        bodyPadding.classList.add('closed')
       } else {
         navBar.classList.remove('closed')
+        bodyPadding.classList.remove('closed')
       }
 
-      if (isOpened) {
-        navText.classList.add("long");
-        navText.classList.remove("short", "font-mont");
-        navText.innerHTML = '재고 관리 시스템'
-      } else {
-        navText.classList.add("short", "font-mont");
-        navText.classList.remove("long");
-        navText.innerHTML = 'Inventory<br/>Service'
-      }
-
-      bodyPadding.style.marginLeft = isOpened ? "200px" : "62px";
-      bodyPadding.style.width = isOpened ? "calc(100% - 200px)" : "100%";
     },
     toggleMenu() {
       const navBar = document.getElementById("navBar");
-      const navText = document.querySelector(".navText");
       const bodyPadding = document.querySelector(".body-padding");
 
       const isOpened = navBar.classList.contains("closed");
 
       // 메뉴 열기/닫기에 따른 스타일 변경
       navBar.classList.toggle("closed");
-
-      if (isOpened) {
-        navText.classList.add("long");
-        navText.classList.remove("short", "font-mont");
-        navText.innerHTML = '재고 관리 시스템'
-      } else {
-        navText.classList.add("short", "font-mont");
-        navText.classList.remove("long");
-        navText.innerHTML = 'Inventory<br/>Service'
-      }
+      bodyPadding.classList.toggle("closed");
 
       bodyPadding.style.marginLeft = isOpened ? "200px" : "62px";
       bodyPadding.style.width = isOpened ? "calc(100% - 200px)" : "100%";
@@ -162,7 +142,7 @@ export default {
   padding: 8px 8px 11px;
   transition: width 0.5s ease, background-color 0.3s ease;
 }
-.closed .v-btn:not(.v-btn--round).v-size--default:hover, .closed .clicked{
+#navBar.closed .v-btn:not(.v-btn--round).v-size--default:hover, .closed .clicked{
   width: 41px !important;
 }
 #navBar .theme--light.v-btn:hover::before {

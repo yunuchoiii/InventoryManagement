@@ -58,7 +58,8 @@ export default {
               return gradient;
             },
             borderWidth: 4,
-            fill: 'origin'
+            fill: 'origin',
+            cubicInterpolationMode: 'monotone'
           }
         ]
       },

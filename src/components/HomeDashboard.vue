@@ -95,7 +95,7 @@
         <div class="fw-700 homebox-titlebox homebox-title1">
           <span>{{this.today_year + '년 ' + this.today_month + '월 ' + this.today_date + '일'}}</span>
         </div>
-        <div v-if="isLoading">
+        <div v-if="isLoading" class="h-100 pos-rel flex-center">
           <v-row>
             <v-col cols="4">
               <v-skeleton-loader
@@ -130,12 +130,12 @@
                 <img src="@/assets/nav-1.png">
               </div>
               <div class="flex-center numbox-txtbox">
-                <p class="numbox-today1">오늘 재고</p>
-                <p class="numbox-today2">{{today_inventory}}</p>
+                <div class="numbox-today1">오늘 재고</div>
+                <div class="numbox-today2">{{today_inventory}}</div>
               </div>
               <div class="flex-center numbox-txtbox">
-                <p class="numbox-yesterday1">어제 재고</p>
-                <p class="numbox-yesterday2">{{yesterday_inventory}}</p>
+                <div class="numbox-yesterday1">어제 재고</div>
+                <div class="numbox-yesterday2">{{yesterday_inventory}}</div>
               </div>
             </div>
             <div class="d-flex numbox numbox-divider">
@@ -143,12 +143,12 @@
                 <img src="@/assets/nav-3.png">
               </div>
               <div class="flex-center numbox-txtbox">
-                <p class="numbox-today1">오늘 입고</p>
-                <p class="numbox-today2">{{today_inbound}}</p>
+                <div class="numbox-today1">오늘 입고</div>
+                <div class="numbox-today2">{{today_inbound}}</div>
               </div>
               <div class="flex-center numbox-txtbox">
-                <p class="numbox-yesterday1">어제 입고</p>
-                <p class="numbox-yesterday2">{{yesterday_inbound}}</p>
+                <div class="numbox-yesterday1">어제 입고</div>
+                <div class="numbox-yesterday2">{{yesterday_inbound}}</div>
               </div>
             </div>
             <div class="d-flex numbox">
@@ -156,12 +156,12 @@
                 <img src="@/assets/nav-4.png">
               </div>
               <div class="flex-center numbox-txtbox">
-                <p class="numbox-today1">오늘 출고</p>
-                <p class="numbox-today2">{{today_outbound}}</p>
+                <div class="numbox-today1">오늘 출고</div>
+                <div class="numbox-today2">{{today_outbound}}</div>
               </div>
               <div class="flex-center numbox-txtbox">
-                <p class="numbox-yesterday1">어제 출고</p>
-                <p class="numbox-yesterday2">{{yesterday_outbound}}</p>
+                <div class="numbox-yesterday1">어제 출고</div>
+                <div class="numbox-yesterday2">{{yesterday_outbound}}</div>
               </div>
             </div>
           </div>
@@ -190,7 +190,7 @@
                   {{ Math.abs(today_inbound - yesterday_inbound) }}
                 </span>
                 <span class="change-text-2">
-                  {{ yesterday_inbound != 0 ? `(${Math.round((today_inbound - yesterday_inbound) / yesterday_inbound * 100)}%)` : null }}
+                  {{ today_inbound != 0 && yesterday_inbound != 0 ? `(${Math.round((today_inbound - yesterday_inbound) / yesterday_inbound * 100)}%)` : null }}
                 </span>
               </div>
             </div>
@@ -204,7 +204,7 @@
                   {{ Math.abs(today_outbound - yesterday_outbound) }}
                 </span>
                 <span class="change-text-2">
-                  {{ yesterday_outbound != 0 ? `(${Math.round((today_outbound - yesterday_outbound) / yesterday_outbound * 100)}%)` : null }}
+                  {{ today_outbound != 0 && yesterday_outbound != 0 ? `(${Math.round((today_outbound - yesterday_outbound) / yesterday_outbound * 100)}%)` : null }}
                 </span>
               </div>
             </div>
@@ -214,7 +214,7 @@
       <div data-aos="fade-up">
         <div class="flex-between">
           <a href="/list/product" class="box-shadow homebox homebox-w2">
-            <div class="homebox-titlebox homebox-title1">재고 카테고리 비율</div>
+            <div class="homebox-titlebox homebox-title1">카테고리별 재고량 비율</div>
             <div class="w-100 d-flex">
               <div class="w-30 flex-center">
                 <div class="flex-between flex-column" style="height: 196px; margin-top: 3px;">
@@ -232,13 +232,13 @@
                   <div>박스</div>
                 </div>
               </div>
-              <div class="w-70 pos-rel" style="height: 32vh; margin-bottom: 15px;">
+              <div v-if="this.itemChart.data.length !== 0" class="w-70 pos-rel" style="height: 32vh; margin-bottom: 15px;">
                 <ItemDoughnutChart
                 :labels="this.itemChart.labels"
                 :data="this.itemChart.data"
                 :colors="this.itemChart.colors"/>
                 <span class="doughnut-label">
-                  총 1000개
+                  총 {{itemChart.data.reduce((a,b) => (a+b))}}개
                 </span>
               </div>
             </div>
@@ -250,7 +250,7 @@
                 재고 금액
               </div>
               <div class="numbox-today2 fs-22">
-                ₩12,932,970
+                ₩ {{ inventory_price }}
               </div>
             </div>
             <div class="box-shadow homebox homebox-h3 flex-center-between">
@@ -259,7 +259,7 @@
                 출고 금액
               </div>
               <div class="numbox-today2 fs-22">
-                ₩15,752,700
+                ₩ {{ outbound_price }}
               </div>
             </div>
             <div class="box-shadow homebox homebox-h3 flex-center-between">
@@ -268,7 +268,7 @@
                 인기 제품
               </div>
               <div class="numbox-today2 fs-22">
-                원샷광택제
+                {{ bestseller }}
               </div>
             </div>
           </div>
@@ -355,6 +355,9 @@ export default {
       yesterday_inventory: 0,
       yesterday_inbound: 0,
       yesterday_outbound: 0,
+      inventory_price: 0,
+      outbound_price: 0,
+      bestseller: '',
       inBoundChart: {
         labels: [],
         data: [],
@@ -369,7 +372,7 @@ export default {
       },
       itemChart: {
         labels: ['세제', '방향제', '말통', '광택제', '박스'],
-        data: [13,22,45,24,36],
+        data: [],
         colors: ['#c41230', '#fb7b00', '#F2BB05', '#47A8BD', '#254359']
       },
       graphRender: false,
@@ -390,6 +393,7 @@ export default {
   },
   mounted () {
     this.getDaysSummary()
+    this.getHotSummary()
     this.getYearSummary()
     window.addEventListener('scroll', this.handleScroll);
   },
@@ -438,6 +442,25 @@ export default {
         this.yesterday_inbound = yesterday.inbound;
         this.yesterday_outbound = yesterday.outbound*(-1);
         this.isLoading = false;
+      } catch (error) {
+        console.error()
+      }
+    },
+    // 어제 오늘 입출고, 재고량
+    async getHotSummary () {
+      try {
+        const res = await this.$axios.get(`${process.env.VUE_APP_API}/dashboard/summary/hot`);
+        const dataSet = res.data;
+        console.log((dataSet))
+
+        this.itemChart.data = Object.values(dataSet.inventoryList);
+
+        function addCommas(number) {
+          return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        this.inventory_price = addCommas(dataSet.inventoryPrice);
+        this.outbound_price = addCommas(dataSet.outBoundPrice);
+        this.bestseller = dataSet.bestSeller;
       } catch (error) {
         console.error()
       }
@@ -502,76 +525,5 @@ body {background-color: #f3f3f3;}
 }
 .v-application a {
   color: black;
-}
-#infobox {
-  height: 28vh;
-  transition: all 0.5s ease;
-}
-#infobox.expanded {
-  height: 45vh;
-}
-#infobox .contents {
-  justify-content: center;
-  align-content: center;
-  flex-wrap: wrap;
-}
-#infobox.expanded .contents {
-  padding-bottom: 15px;
-}
-.doughnut-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.1rem;
-}
-.change-box {
-  display: flex;
-  opacity: 0;
-  position: absolute;
-  bottom: 15px;
-  transition: all 0.5s ease
-}
-.expanded .change-box {
-  opacity: 1;
-}
-.change-unit {
-  width: 33.3%;
-}
-.change-unit img {
-  width: 25px;
-  height: 25px;
-  margin-right: 10px;
-}
-.change-text-1 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #3a3a3a;
-  margin-right: 5px;
-}
-.change-text-2 {
-  font-size: 1rem;
-  font-weight: 300;
-  color: #5e5e5e
-}
-.red-filter {
-  filter: invert(37%) sepia(65%) saturate(2566%) hue-rotate(331deg) brightness(102%) contrast(96%);
-}
-.green-filter {
-  filter: invert(74%) sepia(56%) saturate(3376%) hue-rotate(115deg) brightness(90%) contrast(104%);
-}
-.numbox-icon {
-  width: 80px;
-  height: 80px;
-  margin-right: 20px;
-  border-radius: 100px;
-  background: linear-gradient(145deg, #f0f0f0, #f3f3f3);
-  box-shadow:  20px 20px 60px #d3d3d3,
-             -20px -20px 60px #ffffff;
-}
-.numbox-icon img {
-  width: 50%;
-  height: 50%;
-  filter: invert(74%) sepia(4%) saturate(54%) hue-rotate(314deg) brightness(84%) contrast(80%);
 }
 </style>

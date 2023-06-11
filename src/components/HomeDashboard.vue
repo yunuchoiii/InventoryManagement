@@ -125,7 +125,7 @@
         </div>
         <div v-else class="h-100 pos-rel">
           <div class="d-flex contents h-100">
-            <div class="d-flex numbox numbox-divider">
+            <div class="d-flex numbox numbox-divider" style="width: 34%">
               <div class="numbox-icon flex-center">
                 <img src="@/assets/nav-1.png">
               </div>
@@ -166,7 +166,7 @@
             </div>
           </div>
           <div class="change-box w-100 flex-between">
-            <div class="change-unit tx-center">
+            <div class="change-unit tx-center" style="width: 34%">
               <div class="flex-center" v-if="today_inventory != yesterday_inventory">
                 <div class="d-flex" :class="today_inventory > yesterday_inventory ? 'green-filter' : 'red-filter'">
                   <img v-if="today_inventory > yesterday_inventory" src="@/assets/up-arrow.png" alt="">
@@ -227,8 +227,8 @@
                 <div class="flex-between flex-column" style="height: 200px;">
                   <div>세제</div>
                   <div>방향제</div>
-                  <div>말통</div>
                   <div>광택제</div>
+                  <div>말통</div>
                   <div>박스</div>
                 </div>
               </div>
@@ -308,7 +308,7 @@
         <a href="/status/monthly">
           <div class="box-shadow homebox">
             <div class="homebox-titlebox p-0">
-              <span class="homebox-title1">연간 재고 현황</span>
+              <span class="homebox-title1">월별 재고 현황</span>
               <span class="homebox-title2">최근 1년</span>
             </div>
             <div style="height: 35vh;">
@@ -371,7 +371,7 @@ export default {
         data: [],
       },
       itemChart: {
-        labels: ['세제', '방향제', '말통', '광택제', '박스'],
+        labels: ['세제', '방향제', '광택제', '말통', '박스'],
         data: [],
         colors: ['#c41230', '#fb7b00', '#F2BB05', '#47A8BD', '#254359']
       },
@@ -471,6 +471,15 @@ export default {
         const res = await this.$axios.get(`${process.env.VUE_APP_API}/dashboard/summary/year`);
         const dataSet = res.data;
 
+        const updateDataset = (data) => {
+          let newData = data.sort((a, b) => a.days - b.days)
+          console.log(newData[0].quantity)
+          if (newData[0].quantity === 0) {
+            newData.shift()
+          }
+          return newData;
+        }
+
         const updateChart = (list, chart) => {
           for (const element of list) {
             const month = String(element.days).slice(-2) + "월";
@@ -479,9 +488,9 @@ export default {
           }
         };
 
-        updateChart(dataSet.inBoundList.sort((a, b) => a.days - b.days), this.inBoundChart);
-        updateChart(dataSet.outBoundList.sort((a, b) => a.days - b.days), this.outBoundChart);
-        updateChart(dataSet.inventoryList.sort((a, b) => a.days - b.days), this.annualChart);
+        updateChart(updateDataset(dataSet.inBoundList), this.inBoundChart);
+        updateChart(updateDataset(dataSet.outBoundList), this.outBoundChart);
+        updateChart(updateDataset(dataSet.inventoryList), this.annualChart);
 
         this.graphRender = true
 

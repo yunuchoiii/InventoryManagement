@@ -43,7 +43,7 @@ export default {
         labels: this.labels,
         datasets: [
           {
-            label: '연간 재고량',
+            label: '총 재고량',
             data: this.data,
             borderColor: '#9a66ff',
             pointBorderColor: '#9a66ff',
@@ -64,6 +64,11 @@ export default {
         ]
       },
       chartOptions: {
+        scales: {
+          y: {
+            suggestedMin: 0
+          }
+        },
         responsive: true,
         maintainAspectRatio: false,
         layout: {

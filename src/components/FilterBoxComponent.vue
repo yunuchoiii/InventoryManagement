@@ -199,7 +199,7 @@ export default {
       selectedCategory: "",
       categories: [],
       selectedItem: "",
-      itemsObjects: {},
+      itemsObjects: [],
       items: [],
       last_month: new Date().getMonth(),
       calendarData: {
@@ -258,7 +258,10 @@ export default {
     },
     // 카테고리별 품목 리스트 구하기
     getProductsByCategory () {
-      this.$axios.get(`${process.env.VUE_APP_API}/products?categoryCode=${this.selectedCategory}`).then((res) => {
+      this.itemsObjects = [
+        {productName: '불러오는 중...'}
+      ]
+      this.$axios.get(`${process.env.VUE_APP_API}/products?categoryCode=${this.selectedCategory}&size=1000`).then((res) => {
         this.itemsObjects = res.data.content
       }).catch((error) => {
         console.log(error);
@@ -362,8 +365,13 @@ export default {
     },
     // 조회 조건 초기화
     renewFilter () {
-      this.selectedYear = new Date().getFullYear()
-      this.selectedMonth = new Date().getMonth() + 1
+      if (this.register_name == '입고' || this.register_name == '출고') {
+        this.selectedYear = new Date().getFullYear()
+        this.selectedMonth = new Date().getMonth() + 1        
+      } else {
+        this.selectedYear = ''
+        this.selectedMonth = ''
+      }
       this.selectedCategory = ""
       this.selectedItem = ""
       this.calendarData = {

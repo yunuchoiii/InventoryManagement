@@ -279,22 +279,8 @@
                       v-model="inStock_info.inBoundDate"
                       no-title
                       scrollable
+                      @input="$refs.menu.save(inStock_info.inBoundDate)"
                     >
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="menu = false"
-                      >
-                        취소
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.menu.save(inStock_info.inBoundDate)"
-                      >
-                        확인
-                      </v-btn>
                     </v-date-picker>
                   </v-menu>
                 </v-col>
@@ -457,22 +443,8 @@
                       v-model="outStock_info.outBoundDate"
                       no-title
                       scrollable
+                      @input="$refs.menu.save(outStock_info.outBoundDate)"
                     >
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="menu = false"
-                      >
-                        취소
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.menu.save(outStock_info.outBoundDate)"
-                      >
-                        확인
-                      </v-btn>
                     </v-date-picker>
                   </v-menu>
                 </v-col>
@@ -728,13 +700,23 @@ export default {
     },
     // 카테고리별 품목 리스트 구하기
     getProductsByCategory () {
+      this.productList = ['불러오는 중...'];
       const arr = [];
+      const pageable = {
+        "page": 0,
+        "size": 1000,
+        "sort": [
+          "string"
+        ]
+      };
       const categoryCode = this.selectedCategory=="세제" ? "00" 
         : this.selectedCategory=="방향제" ? "01" 
         : this.selectedCategory=="광택제" ? "02" 
         : this.selectedCategory=="말통" ? "03" 
         : "04"
-      this.$axios.get(`${process.env.VUE_APP_API}/products?categoryCode=${categoryCode}`).then((res) => {
+      this.$axios.get(
+        `${process.env.VUE_APP_API}/products?categoryCode=${categoryCode}&size=1000`,
+      ).then((res) => {
         this.itemsObjects = res.data.content
         res.data.content.forEach(function(number) {
           arr.push(number.productName)
@@ -790,7 +772,6 @@ export default {
         :this.register_name === '입고' ? this.inStock_info
         :this.outStock_info
       ).then((res) => {
-        console.log(res)
         this.alertType = {
           msg: `${this.register_name} 수정이 완료되었습니다.`,
           type : "success",
@@ -851,6 +832,13 @@ export default {
         this.inRequest = false
       })
     },
+    // removeDatePickerKr () {
+    //   document.querySelectorAll('.v-date-picker-table .v-btn__content').forEach((day)=>{
+    //     if (day.innerText.charAt(day.innerText.length-1) === '일') {
+    //       day.innerText = day.innerText.slice(0, -1);
+    //     }
+    //   })
+    // }
   }
 }
 </script>

@@ -258,22 +258,8 @@
                       v-model="inStock_info.inBoundDate"
                       no-title
                       scrollable
+                      @input="$refs.menu.save(inStock_info.inBoundDate)"
                     >
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="menu = false"
-                      >
-                        취소
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.menu.save(inStock_info.inBoundDate)"
-                      >
-                        확인
-                      </v-btn>
                     </v-date-picker>
                   </v-menu>
                 </v-col>
@@ -406,22 +392,8 @@
                       v-model="outStock_info.outBoundDate"
                       no-title
                       scrollable
+                      @input="$refs.menu.save(outStock_info.outBoundDate)"
                     >
-                      <v-spacer></v-spacer>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="menu = false"
-                      >
-                        취소
-                      </v-btn>
-                      <v-btn
-                        text
-                        color="primary"
-                        @click="$refs.menu.save(outStock_info.outBoundDate)"
-                      >
-                        확인
-                      </v-btn>
                     </v-date-picker>
                   </v-menu>
                 </v-col>
@@ -576,7 +548,6 @@ export default {
         setTimeout(()=>{
             const dialogContent = document.querySelectorAll(".v-dialog.v-dialog--active.v-dialog--persistent")[0];
             this.dialogHeight = dialogContent.clientHeight;
-            console.log(this.dialogHeight)
         }, 100)
       }
     },
@@ -608,13 +579,14 @@ export default {
     },
     // 카테고리별 품목 리스트 구하기
     getProductsByCategory () {
+      this.items = ['불러오는 중...'];
       const arr = [];
       const categoryCode = this.selectedCategory=="세제" ? "00" 
         : this.selectedCategory=="방향제" ? "01" 
         : this.selectedCategory=="광택제" ? "02" 
         : this.selectedCategory=="말통" ? "03" 
         : "04"
-      this.$axios.get(`${process.env.VUE_APP_API}/products?categoryCode=${categoryCode}`).then((res) => {
+      this.$axios.get(`${process.env.VUE_APP_API}/products?categoryCode=${categoryCode}&size=1000`).then((res) => {
         this.itemsObjects = res.data.content
         res.data.content.forEach(function(number) {
           arr.push(number.productName)

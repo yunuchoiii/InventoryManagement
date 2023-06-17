@@ -49,7 +49,7 @@ export default {
       this.querys = [];
       if (data.year != "") {
         const startDate = data.year + '-01-01';
-        const endDate = data.year + '-12-01';
+        const endDate = data.year + '-12-31';
         this.querys.push(`startDate=${startDate}`);
         this.querys.push(`endDate=${endDate}`);
         this.headers = ['순번', '구분', '품목', '품목코드', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];

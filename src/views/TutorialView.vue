@@ -419,19 +419,22 @@ export default {
   methods: {
     toNextPage () {
       if (this.current_page=== 1) {
-        this.page_2_show = true
         document.getElementById("page_1").classList.add("slide-out-left");
         setTimeout(()=>{
-          this.page_1_show = false
+          this.page_2_show = true;
+        }, 400)
+        setTimeout(()=>{
+          this.page_1_show = false;
         }, 500)
       } else if (this.current_page=== 2) {
-        this.page_3_show = true
         document.getElementById("page_2").classList.add("slide-out-left");
+        setTimeout(()=>{
+          this.page_3_show = true;
+        }, 400)
         setTimeout(()=>{
           this.page_2_show = false
         }, 500)
       } else if (this.current_page=== 3) {
-        this.page_4_show = true
         document.getElementById("page_3").classList.add("slide-out-left");
         setTimeout(()=>{
           const table_row = document.getElementById("tut-table-row");
@@ -448,25 +451,34 @@ export default {
           grayfilter.style.backgroundColor="rgb(0 0 0 / 30%)";
         }, 2500)
         setTimeout(()=>{
+          this.page_4_show = true;
+        }, 400)
+        setTimeout(()=>{
           this.page_3_show = false
         }, 500)
       } else if (this.current_page=== 4) {
-        this.page_5_show = true
         document.getElementById("page_4").classList.add("slide-out-left");
+        setTimeout(()=>{
+          this.page_5_show = true;
+        }, 400)
         setTimeout(()=>{
           this.page_4_show = false
         }, 500)
         setTimeout(()=>{
-          this.page_6_show = true
           document.getElementById("page_5").classList.add("slide-out-left");
+          setTimeout(()=>{
+            this.page_6_show = true;
+          }, 400)
           setTimeout(()=>{
             this.page_5_show = false
             this.current_page++
           }, 500)
         }, 3000)
       } else if (this.current_page=== 6) {
-        this.page_7_show = true
         document.getElementById("page_6").classList.add("slide-out-left");
+        setTimeout(()=>{
+          this.page_7_show = true;
+        }, 400)
         setTimeout(()=>{
           this.page_6_show = false
         }, 500)

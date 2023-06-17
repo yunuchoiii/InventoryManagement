@@ -123,9 +123,9 @@
             </v-col>
           </v-row>
         </div>
-        <div v-else class="h-100 pos-rel">
-          <div class="d-flex contents h-100">
-            <div class="d-flex numbox numbox-divider" style="width: 34%">
+        <div v-else class="h-100 pos-rel d-flex flex-column">
+          <div class="d-flex contents" style="flex: 1">
+            <div class="d-flex numbox numbox-divider flex-center-evenly" style="width: 34%">
               <div class="numbox-icon flex-center">
                 <img src="@/assets/nav-1.png">
               </div>
@@ -138,7 +138,7 @@
                 <div class="numbox-yesterday2">{{yesterday_inventory}}</div>
               </div>
             </div>
-            <div class="d-flex numbox numbox-divider">
+            <div class="d-flex numbox numbox-divider flex-center-evenly">
               <div class="numbox-icon flex-center">
                 <img src="@/assets/nav-3.png">
               </div>
@@ -151,7 +151,7 @@
                 <div class="numbox-yesterday2">{{yesterday_inbound}}</div>
               </div>
             </div>
-            <div class="d-flex numbox">
+            <div class="d-flex numbox flex-center-evenly">
               <div class="numbox-icon flex-center">
                 <img src="@/assets/nav-4.png">
               </div>
@@ -165,8 +165,12 @@
               </div>
             </div>
           </div>
-          <div class="change-box w-100 flex-between">
-            <div class="change-unit tx-center" style="width: 34%">
+          <div
+            v-if="today_inventory != yesterday_inventory || today_inbound != yesterday_inbound || today_outbound != yesterday_outbound"
+            class="change-box w-100 flex-between"
+            style="margin-bottom: 11px;"
+          >
+            <div class="change-unit flex-center" style="width: 34%">
               <div class="flex-center" v-if="today_inventory != yesterday_inventory">
                 <div class="d-flex" :class="today_inventory > yesterday_inventory ? 'green-filter' : 'red-filter'">
                   <img v-if="today_inventory > yesterday_inventory" src="@/assets/up-arrow.png" alt="">
@@ -176,11 +180,11 @@
                   {{ Math.abs(today_inventory - yesterday_inventory) }}
                 </span>
                 <span class="change-text-2">
-                  {{ yesterday_inventory != 0 ? `(${Math.round((today_inventory - yesterday_inventory) / yesterday_inventory * 100)}%)` : null }}
+                  {{ yesterday_inventory != 0 ? `(${((today_inventory - yesterday_inventory) / yesterday_inventory * 100).toFixed(1)}%)` : null }}
                 </span>
               </div>
             </div>
-            <div class="change-unit tx-center">
+            <div class="change-unit flex-center">
               <div class="flex-center" v-if="today_inbound != yesterday_inbound">
                 <div class="d-flex" :class="today_inbound > yesterday_inbound ? 'green-filter' : 'red-filter'">
                   <img v-if="today_inbound > yesterday_inbound" src="@/assets/up-arrow.png" alt="">
@@ -190,11 +194,11 @@
                   {{ Math.abs(today_inbound - yesterday_inbound) }}
                 </span>
                 <span class="change-text-2">
-                  {{ today_inbound != 0 && yesterday_inbound != 0 ? `(${Math.round((today_inbound - yesterday_inbound) / yesterday_inbound * 100)}%)` : null }}
+                  {{ today_inbound != 0 && yesterday_inbound != 0 ? `(${((today_inbound - yesterday_inbound) / yesterday_inbound * 100).toFixed(1)}%)` : null }}
                 </span>
               </div>
             </div>
-            <div class="change-unit tx-center">
+            <div class="change-unit flex-center">
               <div class="flex-center" v-if="today_outbound != yesterday_outbound">
                 <div class="d-flex" :class="today_outbound > yesterday_outbound ? 'green-filter' : 'red-filter'">
                   <img v-if="today_outbound > yesterday_outbound" src="@/assets/up-arrow.png" alt="">
@@ -204,7 +208,7 @@
                   {{ Math.abs(today_outbound - yesterday_outbound) }}
                 </span>
                 <span class="change-text-2">
-                  {{ today_outbound != 0 && yesterday_outbound != 0 ? `(${Math.round((today_outbound - yesterday_outbound) / yesterday_outbound * 100)}%)` : null }}
+                  {{ today_outbound != 0 && yesterday_outbound != 0 ? `(${((today_outbound - yesterday_outbound) / yesterday_outbound * 100).toFixed(1)}%)` : null }}
                 </span>
               </div>
             </div>
@@ -244,7 +248,7 @@
             </div>
           </a>
           <div class="homebox-w2 flex-column flex-between">
-            <div class="box-shadow homebox homebox-h3 flex-center-between">
+            <div class="box-shadow homebox homebox-h3 flex-center-between pos-rel">
               <div class="homebox-title3 flex-center">
                 <img src="https://cdn-icons-png.flaticon.com/512/1670/1670341.png" alt="" class="home-icon">
                 재고 금액
@@ -253,22 +257,28 @@
                 ₩ {{ inventory_price }}
               </div>
             </div>
-            <div class="box-shadow homebox homebox-h3 flex-center-between">
+            <div class="box-shadow homebox homebox-h3 flex-center-between pos-rel">
               <div class="homebox-title3 flex-center">
                 <img src="https://cdn-icons-png.flaticon.com/512/567/567600.png" alt="" class="home-icon">
                 출고 금액
               </div>
-              <div class="numbox-today2 fs-22">
+              <div class="numbox-today2 fs-22" style="padding-top: 12px">
                 ₩ {{ outbound_price }}
               </div>
+              <div class="pos-abs month-standard">
+                이달 기준
+              </div>
             </div>
-            <div class="box-shadow homebox homebox-h3 flex-center-between">
+            <div class="box-shadow homebox homebox-h3 flex-center-between pos-rel">
               <div class="homebox-title3 flex-center">
                 <img src="https://cdn-icons-png.flaticon.com/512/3712/3712196.png" alt="" class="home-icon">
                 인기 제품
               </div>
-              <div class="numbox-today2 fs-22">
+              <div class="numbox-today2 fs-22" style="padding-top: 12px">
                 {{ bestseller }}
+              </div>
+              <div class="pos-abs month-standard">
+                이달 기준
               </div>
             </div>
           </div>
@@ -377,14 +387,9 @@ export default {
       },
       graphRender: false,
       isLoading: false,
-      scrollY: window.scrollY
     }
   },
-  watch: {
-    scrollY () {
-      console.log(this.scrollY)
-    }
-  },
+  watch: {},
   setup () {},
   created () {
     AOS.init()
@@ -451,7 +456,6 @@ export default {
       try {
         const res = await this.$axios.get(`${process.env.VUE_APP_API}/dashboard/summary/hot`);
         const dataSet = res.data;
-        console.log((dataSet))
 
         this.itemChart.data = Object.values(dataSet.inventoryList);
 
@@ -473,7 +477,6 @@ export default {
 
         const updateDataset = (data) => {
           let newData = data.sort((a, b) => a.days - b.days)
-          console.log(newData[0].quantity)
           if (newData[0].quantity === 0) {
             newData.shift()
           }
@@ -525,8 +528,12 @@ body {background-color: #f3f3f3;}
   border-radius: 20px;
   margin-right: 10px;
 }
-.fs-22 {
-  font-size: 2.2rem;
+.change-unit > .flex-center {
+  min-width: 46%;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: #f7f7f7;
+  border-radius: 13px;
 }
 .v-application {
   background-color: transparent !important;
@@ -534,5 +541,11 @@ body {background-color: #f3f3f3;}
 }
 .v-application a {
   color: black;
+}
+.month-standard {
+  font-size: 0.8rem;
+  top: 18px;
+  right: 32px;
+  color: rgb(168, 168, 168);
 }
 </style>

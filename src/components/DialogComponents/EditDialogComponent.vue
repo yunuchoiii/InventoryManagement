@@ -101,6 +101,7 @@
                 <v-text-field
                     dense
                     outlined
+                    readonly
                     label="품목 코드"
                     v-model="product_info.productCode"
                   ></v-text-field>

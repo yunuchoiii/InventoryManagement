@@ -14,8 +14,8 @@
         </div>
         <div class="d-flex" data-aos="zoom-in" style="flex-wrap: wrap;">
           <a href="/status/inventory" class="menu-card mr-2per homebox">
-            <div class="flex-center">
-              <img src="@/assets/inventory_status_icon.png" alt="현 재고 현황" width="50px" height="50px">
+            <div class="flex-center h-100">
+              <img src="@/assets/inventory_status_icon.png" alt="현 재고 현황">
             </div>
             <div class="flex-center menu-card-title">
               <span>현 재고 현황</span>
@@ -23,8 +23,8 @@
             </div>
           </a>
           <a href="/status/monthly" class="menu-card mr-2per homebox">
-            <div class="flex-center">
-              <img src="@/assets/month_status_icon.png" alt="월간 재고 현황" width="50px" height="50px">
+            <div class="flex-center h-100">
+              <img src="@/assets/month_status_icon.png" alt="월간 재고 현황">
             </div>
             <div class="flex-center menu-card-title">
               <span>월간 재고 현황</span>
@@ -32,8 +32,8 @@
             </div>
           </a>
           <a href="/status/inbound" class="menu-card mr-2per homebox" style="padding-left: 10px">
-            <div class="flex-center">
-              <img src="@/assets/input_icon.png" alt="입고 현황" width="60px" height="60px">
+            <div class="flex-center h-100">
+              <img src="@/assets/input_icon.png" alt="입고 현황">
             </div>
             <div class="flex-center menu-card-title">
               <span>월간 입고 현황</span>
@@ -41,8 +41,8 @@
             </div>
           </a>
           <a href="/status/outbound" class="menu-card homebox" style="padding-left: 10px">
-            <div class="flex-center">
-              <img src="@/assets/output_icon.png" alt="출고 현황" width="60px" height="60px">
+            <div class="flex-center h-100">
+              <img src="@/assets/output_icon.png" alt="출고 현황">
             </div>
             <div class="flex-center menu-card-title">
               <span>월간 출고 현황</span>
@@ -60,8 +60,8 @@
         </div>
         <div class="d-flex" data-aos="zoom-in" style="flex-wrap: wrap;">
           <a href="/list/inbound" class="menu-card mr-2per homebox">
-            <div class="flex-center">
-              <img src="@/assets/input_list_icon.png" alt="입고 리스트" width="50px" height="50px">
+            <div class="flex-center h-100">
+              <img src="@/assets/input_list_icon.png" alt="입고 리스트" style="height: 60%">
             </div>
             <div class="flex-center menu-card-title">
               <span>입고 내역</span>
@@ -69,8 +69,8 @@
             </div>
           </a>
           <a href="/list/outbound" class="menu-card mr-2per homebox">
-            <div class="flex-center">
-              <img src="@/assets/output_list_icon.png" alt="출고 리스트" width="50px" height="50px">
+            <div class="flex-center h-100">
+              <img src="@/assets/output_list_icon.png" alt="출고 리스트" style="height: 60%">
             </div>
             <div class="flex-center menu-card-title">
               <span>출고 내역</span>
@@ -78,8 +78,8 @@
             </div>
           </a>
           <a href="/list/product" class="menu-card mr-2per homebox">
-            <div class="flex-center">
-              <img src="@/assets/item_list_icon.png" alt="상품 리스트" width="60px" height="60px">
+            <div class="flex-center h-100">
+              <img src="@/assets/item_list_icon.png" alt="상품 리스트">
             </div>
             <div class="flex-center menu-card-title">
               <span>상품 목록</span>
@@ -547,5 +547,8 @@ body {background-color: #f3f3f3;}
   top: 18px;
   right: 32px;
   color: rgb(168, 168, 168);
+}
+.menu-card img {
+  height: 65%;
 }
 </style>

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 Vue.use(VueRouter)
 
@@ -8,15 +7,47 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/HomeView.vue')
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/tutorial',
+    name: 'Tutorial',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/TutorialView.vue')
+  },
+  {
+    path: '/status/inventory',
+    name: 'InventoryStatus',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/InventoryStatusView.vue')
+  },
+  {
+    path: '/status/monthly',
+    name: 'MonthlyInventoryStatus',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/MonthlyStatusView.vue')
+  },
+  {
+    path: '/status/inbound',
+    name: 'InBoundStatus',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/InBoundStatusView.vue')
+  },
+  {
+    path: '/status/outbound',
+    name: 'OutBoundStatus',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/StatusViews/OutBoundStatusView.vue')
+  },
+  {
+    path: '/list/inbound',
+    name: 'InBoundList',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/ListViews/InBoundListView.vue')
+  },
+  {
+    path: '/list/outbound',
+    name: 'OutBoundList',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/ListViews/OutBoundListView.vue')
+  },
+  {
+    path: '/list/product',
+    name: 'ProductList',
+    component: () => import(/* webpackChunkName: "event", webpackPrefetch:true */ '../views/ListViews/ProductListView.vue')
   }
 ]
 

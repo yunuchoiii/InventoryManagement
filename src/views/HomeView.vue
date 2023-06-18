@@ -1,15 +1,16 @@
 <template>
-  <IntroPage />
+  <body>
+    <HomeDashboard/>
+  </body>
 </template>
 
 <script>
-import IntroPage from '@/components/Intro.vue'
+import HomeDashboard from '@/components/HomeDashboard.vue'
 
 export default {
   name: 'HomePage',
-
   components: {
-    IntroPage
+    HomeDashboard
   }
 }
 </script>
